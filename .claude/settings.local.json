@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(./gradlew clean *)",
+      "Bash(./gradlew runClient *)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(uv tool *)",
+      "Bash(memsearch *)",
+      "Bash(docker *)",
+      "Bash(wsl --list --verbose)",
+      "Skill(memsearch:memory-recall)",
+      "Bash(where memsearch *)",
+      "Bash(python *)",
+      "Bash(pip show *)",
+      "Bash(pip3 show *)",
+      "Bash(pip install *)"
+    ]
+  }
+}
