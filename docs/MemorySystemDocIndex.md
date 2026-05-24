@@ -33,6 +33,7 @@ Do not read every framework file. Do not derive rules from this index itself.
 | Inspect or modify refresh script behavior | `scripts/memsearch-refresh.ps1` (only if script behavior must be inspected) |
 | Compliance review, auditing memory-system adherence, checking whether memory-system rules were followed | `docs/framework/role-boundaries.md` + `docs/framework/memory-first-retrieval.md`. For subsystem audits, see Section 4. |
 | Adding, renaming, reorganizing, or removing a framework document | `docs/framework/rule-pack-structure.md` |
+| Fact deduplication, canonical facts, duplicate memory entries, superseded memory, conflicting memory facts, before-save memory quality control | `docs/framework/fact-deduplication.md` |
 
 ---
 
@@ -58,6 +59,9 @@ Do not read every framework file. Do not derive rules from this index itself.
 
 - **Designing or reorganizing rule packs:**
   `rule-pack-structure.md` only
+
+- **Evaluating whether a proposed fact should be saved, merged, replaced, kept separate, or rejected:**
+  `docs/framework/fact-deduplication.md`
 
 - **Auditing general memory-system compliance:**
   `docs/framework/role-boundaries.md` + `docs/framework/memory-first-retrieval.md`
