@@ -38,6 +38,24 @@ Claude Code is the repository executor.
 - Avoid hallucinating repository state
 - Query operational memory before external reasoning
 
+### Claude Code may
+
+- Identify candidate memory items from external reasoning results
+- Write candidate items into a candidate batch file
+- Preserve context and provenance for later validation
+
+### Claude Code must not
+
+- Approve, promote, ingest, or index memory without user review and validation
+- Move candidates into approved memory
+- Delete or tombstone approved memory entries
+- Treat test artifacts as production memory
+- Decide a candidate is durable enough to keep without validation
+- Promote raw source content directly into memory
+
+This boundary exists because previous failures allowed unvalidated content to enter
+production memory and pollute retrieval results.
+
 ---
 
 ## No Human-as-File-Transport Rule
