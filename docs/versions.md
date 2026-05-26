@@ -3,6 +3,12 @@
 **Date:** 2026-05-24
 **Status:** Clean base — MineColonies deferred
 
+## Build Verification
+
+| Date | Result | Command | Notes |
+|---|---|---|---|
+| 2026-05-25 | PASS | `./gradlew build` | 28 tasks; 10 executed, 8 from cache, 10 up-to-date. 1m 29s. |
+
 ## Platform
 
 | Component | Version |
