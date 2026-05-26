@@ -7,7 +7,7 @@
 
 $ErrorActionPreference = "Stop"
 
-$collection = "ms_elegant_stonebraker_5c8067_4e381995"
+$collection = "ms_dragontweaksv2_4403422f"
 $milvusUri  = "http://localhost:19530"
 $scriptDir  = Split-Path -Parent $MyInvocation.MyCommand.Path
 $repoRoot   = Split-Path -Parent $scriptDir
@@ -99,7 +99,7 @@ $failed = 0
 $results = [System.Collections.Generic.List[string]]::new()
 
 foreach ($test in $tests) {
-    $output = memsearch search $test.Query --top-k 5 -c $collection --milvus-uri $milvusUri 2>&1 |
+    $output = memsearch search $test.Query --top-k 5 -c $collection --milvus-uri $milvusUri |
               Out-String
 
     $allFound = $true

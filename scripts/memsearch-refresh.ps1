@@ -1,4 +1,5 @@
 $ErrorActionPreference = "Stop"
+$env:PYTHONUTF8 = "1"
 
 $milvusDir   = "C:\Users\sense\.memsearch\milvus-docker"
 $repoRoot    = "C:\Users\sense\Desktop\DragonTweaksV2"
