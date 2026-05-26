@@ -16,11 +16,7 @@
       "Bash(pip3 show *)",
       "Bash(pip install *)",
       "Bash(./gradlew build *)",
-      "Bash(cd \"C:\\\\Users\\\\sense\\\\Desktop\\\\DragonTweaksV2\" && memsearch search \"event bus routing mod bus\" --top-k 3 -c ms_dragontweaksv2_4403422f 2>&1)",
-      "PowerShell(Set-Location \"C:\\\\Users\\\\sense\\\\Desktop\\\\DragonTweaksV2\\\\.claude\\\\worktrees\\\\elegant-stonebraker-5c8067\"; pwsh -NonInteractive -File scripts\\\\acceptance-tests.ps1 2>&1)",
-      "Bash(Get-ChildItem \"C:\\\\Users\\\\sense\\\\Desktop\\\\DragonTweaksV2\\\\docs\" -Recurse)",
-      "Bash(Select-Object FullName)",
-      "Bash(cp \"C:\\\\Users\\\\sense\\\\Desktop\\\\DragonTweaksV2\\\\docs\\\\cleanstart_project_operations_plan_revised_with_mcp_handoff.md\" \"C:\\\\Users\\\\sense\\\\Desktop\\\\DragonTweaksV2\\\\.claude\\\\worktrees\\\\elegant-stonebraker-5c8067\\\\docs\\\\cleanstart_project_operations_plan_revised_with_mcp_handoff.md\" && echo \"cleanstart copied\")"
+      "Bash(git commit *)"
     ]
   }
 }
