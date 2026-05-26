@@ -2,7 +2,7 @@
 
 ## 1. Purpose
 
-This file helps Claude Code decide which memory-system document(s) to read for a given task. It is a routing aid only — not a rule source. Always read the linked documents for actual rules.
+This file helps Claude Code decide which memory-system document(s) to read for a given task. It is a routing aid only -- not a rule source. Always read the linked documents for actual rules.
 
 ---
 
@@ -29,11 +29,12 @@ Do not read every framework file. Do not derive rules from this index itself.
 | Shell command, script execution, PowerShell, command safety, side effects | `docs/framework/safe-shell-policy.md` |
 | Rule pack layout, framework vs project-specific, rule organization, rule structure | `docs/framework/rule-pack-structure.md` |
 | Git discipline, git maturity level, repository commits, git constraints | `docs/framework/git-maturity-model.md` |
-| MemSearch recovery, Docker/Milvus recovery, reindex, flush, refresh procedure | `docs/MemSearchRecovery.md` |
+| MemSearch recovery, Docker/Milvus recovery, reindex, flush, refresh procedure | `docs/recovery/MemSearchRecovery.md` |
 | Inspect or modify refresh script behavior | `scripts/memsearch-refresh.ps1` (only if script behavior must be inspected) |
 | Compliance review, auditing memory-system adherence, checking whether memory-system rules were followed | `docs/framework/role-boundaries.md` + `docs/framework/memory-first-retrieval.md`. For subsystem audits, see Section 4. |
 | Adding, renaming, reorganizing, or removing a framework document | `docs/framework/rule-pack-structure.md` |
 | Fact deduplication, canonical facts, duplicate memory entries, superseded memory, conflicting memory facts, before-save memory quality control | `docs/framework/fact-deduplication.md` |
+| Memory system architecture, approval pipeline, domain packs, supersession, candidate workflow, advisory models | `docs/active/memory-system-architecture.md` |
 
 ---
 
@@ -98,9 +99,25 @@ Source files are listed in the Routing Table above. Section 3 is the routing aut
 
 ---
 
-## 8. Maintenance Notes
+## 8. Deprecated Files (Not Active Authority)
+
+The following files are preserved for history but must not be treated as active authority.
+Do not route tasks to them. Do not derive rules from them.
+
+| File | Reason deprecated |
+|---|---|
+| `docs/deprecated/old-plans/current_plan_and_checklist.md` | Superseded; plan-era document, no longer active |
+| `docs/deprecated/old-plans/cleanstart_project_operations_plan_revised_with_mcp_handoff.md` | Superseded; old operations plan, no longer active |
+| `docs/memory_system_target_architecture_2026-05-26.md` | Merged into `docs/active/memory-system-architecture.md` |
+| `docs/memory_system_supersession_addendum_2026-05-26.md` | Merged into `docs/active/memory-system-architecture.md` |
+| `docs/memory_system_ai_advisory_addendum_2026-05-26.md` | Merged into `docs/active/memory-system-architecture.md` |
+| `docs/MemSearchRecovery.md` | Canonical copy moved to `docs/recovery/MemSearchRecovery.md` |
+
+---
+
+## 9. Maintenance Notes
 
 - Update the Routing Table when a new framework file is added or renamed.
-- Update the Routing Table to match.
-- Do not add rule content here — keep this file as routing only.
+- Do not add rule content here -- keep this file as routing only.
 - If a file in the Source Document List is removed, add a Stop Condition entry noting the removal.
+- When files are deprecated, add them to Section 8 with a reason.
