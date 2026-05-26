@@ -8,12 +8,12 @@
 
 ---
 
-## Fact Deduplication Before Save — Classification Procedure
+## Fact Deduplication Before Approval — Classification Procedure
 
-**Title:** Fact deduplication procedure before saving to memory  
+**Title:** Fact deduplication procedure before approving to memory  
 **Type:** Protocol rule  
-**Intent triggers:** deduplication, duplicate fact, before saving, memory save, redundant fact, classification, superseding, merge, discard  
-**Rule or fact:** Before any fact is saved to memory, it must be evaluated for deduplication. Assign exactly one classification: new canonical fact (save), duplicate of existing fact (discard), refinement of existing fact (merge), superseding replacement (replace old), conflict requiring review (save with conflict label), related but distinct fact (save separately), temporary observation (discard). Do not silently merge or collapse distinct constraints. Prefer durable canonical rule over multiple incident-specific memories.
+**Intent triggers:** deduplication, duplicate fact, before saving, before approval, memory approval, redundant fact, classification, superseding, merge, discard  
+**Rule or fact:** Before any fact is approved into memory, it must be evaluated for deduplication. Assign exactly one classification: new canonical fact (approve), duplicate of existing fact (discard), near-duplicate (merge or discard), clarification (merge as scoped refinement), conflict (route to supersession workflow -- do not merge silently), replacement (replace old; tombstone old in deprecated/), supersession (high-confidence replacement after authority and scope comparison), related but distinct fact (approve separately), temporary observation (discard). If confidence is below threshold, create a human review patch rather than choosing automatically. Do not silently merge or collapse distinct constraints. Prefer durable canonical rule over multiple incident-specific memories.
 
 ---
 
@@ -31,7 +31,7 @@
 **Title:** Memory-first retrieval — required flow before external reasoning  
 **Type:** Protocol rule  
 **Intent triggers:** memory first, memory-first, retrieval, before external reasoning, search memory, semantic retrieval, sufficiency test, escalate  
-**Rule or fact:** Memory must be consulted before external reasoning. Required retrieval flow: parse intent → search memory semantically → retrieve prior relevant chunks → determine sufficiency → answer from memory if sufficient → escalate to external reasoning only if memory is insufficient → extract durable value → save to memory. Memory is sufficient if it answers what prior rule applies, whether we already solved this, what correction matters, or what query to avoid. Semantic retrieval must match conceptually related ideas, not only exact keywords.
+**Rule or fact:** Memory must be consulted before external reasoning. Required retrieval flow: parse intent -> search memory semantically -> retrieve prior relevant chunks -> determine sufficiency -> answer from memory if sufficient -> escalate to external reasoning only if memory is insufficient -> extract durable value -> capture candidate for user approval and durability validation. Memory is sufficient if it answers what prior rule applies, whether we already solved this, what correction matters, or what query to avoid. Semantic retrieval must match conceptually related ideas, not only exact keywords.
 
 ---
 
@@ -71,12 +71,12 @@
 
 ---
 
-## Save After Query Protocol — Extract and Save Durable Value
+## Candidate After Query Protocol — Capture Durable Value as Candidate
 
-**Title:** Save after query protocol — extract durable value after external reasoning  
+**Title:** Candidate after query protocol — capture durable value as candidate after external reasoning  
 **Type:** Protocol rule  
-**Intent triggers:** save after query, extract value, durable value, external reasoning result, save candidate, discard result  
-**Rule or fact:** Every external reasoning escalation must be followed by a value extraction step. After any external reasoning result: identify whether the result contains durable value; if yes, extract and save as a memory chunk using the save candidate fields (Title, Type, Intent triggers, Content, When to apply); if no, log as a defective query. Claude Code must not discard external reasoning results without first determining whether they contain durable value.
+**Intent triggers:** save after query, candidate after query, extract value, durable value, external reasoning result, candidate batch file, candidate capture, discard result  
+**Rule or fact:** Every external reasoning escalation must be followed by a value extraction step. After any external reasoning result: identify whether the result contains durable value; if yes, extract and write as a candidate entry in the candidate batch file using the candidate fields (Domain, Change type, Title, Type, Intent triggers, Source/evidence, Proposed fact/rule, Reason flagged, Durability concern, Recommended action); if no, log as a defective query. Claude Code must not discard external reasoning results without first determining whether they contain durable value. Claude Code may not approve, ingest, index, or promote candidates -- only the user and validator may advance candidates through the approval pipeline.
 
 ---
 
