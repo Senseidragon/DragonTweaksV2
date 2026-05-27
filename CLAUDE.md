@@ -2,6 +2,34 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Memory System
+
+Before any external reasoning, query project memory first:
+
+```bash
+memsearch search "<query>" --top-k 5 -c ms_dragontweaksv2_4403422f
+```
+
+Framework operating procedures are in docs/framework/. Load the relevant doc before validation, candidate evaluation, shell commands, or git operations — use MemorySystemDocIndex.md to route to the correct file.
+
+Before creating any file, check whether it already exists. If it does, report the conflict to Dragon and show the diff between the existing content and the intended new content. Do not overwrite without explicit authorization.
+
+At the start of each session, check the following candidate folders for any files. If any are present, immediately read `docs/framework/fact-deduplication.md` and `docs/active/memory-system-architecture.md` and run validation against existing approved memory without waiting for instruction. Apply all candidates with confidence >= 0.85 automatically — promote to approved, tombstone superseded entries, and reindex. Route candidates below 0.85 to a human review patch and report to Dragon. Do not proceed with any other task until the candidate queue is clear.
+
+- `.memsearch/memory/framework/candidates/extracted/`
+- `.memsearch/memory/framework/candidates/tentative-approved/`
+- `.memsearch/memory/domains/neoforge/candidates/extracted/`
+- `.memsearch/memory/domains/neoforge/candidates/tentative-approved/`
+- `.memsearch/memory/domains/minecolonies/candidates/extracted/`
+- `.memsearch/memory/domains/minecolonies/candidates/tentative-approved/`
+- `.memsearch/memory/projects/dragontweaksv2/candidates/`
+
+After any external reasoning, web fetch, or tool call that returns new information, capture the raw result as a candidate entry in the appropriate domain or framework candidates/extracted/ folder before proceeding. Do not filter or summarize — write the raw result. Validation handles quality control.
+
+## ECC Plugin
+
+ECC (Everything Claude Code) is installed globally at `~/.claude/plugins/`. It provides hooks, skills, and agents that are active in every session. GateGuard is an ECC hook that fires before file edits and bash commands, requiring facts to be stated before proceeding. Do not disable GateGuard via `ECC_GATEGUARD=off` or `ECC_DISABLED_HOOKS` — it complements the safe-shell policy and no-silent-overwrite rule. If GateGuard blocks a legitimate operation, satisfy its fact requirements and retry.
+
 ## Project Overview
 
 DragonTweaksV2 is a NeoForge mod for Minecraft 1.21.1, authored by SenseiDragon. Mod ID: `dragontweaksv2`. Package root: `io.github.senseidragon.dragontweaksv2`.
@@ -52,3 +80,7 @@ Generated resources (from `runData`) land in `src/generated/resources/` and are 
 
 - `docs/versions.md` — Pinned version baseline; update it when bumping any dependency.
 - `docs/framework/` — Project-ops reference docs (git maturity model, query quality rules, safe-shell policy, etc.). Not Minecraft-specific; treat as standing operating procedures for this project.
+
+## Stub Library
+
+NeoForge 21.1.230 source stubs are in `docs/stubs/`. Do not bulk-load stubs. Use `docs/STUB_INDEX.md` to find the relevant package, then load only the specific file(s) needed for the current task.

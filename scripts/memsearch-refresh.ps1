@@ -13,7 +13,14 @@ docker compose up -d
 
 Write-Host "[2/4] Reindexing project memory into Claude Code plugin collection ($collection)..."
 Set-Location $repoRoot
-memsearch index $memoryDir --force -c $collection
+memsearch index `
+    "$memoryDir\seed-framework-rules.md" `
+    "$memoryDir\2026-05-25.md" `
+    "$memoryDir\framework\approved" `
+    "$memoryDir\domains\neoforge\approved" `
+    "$memoryDir\domains\minecolonies\approved" `
+    "$memoryDir\projects\dragontweaksv2\approved" `
+    --force -c $collection
 
 Write-Host "[3/4] Flushing collection so rows are visible to search..."
 python -c "from pymilvus import MilvusClient; c=MilvusClient(uri='$milvusUri'); c.flush('$collection'); stats=c.get_collection_stats('$collection'); print('Row count:', stats)"

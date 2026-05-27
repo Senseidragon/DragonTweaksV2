@@ -51,3 +51,6 @@ tools/mcp-poc/sandbox/
 
 # MemSearch local runtime files
 .memsearch/.watch.pid
+
+# Generated NeoForge stubs
+docs/stubs/

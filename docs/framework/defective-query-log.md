@@ -45,4 +45,13 @@ Outcome after retry: [pending]
 
 ## Log
 
-(No entries yet.)
+```text
+Timestamp/session: 2026-05-27
+Original user request: Promote approved candidate to framework/approved/ and reindex.
+Defective query text: Prompt did not include instruction to check for pre-existing file before writing.
+Defect category: Missing durable-value target
+Why it was defective: Prompt assumed the target file did not exist. No pre-existence check was specified, resulting in a silent overwrite without diff or user authorization.
+Reframed replacement query: Before creating any file, check whether it already exists. If it does, report the conflict and show the diff before proceeding.
+Expected durable value from replacement query: Guardrail preventing silent overwrites; now captured in CLAUDE.md.
+Outcome after retry: CLAUDE.md updated with pre-existence check rule. No content was lost in this instance, but the process gap is now closed.
+```

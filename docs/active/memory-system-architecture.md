@@ -145,11 +145,15 @@ The intended pipeline is:
 ```text
 candidate capture
     ->
-user edits/deletes candidates
+automated durability validation
     ->
-tentative-approved folder
+if confidence >= threshold (default 0.85):
+    promote to approved automatically
     ->
-durability validation
+if confidence < threshold:
+    route to human review
+    ->
+human reviews only ambiguous or conflicting cases
     ->
 approved domain/project/framework memory
     ->
@@ -161,6 +165,8 @@ Nothing skips this pipeline.
 No item moves directly from candidate to indexed memory.
 
 No item moves directly from raw source to indexed memory.
+
+Human review is a fallback for low-confidence cases only, not a required step for every candidate.
 
 ---
 

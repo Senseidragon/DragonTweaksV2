@@ -1,0 +1,5 @@
+**Title:** LLM coding behavior guidelines — think, simplify, surgical changes, goal-driven execution
+**Type:** rule
+**Intent triggers:** coding guidelines, before coding, assumptions, simplicity, minimum code, surgical changes, touch only what you must, goal-driven, success criteria, overcomplication, refactor, adjacent code, clarifying questions
+**Source/evidence:** CLAUDE.md — general LLM coding behavior guidelines document
+**Rule or fact:** Before implementing, state assumptions explicitly; if uncertain, ask. If multiple interpretations exist, present them. Write minimum code that solves the problem — no speculative features, no unrequested abstractions. When editing existing code, touch only what the task requires; match existing style; do not improve adjacent code. When your changes create orphaned imports/variables/functions, remove them. Transform tasks into verifiable goals with explicit success criteria before starting. For multi-step tasks, state a brief plan with a verify step for each stage.
