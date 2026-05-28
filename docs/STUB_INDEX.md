@@ -1,4 +1,4 @@
-# Stub Library Index
+`# Stub Library Index
 
 This file serves as a high-level directory for the read-only stub files located in the `docs/stubs/` directory.
 
