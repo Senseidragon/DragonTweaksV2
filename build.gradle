@@ -26,7 +26,7 @@ sourceSets.main.resources {
 }
 
 repositories {
-    // Add here additional repositories if required by some of the dependencies below.
+    flatDir { dirs 'libs' }
 }
 
 base {
@@ -103,6 +103,13 @@ dependencies {
     // And its provides the option to then use net.minecraft as the group, and one of; client, server or joined as the module name, plus the game version as version.
     // For all intends and purposes: You can treat this dependency as if it is a normal library you would use.
     implementation "net.neoforged:neoforge:${neo_version}"
+
+    // MineColonies: compile against the API, load all deps at runtime only
+    compileOnly files('libs/minecolonies-1.1.1299-1.21.1-snapshot.jar')
+    localRuntime files('libs/minecolonies-1.1.1299-1.21.1-snapshot.jar')
+    localRuntime files('libs/structurize-1.0.820-1.21.1-snapshot.jar')
+    localRuntime files('libs/domum-ornamentum-1.0.233-snapshot-main.jar')
+    localRuntime files('libs/blockui-1.0.211-1.21.1-snapshot.jar')
 
     // Example optional mod dependency with JEI
     // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime
