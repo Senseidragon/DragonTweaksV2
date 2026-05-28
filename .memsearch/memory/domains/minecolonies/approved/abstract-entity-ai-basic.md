@@ -48,5 +48,5 @@ Key utility methods inherited:
 
 **Version scope:** MineColonies 1.1.1299 / NeoForge 21.1.x / MC 1.21.1
 **Confidence:** 0.90
-**Status:** candidate
+**Status:** approved
 **Date:** 2026-05-28

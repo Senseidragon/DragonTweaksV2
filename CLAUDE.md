@@ -14,7 +14,11 @@ Framework operating procedures are in docs/framework/. Load the relevant doc bef
 
 Before creating any file, check whether it already exists. If it does, report the conflict to Dragon and show the diff between the existing content and the intended new content. Do not overwrite without explicit authorization.
 
-At the start of each session, check the following candidate folders for any files. If any are present, immediately read `docs/framework/fact-deduplication.md` and `docs/active/memory-system-architecture.md` and run validation against existing approved memory without waiting for instruction. Apply all candidates with confidence >= 0.85 automatically — promote to approved, tombstone superseded entries, and reindex. Route candidates below 0.85 to a human review patch and report to Dragon. Do not proceed with any other task until the candidate queue is clear.
+At the start of each session:
+
+1. **Reindex check** — if `.memsearch/candidates/pending-reindex.txt` exists, read it, run `memsearch index <dir> --force -c ms_dragontweaksv2_4403422f` for each listed directory, then delete the file. Do this before anything else and before checking candidate folders.
+
+2. **Candidate queue** — check the following folders for any files. If any are present, immediately read `docs/framework/fact-deduplication.md` and `docs/active/memory-system-architecture.md` and run validation against existing approved memory without waiting for instruction. Apply all candidates with confidence >= 0.85 automatically — promote to approved, tombstone superseded entries, and reindex. Route candidates below 0.85 to a human review patch and report to Dragon. Do not proceed with any other task until the candidate queue is clear.
 
 - `.memsearch/memory/framework/candidates/extracted/`
 - `.memsearch/memory/framework/candidates/tentative-approved/`

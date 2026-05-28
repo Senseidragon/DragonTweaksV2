@@ -32,5 +32,5 @@ MineColonies' own jobs live in `ModJobs` as static `DeferredHolder<JobEntry, Job
 
 **Version scope:** MineColonies 1.1.1299 / NeoForge 21.1.x / MC 1.21.1
 **Confidence:** 0.95
-**Status:** candidate
+**Status:** approved
 **Date:** 2026-05-28

@@ -36,5 +36,5 @@ See also: [[OpenRouter-Integration]], [[Dialogue-System]], [[NPC-Roles]]
 
 **Version scope:** DragonTweaksV2 / NeoForge 21.1.x
 **Confidence:** 0.95
-**Status:** candidate
+**Status:** approved
 **Date:** 2026-05-27
