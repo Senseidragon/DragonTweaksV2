@@ -138,6 +138,33 @@ dependencies {
 // A missing property will result in an error. Properties are expanded using ${} Groovy notation.
 // When "copyIdeResources" is enabled, this will also run before the game launches in IDE environments.
 // See https://docs.gradle.org/current/dsl/org.gradle.language.jvm.tasks.ProcessResources.html
+// Copy MineColonies and its deps into each run's mods/ folder so the mod loader picks them up.
+def devModFiles = [
+    'libs/minecolonies-1.1.1299-1.21.1-snapshot.jar',
+    'libs/structurize-1.0.820-1.21.1-snapshot.jar',
+    'libs/domum-ornamentum-1.0.233-snapshot-main.jar',
+    'libs/blockui-1.0.211-1.21.1-snapshot.jar'
+]
+
+tasks.register('copyDevModsClient', Copy) {
+    from devModFiles
+    into layout.projectDirectory.dir("run/client/mods")
+}
+
+tasks.register('copyDevModsServer', Copy) {
+    from devModFiles
+    into layout.projectDirectory.dir("run/server/mods")
+}
+
+tasks.register('copyDevMods') {
+    dependsOn 'copyDevModsClient', 'copyDevModsServer'
+}
+
+afterEvaluate {
+    tasks.named('runClient') { dependsOn 'copyDevMods' }
+    tasks.named('runServer') { dependsOn 'copyDevMods' }
+}
+
 tasks.withType(ProcessResources).configureEach {
     var replaceProperties = [
             minecraft_version      : minecraft_version,
