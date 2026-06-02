@@ -66,3 +66,6 @@ docs/stubs/
 
 # MineColonies Wiki reference pages (local copy, not committed)
 docs/wiki-ref/
+
+# Dependency JARs
+libs/*.jar
