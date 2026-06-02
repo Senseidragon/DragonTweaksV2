@@ -85,6 +85,10 @@ Generated resources (from `runData`) land in `src/generated/resources/` and are 
 - `docs/versions.md` — Pinned version baseline; update it when bumping any dependency.
 - `docs/framework/` — Project-ops reference docs (git maturity model, query quality rules, safe-shell policy, etc.). Not Minecraft-specific; treat as standing operating procedures for this project.
 
+## Obsidian Sync
+
+The Obsidian vault at `obsidian-docs/` is the human-readable counterpart to the Claude memory system. When writing a `type: project` memory entry, also create or update the corresponding Obsidian doc and add a link to it in `obsidian-docs/DragonTweaks-v2.md` (the MOC). Feedback and reference memory types do not need Obsidian counterparts.
+
 ## Stub Library
 
 NeoForge 21.1.230 source stubs are in `docs/stubs/`. Do not bulk-load stubs. Use `docs/STUB_INDEX.md` to find the relevant package, then load only the specific file(s) needed for the current task.

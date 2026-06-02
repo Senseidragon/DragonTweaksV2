@@ -1,7 +1,7 @@
 **Title:** IItemExtension -- selected NeoForge-added methods on all Items
 **Type:** fact
 **Intent triggers:** IItemExtension, onItemUseFirst, getBurnTime, canPerformAction, ItemAbility, getEquipmentSlot, canElytraFly, elytraFlightTick, supportsEnchantment, canDisableShield, getFoodProperties, NeoForge item extension
-**Source/evidence:** docs/stubs/net/neoforged/neoforge/common/extensions/IItemExtension.java, NeoForge 21.1.230 source stub
+**Source:** docs/stubs/net/neoforged/neoforge/common/extensions/IItemExtension.java, NeoForge 21.1.230 source stub
 **Rule or fact:** IItemExtension is automatically mixed into all Item instances by NeoForge.
 
 Key overrideable methods (@ApiStatus.OverrideOnly methods must be invoked via IItemStackExtension on the ItemStack, not called directly on Item):

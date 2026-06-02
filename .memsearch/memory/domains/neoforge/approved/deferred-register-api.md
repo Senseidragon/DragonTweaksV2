@@ -1,7 +1,7 @@
 **Title:** DeferredRegister -- registration helper, factory methods, and usage constraints
 **Type:** fact
 **Intent triggers:** DeferredRegister, registration helper, register blocks, register items, mod event bus, registerEventBus, DeferredRegister.Blocks, DeferredRegister.Items, DeferredBlock, DeferredItem
-**Source/evidence:** docs/stubs/net/neoforged/neoforge/registries/DeferredRegister.java, NeoForge 21.1.230 source stub
+**Source:** docs/stubs/net/neoforged/neoforge/registries/DeferredRegister.java, NeoForge 21.1.230 source stub
 **Rule or fact:** DeferredRegister<T> is the standard object registration helper in NeoForge 21.1.x.
 
 Factory methods:

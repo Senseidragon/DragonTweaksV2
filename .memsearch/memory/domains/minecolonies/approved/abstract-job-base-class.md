@@ -1,44 +1,40 @@
-**Title:** MineColonies AbstractJob base class — custom job implementation contract
-**Type:** fact
-**Intent triggers:** AbstractJob, custom job, IJob, generateAI, createAI, ICitizenData, JobEntry, job base class, implement job
-**Source/evidence:** com.minecolonies.core.colony.jobs.AbstractJob (cloned source version/1.21)
-**Rule or fact:** Custom jobs extend AbstractJob<AI, J> where AI is the paired AI class and J is the job class itself (self-referential). The only abstract method subclasses must implement is `generateAI()`.
+---
+title: MineColonies — AbstractJob base class (custom job implementation contract)
+domain: minecolonies
+fact: AbstractJob<AI, J> is the concrete base class all custom jobs must extend. AI is the paired AI class and J is the job class itself (self-referential). The only abstract method subclasses must implement is generateAI(). All IJob lifecycle methods (NBT, removal, action counter, food tracking) are implemented here. Key methods: generateAI (abstract), getModel, triggerDeathAchievement, processOfflineTime, allowsAvoidance, getDiseaseModifier, assignTo. Protected fields: workBuildingPos, workBuilding, workModule. NBT fields serialized: TAG_JOB_TYPE, asyncRequests, actionsDone, workPos.
+confidence: 0.95
+usefulness: high
+supersedes: abstract-job-base-class.md
+authority: authoritative
+validator_version: memory-pipeline-v1
+validator_stage: first
+validator_hash: a055778e9d991e27c079583a363152f58694c6792c83516835dc095db5c8a860
+validated_at: 2026-05-31T23:43:31.746141+00:00
+approval_route: auto
+---
 
-Class signature:
-```java
-public abstract class AbstractJob<AI extends AbstractAISkeleton<J> & ITickingStateAI, J extends AbstractJob<AI, J>>
-    implements IJob<AI>
-```
+`AbstractJob<AI, J>` is the concrete base class all custom jobs must extend. `AI` is the paired AI class and `J` is the job class itself (self-referential). The only abstract method subclasses must implement is `generateAI()`. All `IJob` lifecycle methods (NBT, removal, action counter, food tracking) are implemented here.
 
-Constructor:
-```java
-public AbstractJob(final ICitizenData entity)  // pass through to super
-```
+**Key API surfaces:**
+- Class signature: `public abstract class AbstractJob<AI extends AbstractAISkeleton<J> & ITickingStateAI, J extends AbstractJob<AI, J>> implements IJob<AI>`
+- `AbstractJob(ICitizenData entity)` — constructor; pass through from subclass
+- `generateAI()` — **the one abstract method subclasses must implement**; returns a new AI instance
+- `getModel()` — defaults to `ModModelTypes.CITIZEN_ID`; override for a custom citizen skin
+- `triggerDeathAchievement(DamageSource, AbstractEntityCitizen)` — no-op by default
+- `processOfflineTime(long time)` — no-op by default; called when citizen was offline
+- `allowsAvoidance()` — returns true by default
+- `getDiseaseModifier()` — returns 1.0 by default
+- `assignTo(IAssignsJob module)` — validates `JobEntry` match before assigning; returns false silently on mismatch
+- Protected fields accessible to subclasses: `workBuildingPos`, `workBuilding`, `workModule`
 
-Abstract method subclasses must implement:
-- `AI generateAI()` — returns a new instance of the paired AI class; called by `createAI()` which wires the result into the citizen entity
-
-Optional overrides:
-- `ResourceLocation getModel()` — defaults to `ModModelTypes.CITIZEN_ID`; override to use a custom citizen model
-- `void triggerDeathAchievement(DamageSource, AbstractEntityCitizen)` — no-op by default
-- `void processOfflineTime(long time)` — no-op by default; called when citizen was offline
-- `boolean allowsAvoidance()` — returns true by default
-- `double getDiseaseModifier()` — returns 1.0 by default
-
-NBT fields serialized automatically by AbstractJob:
+**NBT fields serialized automatically:**
 - `TAG_JOB_TYPE` — registry key string
 - `asyncRequests` — set of async request tokens
-- `actionsDone` — counter for inventory-dump trigger
-- `workPos` — BlockPos of assigned work building
+- `actionsDone` — inventory-dump counter
+- `workPos` — `BlockPos` of assigned work building
 
-Key runtime fields (protected, accessible to subclasses):
-- `BlockPos workBuildingPos`
-- `IBuilding workBuilding`
-- `IAssignsJob workModule`
+**Useful for:** implementing a custom job class, overriding model or death achievements, reading the assigned building position from the job.
 
-`assignTo(IAssignsJob module)` validates the module's JobEntry matches this job's entry before assigning — mismatched entries return false silently.
+**Does not prove:** how to register the job in the registry (see `JobEntry.Builder`); how the AI state machine works (see `AbstractEntityAIBasic`); how to create item requests.
 
-**Version scope:** MineColonies 1.1.1299 / NeoForge 21.1.x / MC 1.21.1
-**Confidence:** 0.95
-**Status:** approved
-**Date:** 2026-05-28
+**Source:** [[docs/api/minecolonies/core/colony/jobs/AbstractJob.java]]

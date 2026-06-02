@@ -1,7 +1,7 @@
 **Title:** AttachmentType -- data attachment type registration, builder API, and holder-specific constraints
 **Type:** fact
 **Intent triggers:** AttachmentType, data attachment, IAttachmentHolder, NeoForgeRegistries, attachment builder, copyOnDeath, serialize attachment, sync attachment, attachment registration
-**Source/evidence:** docs/stubs/net/neoforged/neoforge/attachment/AttachmentType.java, NeoForge 21.1.230 source stub
+**Source:** docs/stubs/net/neoforged/neoforge/attachment/AttachmentType.java, NeoForge 21.1.230 source stub
 **Rule or fact:** AttachmentType<T> represents data attachable to any IAttachmentHolder (Entity, BlockEntity, Level, ChunkAccess).
 Must be registered to NeoForgeRegistries.Keys.ATTACHMENT_TYPES via DeferredRegister.
 

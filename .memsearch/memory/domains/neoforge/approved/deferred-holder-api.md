@@ -1,7 +1,7 @@
 **Title:** DeferredHolder -- lazy registry reference and bind behavior
 **Type:** fact
 **Intent triggers:** DeferredHolder, DeferredBlock, DeferredItem, registry reference, isBound, get() NPE, unbound value, Holder, Supplier
-**Source/evidence:** docs/stubs/net/neoforged/neoforge/registries/DeferredHolder.java, NeoForge 21.1.230 source stub
+**Source:** docs/stubs/net/neoforged/neoforge/registries/DeferredHolder.java, NeoForge 21.1.230 source stub
 **Rule or fact:** DeferredHolder<R, T> implements both Holder<R> and Supplier<T>, resolving lazily from the registry by ResourceKey.
 
 Behavior:

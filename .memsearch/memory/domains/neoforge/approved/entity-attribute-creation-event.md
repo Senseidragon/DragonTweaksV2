@@ -1,7 +1,7 @@
 **Title:** EntityAttributeCreationEvent -- registering attributes for custom entity types
 **Type:** fact
 **Intent triggers:** EntityAttributeCreationEvent, entity attributes, AttributeSupplier, LivingEntity attributes, createAttributes, DefaultAttributes, mod bus entity event
-**Source/evidence:** docs/stubs/net/neoforged/neoforge/event/entity/EntityAttributeCreationEvent.java, NeoForge 21.1.230 source stub
+**Source:** docs/stubs/net/neoforged/neoforge/event/entity/EntityAttributeCreationEvent.java, NeoForge 21.1.230 source stub
 **Rule or fact:** EntityAttributeCreationEvent is used to register AttributeSupplier instances for custom LivingEntity subclasses.
 
 Event bus: MOD event bus (implements IModBusEvent).

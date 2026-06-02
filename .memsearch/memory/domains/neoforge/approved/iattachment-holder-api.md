@@ -1,7 +1,7 @@
 **Title:** IAttachmentHolder -- interface methods and getData side-effect
 **Type:** fact
 **Intent triggers:** IAttachmentHolder, getData, getExistingData, hasData, setData, removeData, syncData, attachment side effect, default value creation
-**Source/evidence:** docs/stubs/net/neoforged/neoforge/attachment/IAttachmentHolder.java, NeoForge 21.1.230 source stub
+**Source:** docs/stubs/net/neoforged/neoforge/attachment/IAttachmentHolder.java, NeoForge 21.1.230 source stub
 **Rule or fact:** IAttachmentHolder is implemented by Entity, BlockEntity, Level, and ChunkAccess.
 
 Methods:

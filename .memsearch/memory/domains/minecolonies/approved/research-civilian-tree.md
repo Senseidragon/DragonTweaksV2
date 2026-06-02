@@ -1,0 +1,283 @@
+**Title:** MineColonies civilian research tree — full node list
+**Type:** fact
+**Intent triggers:** civilian research, higherlearning, school, library, keen, diligent, stamina, hospital, firstaid, remembrance, graveyard, ambition, citizen cap, outpost, hamlet, village, city, walking speed, leveling, teaching multiplier, growth multiplier, saturation, happiness, regeneration, health, vaccination, masks, resurrect, undertaker, rails, vines, research tree, university research
+**Source:** [[none]]
+**Note:** University level 1 is a global implicit prerequisite for all research — not encoded in individual node requirements. See [[research-global-requirements.md]].
+
+# MineColonies Research Tree — Civilian Branch
+
+Research nodes available in the University for the **civilian** branch. Each node lists its cost, building prerequisites, and what it unlocks. Child nodes are indented under their parent.
+
+---
+
+### Keen  *(Research Level 1)*
+
+  - Cost: 3x book
+  - Requires: Residence level 3
+  - Effect: Unlocks Library
+  - **Diligent** *(Research Level 2)*
+    - Cost: 6x book
+    - Requires: Library level 2
+    - Effect: Unlocks Levelingmultiplier
+    - **Studious** *(Research Level 3)*
+      - Cost: 12x book
+      - Requires: Library level 3
+      - Effect: Unlocks Levelingmultiplier level 2
+      - **Scholarly** *(Research Level 4)*
+        - Cost: 24x book
+        - Requires: Library level 4
+        - Effect: Unlocks Levelingmultiplier level 3
+        - **Reflective** *(Research Level 5)*
+          - Cost: 48x book
+          - Requires: Library level 5
+          - Effect: Unlocks Levelingmultiplier level 4
+          - **Academic** *(Research Level 6)*
+            - Cost: 128x book
+            - Effect: Unlocks Levelingmultiplier level 5
+  - **Haste** *(Research Level 2)*
+    - Cost: 1x rabbit_foot
+    - Requires: Townhall level 3
+    - Effect: Unlocks Walkingmultiplier
+    - **Nimble** *(Research Level 3)*
+      - Cost: 4x rabbit_foot
+      - Requires: Townhall level 3
+      - Effect: Unlocks Walkingmultiplier level 2
+      - **Agile** *(Research Level 4)*
+        - Cost: 8x rabbit_foot
+        - Requires: Townhall level 4
+        - Effect: Unlocks Walkingmultiplier level 3
+        - **Swift** *(Research Level 5)*
+          - Cost: 32x rabbit_foot
+          - Requires: Townhall level 5
+          - Effect: Unlocks Walkingmultiplier level 4
+          - **Athlete** *(Research Level 6)*
+            - Cost: 64x rabbit_foot
+            - Effect: Unlocks Walkingmultiplier level 5
+  - **Rails** *(Research Level 2)*
+    - Cost: 64x rail
+    - Requires: Deliveryman level 3
+    - Effect: Unlocks Railsunlock
+  - **Vines** *(Research Level 2)*
+    - Cost: 64x vine
+    - Requires: Residence level 3
+    - Effect: Unlocks Vinesunlock
+  - **Outpost** *(Research Level 2)*
+    - Cost: 64x cooked_beef
+    - Requires: Residence level 4
+    - Effect: Unlocks Citizencapaddition level 2
+    - **Hamlet** *(Research Level 3)*
+      - Cost: 128x cooked_beef
+      - Requires: Residence level 5
+      - Effect: Unlocks Citizencapaddition level 3
+      - **Village** *(Research Level 4)*
+        - Cost: 256x cooked_beef
+        - Requires: Townhall level 4
+        - Effect: Unlocks Citizencapaddition level 4
+        - **City** *(Research Level 5)*
+          - Cost: 512x cooked_beef
+          - Requires: Townhall level 5
+          - Effect: Unlocks Citizencapaddition level 5
+
+### Firstaid  *(Research Level 1)*
+
+  - Cost: 8x hay_block
+  - Requires: Townhall level 1
+  - Effect: Unlocks Healthaddition
+  - **Circus** *(Research Level 2)*
+    - Cost: 1x cake
+    - Requires: Cook level 2
+    - Effect: Unlocks Happinessmultiplier
+    - **Nightowl** *(Research Level 3)*
+      - Cost: 25x golden_carrot
+      - Requires: Library level 2
+      - Effect: Unlocks Workingdayhaddition
+      - **Nightowl2** *(Research Level 4)*
+        - Cost: 75x golden_carrot
+        - Requires: Townhall level 3
+        - Effect: Unlocks Workingdayhaddition level 2
+    - **Festival** *(Research Level 3)*
+      - Cost: 9x cake
+      - Requires: Cook level 3
+      - Effect: Unlocks Happinessmultiplier level 2
+      - **Spectacle** *(Research Level 4)*
+        - Cost: 18x cake
+        - Requires: Cook level 4
+        - Effect: Unlocks Happinessmultiplier level 3
+        - **Opera** *(Research Level 5)*
+          - Cost: 27x cake
+          - Requires: Cook level 5
+          - Effect: Unlocks Happinessmultiplier level 4
+          - **Theater** *(Research Level 6)*
+            - Cost: 16x enchanted_golden_apple
+            - Effect: Unlocks Happinessmultiplier level 5
+  - **Gourmand** *(Research Level 2)*
+    - Cost: 32x cookie
+    - Requires: Cook level 2
+    - Effect: Unlocks Saturationmultiplier
+    - **Gorger** *(Research Level 3)*
+      - Cost: 64x cookie
+      - Requires: Cook level 3
+      - Effect: Unlocks Saturationmultiplier level 2
+      - **Stuffer** *(Research Level 4)*
+        - Cost: 128x cookie
+        - Requires: Cook level 4
+        - Effect: Unlocks Saturationmultiplier level 3
+        - **Epicure** *(Research Level 5)*
+          - Cost: 256x cookie
+          - Requires: Cook level 5
+          - Effect: Unlocks Saturationmultiplier level 4
+          - **Glutton** *(Research Level 6)*
+            - Cost: 512x cookie
+            - Effect: Unlocks Saturationmultiplier level 5
+  - **Firstaid2** *(Research Level 2)*
+    - Cost: 16x hay_block
+    - Requires: Townhall level 2
+    - Effect: Unlocks Healthaddition level 2
+    - **Lifesaver** *(Research Level 3)*
+      - Cost: 32x hay_block
+      - Requires: Townhall level 3
+      - Effect: Unlocks Healthaddition level 3
+      - **Lifesaver2** *(Research Level 4)*
+        - Cost: 64x hay_block
+        - Requires: Townhall level 4
+        - Effect: Unlocks Healthaddition level 4
+        - **Guardianangel** *(Research Level 5)*
+          - Cost: 128x hay_block
+          - Requires: Townhall level 5
+          - Effect: Unlocks Healthaddition level 5
+          - **Guardianangel2** *(Research Level 6)*
+            - Cost: 256x hay_block
+            - Effect: Unlocks Healthaddition level 6
+    - **Masks** *(Research Level 3)*
+      - Cost: 32x white_wool
+      - Requires: Library level 3
+      - Effect: Unlocks Masks
+      - **Vaccines** *(Research Level 4)*
+        - Cost: 64x egg
+        - Requires: Hospital level 3
+        - Effect: Unlocks Vaccines
+
+### Higherlearning  *(Research Level 1)*
+
+  - Cost: 3x book
+  - Requires: Residence level 3
+  - Effect: Unlocks School
+  - **Nurture** *(Research Level 2)*
+    - Cost: 32x cooked_chicken
+    - Requires: School level 1
+    - Effect: Unlocks Growthmultiplier
+    - **Hormones** *(Research Level 3)*
+      - Cost: 64x cooked_chicken
+      - Requires: School level 3
+      - Effect: Unlocks Growthmultiplier level 2
+      - **Puberty** *(Research Level 4)*
+        - Cost: 128x cooked_chicken
+        - Requires: Library level 3
+        - Effect: Unlocks Growthmultiplier level 3
+        - **Growth** *(Research Level 5)*
+          - Cost: 256x cooked_chicken
+          - Requires: Library level 5
+          - Effect: Unlocks Growthmultiplier level 4
+          - **Beanstalk** *(Research Level 6)*
+            - Cost: 512x cooked_chicken
+            - Effect: Unlocks Growthmultiplier level 5
+  - **Morebooks** *(Research Level 2)*
+    - Cost: 6x book
+    - Requires: School level 1
+    - Effect: Unlocks Teachingmultiplier
+    - **Bookworm** *(Research Level 3)*
+      - Cost: 6x bookshelf
+      - Requires: School level 3
+      - Effect: Unlocks Teachingmultiplier level 2
+      - **Bachelor** *(Research Level 4)*
+        - Cost: 12x bookshelf
+        - Requires: Library level 3
+        - Effect: Unlocks Teachingmultiplier level 3
+        - **Master** *(Research Level 5)*
+          - Cost: 32x bookshelf
+          - Requires: Library level 5
+          - Effect: Unlocks Teachingmultiplier level 4
+          - **Phd** *(Research Level 6)*
+            - Cost: 64x bookshelf
+            - Effect: Unlocks Teachingmultiplier level 5
+
+### Ambition  *(Research Level 1)*
+
+  - Cost: 1x diamond
+  - Effect: Unlocks Mysticalsite
+  - **Air** *(Research Level 2)*
+    - Cost: 1x heart_of_the_sea
+    - Effect: Unlocks Air
+
+### Remembrance  *(Research Level 1)*
+
+  - Cost: 8x bone
+  - Requires: Townhall level 2
+  - Effect: Unlocks Graveyard
+  - **Resurrectchance1** *(Research Level 2)*
+    - Cost: 1x ghast_tear
+    - Requires: Graveyard level 3
+    - Effect: Unlocks Resurrectchanceaddition
+    - **Resurrectchance2** *(Research Level 3)*
+      - Cost: 16x chorus_fruit
+      - Requires: Graveyard level 5
+      - Effect: Unlocks Resurrectchanceaddition level 2
+      - **Raisingthedead** *(Research Level 4)*
+        - Cost: 1x totem_of_undying
+        - Requires: Graveyard level 5
+        - Effect: Unlocks Usetotemunlock
+  - **Gravedecaybonus1** *(Research Level 2)*
+    - Cost: 64x rotten_flesh
+    - Requires: Graveyard level 3
+    - Effect: Unlocks Gravedecaybonus
+    - **Gravedecaybonus2** *(Research Level 3)*
+      - Cost: 8x nether_wart_block
+      - Requires: Graveyard level 5
+      - Effect: Unlocks Gravedecaybonus level 2
+  - **Undertakeremergency** *(Research Level 2)*
+    - Cost: 1x iron_boots
+    - Requires: Graveyard level 2
+    - Effect: Unlocks Undertakerrun
+
+### Stamina  *(Research Level 1)*
+
+  - Cost: 1x carrot
+  - Effect: Unlocks Hospital
+  - **Resistance** *(Research Level 2)*
+    - Cost: 1x golden_apple
+    - Requires: Cook level 2
+    - Effect: Unlocks Healingsaturationlimitaddition
+    - **Resilience** *(Research Level 3)*
+      - Cost: 8x golden_apple
+      - Requires: Cook level 3
+      - Effect: Unlocks Healingsaturationlimitaddition level 2
+      - **Vitality** *(Research Level 4)*
+        - Cost: 16x golden_apple
+        - Requires: Cook level 4
+        - Effect: Unlocks Healingsaturationlimitaddition level 3
+        - **Fortitude** *(Research Level 5)*
+          - Cost: 32x golden_apple
+          - Requires: Cook level 5
+          - Effect: Unlocks Healingsaturationlimitaddition level 4
+          - **Indefatigability** *(Research Level 6)*
+            - Cost: 64x golden_apple
+            - Effect: Unlocks Healingsaturationlimitaddition level 5
+  - **Bandaid** *(Research Level 2)*
+    - Cost: 1x golden_carrot
+    - Requires: Library level 2
+    - Effect: Unlocks Regenerationmultiplier
+    - **Healingcream** *(Research Level 3)*
+      - Cost: 8x golden_carrot
+      - Requires: Library level 3
+      - Effect: Unlocks Regenerationmultiplier level 2
+      - **Bandages** *(Research Level 4)*
+        - Cost: 16x golden_carrot
+        - Requires: Library level 4
+        - Effect: Unlocks Regenerationmultiplier level 3
+        - **Compress** *(Research Level 5)*
+          - Cost: 32x golden_carrot
+          - Requires: Library level 5
+          - Effect: Unlocks Regenerationmultiplier level 4
+          - **Cast** *(Research Level 6)*
+            - Cost: 64x golden_carrot
+            - Effect: Unlocks Regenerationmultiplier level 5

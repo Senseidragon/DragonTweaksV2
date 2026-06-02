@@ -1,7 +1,7 @@
 **Title:** Capabilities -- NeoForge built-in capability constants (ItemHandler, EnergyStorage, FluidHandler)
 **Type:** fact
 **Intent triggers:** Capabilities, IItemHandler, IEnergyStorage, IFluidHandler, built-in capabilities, neoforge capability keys, ItemHandler.BLOCK, EnergyStorage.BLOCK, FluidHandler.BLOCK
-**Source/evidence:** docs/stubs/net/neoforged/neoforge/capabilities/Capabilities.java, NeoForge 21.1.230 source stub
+**Source:** docs/stubs/net/neoforged/neoforge/capabilities/Capabilities.java, NeoForge 21.1.230 source stub
 **Rule or fact:** NeoForge provides built-in capability constants in net.neoforged.neoforge.capabilities.Capabilities.
 All keys use namespace "neoforge".
 

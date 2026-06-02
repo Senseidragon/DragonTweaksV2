@@ -1,7 +1,7 @@
 **Title:** RegisterCapabilitiesEvent -- event bus assignment and registration methods
 **Type:** fact
 **Intent triggers:** RegisterCapabilitiesEvent, mod bus capability, capability registration, registerBlock, registerBlockEntity, registerEntity, registerItem, setProxyable, wrong event bus capability
-**Source/evidence:** docs/stubs/net/neoforged/neoforge/capabilities/RegisterCapabilitiesEvent.java, NeoForge 21.1.230 source stub
+**Source:** docs/stubs/net/neoforged/neoforge/capabilities/RegisterCapabilitiesEvent.java, NeoForge 21.1.230 source stub
 **Rule or fact:** RegisterCapabilitiesEvent fires on the MOD event bus (implements IModBusEvent).
 
 Registration methods:

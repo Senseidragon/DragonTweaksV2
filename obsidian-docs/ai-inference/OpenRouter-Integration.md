@@ -38,3 +38,4 @@ Cloud LLM inference via OpenRouter API. The sole inference backend for [[Dialogu
 - [[Dialogue-System]] — primary consumer of inference results
 - [[Config]] — API key and model selection stored here
 - [[NPC-Roles]] — role context passed as part of the prompt
+- [[Compliance-Testing]] — probe suite that scores models before they enter rotation

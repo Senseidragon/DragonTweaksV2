@@ -1,7 +1,7 @@
 **Title:** IBlockEntityExtension -- NeoForge-added methods on all BlockEntities
 **Type:** fact
 **Intent triggers:** IBlockEntityExtension, onLoad, getPersistentData, invalidateCapabilities, requestModelDataUpdate, getModelData, handleUpdateTag, onDataPacket, block entity NeoForge extension
-**Source/evidence:** docs/stubs/net/neoforged/neoforge/common/extensions/IBlockEntityExtension.java, NeoForge 21.1.230 source stub
+**Source:** docs/stubs/net/neoforged/neoforge/common/extensions/IBlockEntityExtension.java, NeoForge 21.1.230 source stub
 **Rule or fact:** IBlockEntityExtension is automatically mixed into all BlockEntity instances by NeoForge.
 
 Key methods:

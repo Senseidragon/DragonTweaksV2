@@ -1,0 +1,313 @@
+**Title:** MineColonies technology research tree — full node list
+**Type:** fact
+**Intent triggers:** technology research, sawmill, smeltery, blacksmith, crusher, stonemason, composter, plantation, farmer, miner, lumberjack, enchanter, mechanic, glassblower, fletcher, florist, dyer, beekeeper, netherworker, alchemist, recipe multiplier, tool durability, block break speed, block place speed, ore multiplier, farming multiplier, inventory slots, warehouse, sifter, biodegradable, woodwork, research tree, university research
+**Source:** [[none]]
+**Note:** University level 1 is a global implicit prerequisite for all research — not encoded in individual node requirements. See [[research-global-requirements.md]].
+
+# MineColonies Research Tree — Technology Branch
+
+Research nodes available in the University for the **technology** branch. Each node lists its cost, building prerequisites, and what it unlocks. Child nodes are indented under their parent.
+
+---
+
+### Softshoes  *(Research Level 1)*
+
+  - Cost: 16x white_wool, 16x feather
+  - Effect: Unlocks Softshoesunlock
+
+### Morescrolls  *(Research Level 1)*
+
+  - Cost: 64x paper, 1x ancienttome, 64x lapis_lazuli
+  - Requires: Enchanter level 3
+  - Effect: Unlocks Morescrollsunlock
+  - **Opennether** *(Research Level 2)*
+    - Cost: 3x gilded_blackstone
+    - Effect: Unlocks Netherworker
+    - **Netherlog** *(Research Level 3)*
+      - Cost: 16x ender_eye, 1x ancienttome
+      - Requires: Netherworker level 1
+      - Effect: Unlocks Netherexpeditionlog
+    - **Alchemist** *(Research Level 3)*
+      - Cost: 16x nether_wart
+      - Effect: Unlocks Alchemist
+      - **Oceanheart** *(Research Level 4)*
+        - Cost: 1x heart_of_the_sea
+        - Requires: Fisherman level 4
+        - Effect: Unlocks Fishingtreasure
+
+### Stonecake  *(Research Level 1)*
+
+  - Cost: 64x chiseled_stone_bricks
+  - Requires: Miner level 3
+  - Effect: Unlocks Stonemason
+  - **Rockingroll** *(Research Level 2)*
+    - Cost: 64x stone
+    - Requires: Stonemason level 1
+    - Effect: Unlocks Crusher
+    - **Pavetheroad** *(Research Level 3)*
+      - Cost: 32x concrete (any)
+      - Requires: Crusher level 1
+      - Effect: Unlocks Concretemixer
+    - **Depthknowledge** *(Research Level 3)*
+      - Cost: 64x deepslate
+      - Requires: Crusher level 3
+      - Effect: Unlocks Knowledgeofthedepthsunlock
+    - **Gildedhammer** *(Research Level 3)*
+      - Cost: 64x gravel, 64x sand, 64x clay
+      - Requires: Crusher level 3
+      - Effect: Unlocks Crushing11Unlock
+  - **Theflintstones** *(Research Level 2)*
+    - Cost: 64x brick
+    - Requires: Stonemason level 1
+    - Effect: Unlocks Stonesmeltery
+    - **Knowtheend** *(Research Level 3)*
+      - Cost: 64x chorus_fruit
+      - Requires: Baker level 3
+      - Effect: Unlocks Knowledgeoftheendunlock
+
+### Woodwork  *(Research Level 1)*
+
+  - Cost: 64x planks (any)
+  - Requires: Lumberjack level 3
+  - Effect: Unlocks Sawmill
+  - **Sieving** *(Research Level 2)*
+    - Cost: 64x string
+    - Requires: Fisherman level 3
+    - Effect: Unlocks Sifter
+    - **Space** *(Research Level 3)*
+      - Cost: 16x blockminecoloniesrack
+      - Requires: Miner level 3
+      - Effect: Unlocks Minimumstockmultiplier
+      - **Capacity** *(Research Level 4)*
+        - Cost: 32x blockminecoloniesrack
+        - Requires: Miner level 4
+        - Effect: Unlocks Minimumstockmultiplier level 2
+        - **Fullstock** *(Research Level 5)*
+          - Cost: 64x blockminecoloniesrack
+          - Requires: Miner level 5
+          - Effect: Unlocks Minimumstockmultiplier level 3
+  - **Memoryaid** *(Research Level 2)*
+    - Cost: 32x paper
+    - Requires: Sawmill level 1
+    - Effect: Unlocks Recipesmultiplier
+    - **Cheatsheet** *(Research Level 3)*
+      - Cost: 64x paper
+      - Requires: Sawmill level 2
+      - Effect: Unlocks Recipesmultiplier level 2
+      - **Deeppockets** *(Research Level 4)*
+        - Cost: 64x emerald
+        - Requires: Library level 4
+        - Effect: Unlocks Citizeninvslotsaddition
+        - **Loaded** *(Research Level 5)*
+          - Cost: 128x emerald
+          - Requires: Library level 5
+          - Effect: Unlocks Citizeninvslotsaddition level 2
+          - **Heavilyloaded** *(Research Level 6)*
+            - Cost: 256x emerald
+            - Effect: Unlocks Citizeninvslotsaddition level 3
+      - **Recipebook** *(Research Level 4)*
+        - Cost: 128x paper
+        - Requires: Sawmill level 3
+        - Effect: Unlocks Recipesmultiplier level 3
+        - **Rtm** *(Research Level 5)*
+          - Cost: 256x paper
+          - Requires: Sawmill level 4
+          - Effect: Unlocks Recipesmultiplier level 4
+          - **Rainman** *(Research Level 6)*
+            - Cost: 27x salmon_bucket
+            - Effect: Unlocks Workinginrainunlock
+    - **Warehousemaster** *(Research Level 3)*
+      - Cost: 3x blockminecoloniesrack
+      - Requires: Warehouse level 3, Sawmill or Stonemason level 3
+      - Effect: Unlocks Recipemodeunlock
+    - **Buildermodes** *(Research Level 3)*
+      - Cost: 1x diamond_axe
+      - Requires: Builder level 3
+      - Effect: Unlocks Buildermodeunlock
+  - **Stringwork** *(Research Level 2)*
+    - Cost: 16x string
+    - Requires: Sawmill level 1
+    - Effect: Unlocks Fletcher
+    - **Hotboots** *(Research Level 3)*
+      - Cost: 32x leather, 16x iron_ingot
+      - Requires: Fletcher level 1
+      - Effect: Unlocks Minerfireresunlock
+
+### Hot  *(Research Level 1)*
+
+  - Cost: 4x lava_bucket
+  - Requires: Miner level 2
+  - Effect: Unlocks Smeltery
+  - **Isthisredstone** *(Research Level 2)*
+    - Cost: 128x redstone
+    - Effect: Unlocks Blockbreakspeedmultiplier
+    - **Redstonepowered** *(Research Level 3)*
+      - Cost: 256x redstone
+      - Effect: Unlocks Blockbreakspeedmultiplier level 2
+      - **Heavymachinery** *(Research Level 4)*
+        - Cost: 512x redstone
+        - Effect: Unlocks Blockbreakspeedmultiplier level 3
+        - **Whatisthisspeed** *(Research Level 5)*
+          - Cost: 1024x redstone
+          - Effect: Unlocks Blockbreakspeedmultiplier level 4
+          - **Lightning** *(Research Level 6)*
+            - Cost: 2048x redstone
+            - Effect: Unlocks Blockbreakspeedmultiplier level 5
+  - **Thoselungs** *(Research Level 2)*
+    - Cost: 64x glass
+    - Requires: Smeltery level 3
+    - Effect: Unlocks Glassblower
+
+### Hittingiron  *(Research Level 1)*
+
+  - Cost: 1x anvil
+  - Requires: Miner level 3
+  - Effect: Unlocks Blacksmith
+  - **Ability** *(Research Level 2)*
+    - Cost: 64x iron_ingot
+    - Requires: Miner level 1
+    - Effect: Unlocks Blockplacespeedmultiplier
+    - **Skills** *(Research Level 3)*
+      - Cost: 128x iron_ingot
+      - Requires: Miner level 2
+      - Effect: Unlocks Blockplacespeedmultiplier level 2
+      - **Tools** *(Research Level 4)*
+        - Cost: 256x iron_ingot
+        - Requires: Blacksmith level 4
+        - Effect: Unlocks Blockplacespeedmultiplier level 3
+        - **Seemsautomatic** *(Research Level 5)*
+          - Cost: 512x iron_ingot
+          - Requires: Blacksmith level 5
+          - Effect: Unlocks Blockplacespeedmultiplier level 4
+          - **Madness** *(Research Level 6)*
+            - Cost: 1024x iron_ingot
+            - Effect: Unlocks Blockplacespeedmultiplier level 5
+  - **Assistanthammers** *(Research Level 2)*
+    - Cost: 2x iron_block
+    - Requires: Blacksmith level 1
+    - Effect: Unlocks Assistanthammerunlock
+  - **Strong** *(Research Level 2)*
+    - Cost: 8x diamond
+    - Requires: Blacksmith level 1
+    - Effect: Unlocks Tooldurabilitymultiplier
+    - **Hardened** *(Research Level 3)*
+      - Cost: 16x diamond
+      - Requires: Blacksmith level 2
+      - Effect: Unlocks Tooldurabilitymultiplier level 2
+      - **Reinforced** *(Research Level 4)*
+        - Cost: 32x diamond
+        - Requires: Blacksmith level 3
+        - Effect: Unlocks Tooldurabilitymultiplier level 3
+        - **Steelbracing** *(Research Level 5)*
+          - Cost: 64x diamond
+          - Requires: Blacksmith level 5
+          - Effect: Unlocks Tooldurabilitymultiplier level 4
+          - **Diamondcoated** *(Research Level 6)*
+            - Cost: 128x diamond
+            - Effect: Unlocks Tooldurabilitymultiplier level 5
+  - **Veinminer** *(Research Level 2)*
+    - Cost: 32x iron_ores (any)
+    - Requires: Miner level 1
+    - Effect: Unlocks Moreoresmultiplier
+    - **Goodveins** *(Research Level 3)*
+      - Cost: 64x iron_ores (any)
+      - Requires: Miner level 2
+      - Effect: Unlocks Moreoresmultiplier level 2
+      - **Richveins** *(Research Level 4)*
+        - Cost: 32x gold_ores (any)
+        - Requires: Miner level 4
+        - Effect: Unlocks Moreoresmultiplier level 3
+        - **Amazingveins** *(Research Level 5)*
+          - Cost: 64x gold_ores (any)
+          - Requires: Miner level 5
+          - Effect: Unlocks Moreoresmultiplier level 4
+          - **Motherlode** *(Research Level 6)*
+            - Cost: 64x diamond_ores (any)
+            - Effect: Unlocks Moreoresmultiplier level 5
+  - **Whatyaneed** *(Research Level 2)*
+    - Cost: 64x redstone
+    - Requires: Blacksmith level 3
+    - Effect: Unlocks Mechanic
+    - **Enhanced Gates1** *(Research Level 3)*
+      - Cost: 64x gate_wood, 2x ancienttome, 5x iron_block
+      - Effect: Unlocks Enhancesgatedurabilityaddition
+      - **Enhanced Gates2** *(Research Level 4)*
+        - Cost: 64x gate_iron, 2x ancienttome, 32x obsidian
+        - Effect: Unlocks Enhancesgatedurabilityaddition level 2
+
+### Biodegradable  *(Research Level 1)*
+
+  - Cost: 64x bone_meal
+  - Requires: Farmer level 3
+  - Effect: Unlocks Composter
+  - **Letitgrow** *(Research Level 2)*
+    - Cost: 16x compost
+    - Requires: Farmer level 3
+    - Effect: Unlocks Plantation
+    - **Croprotation** *(Research Level 3)*
+      - Cost: 32x sugar_cane, 32x cactus
+      - Requires: Plantation level 3
+      - Effect: Unlocks Plantationlarge
+      - **Gargamel** *(Research Level 4)*
+        - Cost: 16x crimson_fungus, 16x warped_fungus
+        - Requires: Plantation level 3, Netherworker level 3
+        - Effect: Unlocks Plantationnether
+    - **Exoticfruits** *(Research Level 3)*
+      - Cost: 32x glow_berries
+      - Requires: Plantation level 3
+      - Effect: Unlocks Plantationexotic
+    - **Junglemaster** *(Research Level 3)*
+      - Cost: 16x bamboo, 16x cocoa_beans, 16x vine
+      - Requires: Plantation level 2
+      - Effect: Unlocks Plantationjungle
+    - **Takingdivinglessons** *(Research Level 3)*
+      - Cost: 16x kelp, 16x seagrass, 16x sea_pickle
+      - Requires: Plantation level 2
+      - Effect: Unlocks Plantationsea
+  - **Bonemeal** *(Research Level 2)*
+    - Cost: 64x wheat_seeds
+    - Requires: Farmer or Composter level 3
+    - Effect: Unlocks Farmingmultiplier
+    - **Dung** *(Research Level 3)*
+      - Cost: 128x wheat_seeds
+      - Requires: Farmer or Composter level 4
+      - Effect: Unlocks Farmingmultiplier level 2
+      - **Compost** *(Research Level 4)*
+        - Cost: 256x wheat_seeds
+        - Requires: Farmer or Composter level 5
+        - Effect: Unlocks Farmingmultiplier level 3
+        - **Fertilizer** *(Research Level 5)*
+          - Cost: 512x wheat_seeds
+          - Requires: Smeltery level 3
+          - Effect: Unlocks Farmingmultiplier level 4
+          - **Magiccompost** *(Research Level 6)*
+            - Cost: 2048x wheat_seeds
+            - Effect: Unlocks Farmingmultiplier level 5
+  - **Greenrevolution** *(Research Level 2)*
+    - Cost: 32x compost
+    - Requires: Farmer level 4
+    - Effect: Unlocks Greenrevolution
+  - **Flowerpower** *(Research Level 2)*
+    - Cost: 64x compost
+    - Requires: Composter level 3
+    - Effect: Unlocks Florist
+  - **Podzolchance** *(Research Level 2)*
+    - Cost: 8x podzol
+    - Requires: Composter level 2
+    - Effect: Unlocks Podzolchancemultiplier
+    - **Podzolchance2** *(Research Level 3)*
+      - Cost: 32x podzol
+      - Requires: Composter level 3
+      - Effect: Unlocks Podzolchancemultiplier level 2
+  - **Rainbowheaven** *(Research Level 2)*
+    - Cost: 64x poppy
+    - Requires: Composter level 3
+    - Effect: Unlocks Dyer
+    - **Honeypot** *(Research Level 3)*
+      - Cost: 16x beehive
+      - Requires: Beekeeper level 3
+      - Effect: Unlocks Beekeep2Unlock
+  - **Skilledbutcher** *(Research Level 2)*
+    - Cost: 1x diamond_axe, 1x enchanted_book, 1x anvil
+    - Requires: Enchanter level 2, Blacksmith level 2
+    - Effect: Unlocks Looting

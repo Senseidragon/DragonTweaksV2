@@ -15,6 +15,7 @@ type: map-of-content
 - [[NeoForge-Patterns]] — Two-bus pattern, `DeferredRegister`, Mixin/AT toggle
 
 ## NPC Roles & Dialogue
+- [[Advisor-System]] — Core design: immersion-first companion, archetypes, sensory model, BYOK cost model
 - [[NPC-Roles]] — Planned: custom citizen job types
 - [[Dialogue-System]] — Planned: dialogue trees for NPC interactions
 - [[ObservationTicker]] — Planned: periodic observation events driving NPC behaviour
@@ -25,6 +26,7 @@ type: map-of-content
 
 ## AI Inference
 - [[OpenRouter-Integration]] — Planned: cloud LLM inference via OpenRouter (sole backend; supersedes Ollama)
+- [[Compliance-Testing]] — Model probe suite; scores instruction-following before models enter rotation
 
 ## MineColonies Integration
 - [[MineColonies-API]] — Deferred: MineColonies mod API integration layer
@@ -32,6 +34,9 @@ type: map-of-content
 
 ## Blueprints
 - [[Blueprint-Packs]] — Planned: dragon-themed building schematic packs
+
+## Resources & Assets
+- [[Sound-Patches]] — Planned: vanilla sound event patches via resource pack
 
 ## Dev Log
 - [[Dev-Log]] — Chronological session timeline

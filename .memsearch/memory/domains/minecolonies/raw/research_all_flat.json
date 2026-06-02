@@ -1,0 +1,5889 @@
+{
+  "_meta": {
+    "globalRequirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:university",
+        "level": 1,
+        "note": "Required to access the research UI \u2014 not encoded in individual node requirements"
+      }
+    ]
+  },
+  "minecolonies:civilian/academic": {
+    "id": "minecolonies:civilian/academic",
+    "name": "Academic",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 6,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:civilian/reflective",
+    "children": [],
+    "costs": [
+      {
+        "count": 128,
+        "item": "minecraft:book"
+      }
+    ],
+    "requirements": [],
+    "effects": [
+      {
+        "id": "minecolonies:effects/levelingmultiplier",
+        "level": 5
+      }
+    ]
+  },
+  "minecolonies:civilian/agile": {
+    "id": "minecolonies:civilian/agile",
+    "name": "Agile",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 4,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:civilian/nimble",
+    "children": [
+      "minecolonies:civilian/swift"
+    ],
+    "costs": [
+      {
+        "count": 8,
+        "item": "minecraft:rabbit_foot"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:single-building",
+        "building": "minecolonies:townhall",
+        "level": 4
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/walkingmultiplier",
+        "level": 3
+      }
+    ]
+  },
+  "minecolonies:civilian/air": {
+    "id": "minecolonies:civilian/air",
+    "name": "Air",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 2,
+    "sortOrder": 1,
+    "parentResearch": "minecolonies:civilian/ambition",
+    "children": [],
+    "costs": [
+      {
+        "count": 1,
+        "item": "minecraft:heart_of_the_sea"
+      }
+    ],
+    "requirements": [],
+    "effects": [
+      {
+        "id": "minecolonies:effects/air",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:civilian/ambition": {
+    "id": "minecolonies:civilian/ambition",
+    "name": "Ambition",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 1,
+    "sortOrder": 5,
+    "parentResearch": null,
+    "children": [
+      "minecolonies:civilian/air"
+    ],
+    "costs": [
+      {
+        "count": 1,
+        "item": "minecraft:diamond"
+      }
+    ],
+    "requirements": [],
+    "effects": [
+      {
+        "id": "minecolonies:effects/blockhutmysticalsite",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:civilian/athlete": {
+    "id": "minecolonies:civilian/athlete",
+    "name": "Athlete",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 6,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:civilian/swift",
+    "children": [],
+    "costs": [
+      {
+        "count": 64,
+        "item": "minecraft:rabbit_foot"
+      }
+    ],
+    "requirements": [],
+    "effects": [
+      {
+        "id": "minecolonies:effects/walkingmultiplier",
+        "level": 5
+      }
+    ]
+  },
+  "minecolonies:civilian/bachelor": {
+    "id": "minecolonies:civilian/bachelor",
+    "name": "Bachelor",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 4,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:civilian/bookworm",
+    "children": [
+      "minecolonies:civilian/master"
+    ],
+    "costs": [
+      {
+        "count": 12,
+        "item": "minecraft:bookshelf"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:library",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/teachingmultiplier",
+        "level": 3
+      }
+    ]
+  },
+  "minecolonies:civilian/bandages": {
+    "id": "minecolonies:civilian/bandages",
+    "name": "Bandages",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 4,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:civilian/healingcream",
+    "children": [
+      "minecolonies:civilian/compress"
+    ],
+    "costs": [
+      {
+        "count": 16,
+        "item": "minecraft:golden_carrot"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:library",
+        "level": 4
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/regenerationmultiplier",
+        "level": 3
+      }
+    ]
+  },
+  "minecolonies:civilian/bandaid": {
+    "id": "minecolonies:civilian/bandaid",
+    "name": "Bandaid",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 2,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:civilian/stamina",
+    "children": [
+      "minecolonies:civilian/healingcream"
+    ],
+    "costs": [
+      {
+        "count": 1,
+        "item": "minecraft:golden_carrot"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:library",
+        "level": 2
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/regenerationmultiplier",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:civilian/beanstalk": {
+    "id": "minecolonies:civilian/beanstalk",
+    "name": "Beanstalk",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 6,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:civilian/growth",
+    "children": [],
+    "costs": [
+      {
+        "count": 512,
+        "item": "minecraft:cooked_chicken"
+      }
+    ],
+    "requirements": [],
+    "effects": [
+      {
+        "id": "minecolonies:effects/growthmultiplier",
+        "level": 5
+      }
+    ]
+  },
+  "minecolonies:civilian/bookworm": {
+    "id": "minecolonies:civilian/bookworm",
+    "name": "Bookworm",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 3,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:civilian/morebooks",
+    "children": [
+      "minecolonies:civilian/bachelor"
+    ],
+    "costs": [
+      {
+        "count": 6,
+        "item": "minecraft:bookshelf"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:school",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/teachingmultiplier",
+        "level": 2
+      }
+    ]
+  },
+  "minecolonies:civilian/cast": {
+    "id": "minecolonies:civilian/cast",
+    "name": "Cast",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 6,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:civilian/compress",
+    "children": [],
+    "costs": [
+      {
+        "count": 64,
+        "item": "minecraft:golden_carrot"
+      }
+    ],
+    "requirements": [],
+    "effects": [
+      {
+        "id": "minecolonies:effects/regenerationmultiplier",
+        "level": 5
+      }
+    ]
+  },
+  "minecolonies:civilian/circus": {
+    "id": "minecolonies:civilian/circus",
+    "name": "Circus",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 2,
+    "sortOrder": 2,
+    "parentResearch": "minecolonies:civilian/firstaid",
+    "children": [
+      "minecolonies:civilian/festival",
+      "minecolonies:civilian/nightowl"
+    ],
+    "costs": [
+      {
+        "count": 1,
+        "item": "minecraft:cake"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:cook",
+        "level": 2
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/happinessmultiplier",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:civilian/city": {
+    "id": "minecolonies:civilian/city",
+    "name": "City",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 5,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:civilian/village",
+    "children": [],
+    "costs": [
+      {
+        "count": 512,
+        "item": "minecraft:cooked_beef"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:single-building",
+        "building": "minecolonies:townhall",
+        "level": 5
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/citizencapaddition",
+        "level": 5
+      }
+    ]
+  },
+  "minecolonies:civilian/compress": {
+    "id": "minecolonies:civilian/compress",
+    "name": "Compress",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 5,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:civilian/bandages",
+    "children": [
+      "minecolonies:civilian/cast"
+    ],
+    "costs": [
+      {
+        "count": 32,
+        "item": "minecraft:golden_carrot"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:library",
+        "level": 5
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/regenerationmultiplier",
+        "level": 4
+      }
+    ]
+  },
+  "minecolonies:civilian/diligent": {
+    "id": "minecolonies:civilian/diligent",
+    "name": "Diligent",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 2,
+    "sortOrder": 2,
+    "parentResearch": "minecolonies:civilian/keen",
+    "children": [
+      "minecolonies:civilian/studious"
+    ],
+    "costs": [
+      {
+        "count": 6,
+        "item": "minecraft:book"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:library",
+        "level": 2
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/levelingmultiplier",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:civilian/epicure": {
+    "id": "minecolonies:civilian/epicure",
+    "name": "Epicure",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 5,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:civilian/stuffer",
+    "children": [
+      "minecolonies:civilian/glutton"
+    ],
+    "costs": [
+      {
+        "count": 256,
+        "item": "minecraft:cookie"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:cook",
+        "level": 5
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/saturationmultiplier",
+        "level": 4
+      }
+    ]
+  },
+  "minecolonies:civilian/festival": {
+    "id": "minecolonies:civilian/festival",
+    "name": "Festival",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 3,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:civilian/circus",
+    "children": [
+      "minecolonies:civilian/spectacle"
+    ],
+    "costs": [
+      {
+        "count": 9,
+        "item": "minecraft:cake"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:cook",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/happinessmultiplier",
+        "level": 2
+      }
+    ]
+  },
+  "minecolonies:civilian/firstaid": {
+    "id": "minecolonies:civilian/firstaid",
+    "name": "Firstaid",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 1,
+    "sortOrder": 3,
+    "parentResearch": null,
+    "children": [
+      "minecolonies:civilian/circus",
+      "minecolonies:civilian/firstaid2",
+      "minecolonies:civilian/gourmand"
+    ],
+    "costs": [
+      {
+        "count": 8,
+        "item": "minecraft:hay_block"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:single-building",
+        "building": "minecolonies:townhall",
+        "level": 1
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/healthaddition",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:civilian/firstaid2": {
+    "id": "minecolonies:civilian/firstaid2",
+    "name": "Firstaid2",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 2,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:civilian/firstaid",
+    "children": [
+      "minecolonies:civilian/lifesaver",
+      "minecolonies:civilian/masks"
+    ],
+    "costs": [
+      {
+        "count": 16,
+        "item": "minecraft:hay_block"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:single-building",
+        "building": "minecolonies:townhall",
+        "level": 2
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/healthaddition",
+        "level": 2
+      }
+    ]
+  },
+  "minecolonies:civilian/fortitude": {
+    "id": "minecolonies:civilian/fortitude",
+    "name": "Fortitude",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 5,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:civilian/vitality",
+    "children": [
+      "minecolonies:civilian/indefatigability"
+    ],
+    "costs": [
+      {
+        "count": 32,
+        "item": "minecraft:golden_apple"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:cook",
+        "level": 5
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/healingsaturationlimitaddition",
+        "level": 4
+      }
+    ]
+  },
+  "minecolonies:civilian/glutton": {
+    "id": "minecolonies:civilian/glutton",
+    "name": "Glutton",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 6,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:civilian/epicure",
+    "children": [],
+    "costs": [
+      {
+        "count": 512,
+        "item": "minecraft:cookie"
+      }
+    ],
+    "requirements": [],
+    "effects": [
+      {
+        "id": "minecolonies:effects/saturationmultiplier",
+        "level": 5
+      }
+    ]
+  },
+  "minecolonies:civilian/gorger": {
+    "id": "minecolonies:civilian/gorger",
+    "name": "Gorger",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 3,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:civilian/gourmand",
+    "children": [
+      "minecolonies:civilian/stuffer"
+    ],
+    "costs": [
+      {
+        "count": 64,
+        "item": "minecraft:cookie"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:cook",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/saturationmultiplier",
+        "level": 2
+      }
+    ]
+  },
+  "minecolonies:civilian/gourmand": {
+    "id": "minecolonies:civilian/gourmand",
+    "name": "Gourmand",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 2,
+    "sortOrder": 3,
+    "parentResearch": "minecolonies:civilian/firstaid",
+    "children": [
+      "minecolonies:civilian/gorger"
+    ],
+    "costs": [
+      {
+        "count": 32,
+        "item": "minecraft:cookie"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:cook",
+        "level": 2
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/saturationmultiplier",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:civilian/gravedecaybonus1": {
+    "id": "minecolonies:civilian/gravedecaybonus1",
+    "name": "Gravedecaybonus1",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 2,
+    "sortOrder": 2,
+    "parentResearch": "minecolonies:civilian/remembrance",
+    "children": [
+      "minecolonies:civilian/gravedecaybonus2"
+    ],
+    "costs": [
+      {
+        "count": 64,
+        "item": "minecraft:rotten_flesh"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:graveyard",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/gravedecaybonus",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:civilian/gravedecaybonus2": {
+    "id": "minecolonies:civilian/gravedecaybonus2",
+    "name": "Gravedecaybonus2",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 3,
+    "sortOrder": 2,
+    "parentResearch": "minecolonies:civilian/gravedecaybonus1",
+    "children": [],
+    "costs": [
+      {
+        "count": 8,
+        "item": "minecraft:nether_wart_block"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:graveyard",
+        "level": 5
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/gravedecaybonus",
+        "level": 2
+      }
+    ]
+  },
+  "minecolonies:civilian/growth": {
+    "id": "minecolonies:civilian/growth",
+    "name": "Growth",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 5,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:civilian/puberty",
+    "children": [
+      "minecolonies:civilian/beanstalk"
+    ],
+    "costs": [
+      {
+        "count": 256,
+        "item": "minecraft:cooked_chicken"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:library",
+        "level": 5
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/growthmultiplier",
+        "level": 4
+      }
+    ]
+  },
+  "minecolonies:civilian/guardianangel": {
+    "id": "minecolonies:civilian/guardianangel",
+    "name": "Guardianangel",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 5,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:civilian/lifesaver2",
+    "children": [
+      "minecolonies:civilian/guardianangel2"
+    ],
+    "costs": [
+      {
+        "count": 128,
+        "item": "minecraft:hay_block"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:single-building",
+        "building": "minecolonies:townhall",
+        "level": 5
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/healthaddition",
+        "level": 5
+      }
+    ]
+  },
+  "minecolonies:civilian/guardianangel2": {
+    "id": "minecolonies:civilian/guardianangel2",
+    "name": "Guardianangel2",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 6,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:civilian/guardianangel",
+    "children": [],
+    "costs": [
+      {
+        "count": 256,
+        "item": "minecraft:hay_block"
+      }
+    ],
+    "requirements": [],
+    "effects": [
+      {
+        "id": "minecolonies:effects/healthaddition",
+        "level": 6
+      }
+    ]
+  },
+  "minecolonies:civilian/hamlet": {
+    "id": "minecolonies:civilian/hamlet",
+    "name": "Hamlet",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 3,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:civilian/outpost",
+    "children": [
+      "minecolonies:civilian/village"
+    ],
+    "costs": [
+      {
+        "count": 128,
+        "item": "minecraft:cooked_beef"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:residence",
+        "level": 5
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/citizencapaddition",
+        "level": 3
+      }
+    ]
+  },
+  "minecolonies:civilian/haste": {
+    "id": "minecolonies:civilian/haste",
+    "name": "Haste",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 2,
+    "sortOrder": 3,
+    "parentResearch": "minecolonies:civilian/keen",
+    "children": [
+      "minecolonies:civilian/nimble"
+    ],
+    "costs": [
+      {
+        "count": 1,
+        "item": "minecraft:rabbit_foot"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:single-building",
+        "building": "minecolonies:townhall",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/walkingmultiplier",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:civilian/healingcream": {
+    "id": "minecolonies:civilian/healingcream",
+    "name": "Healingcream",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 3,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:civilian/bandaid",
+    "children": [
+      "minecolonies:civilian/bandages"
+    ],
+    "costs": [
+      {
+        "count": 8,
+        "item": "minecraft:golden_carrot"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:library",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/regenerationmultiplier",
+        "level": 2
+      }
+    ]
+  },
+  "minecolonies:civilian/higherlearning": {
+    "id": "minecolonies:civilian/higherlearning",
+    "name": "Higherlearning",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 1,
+    "sortOrder": 4,
+    "parentResearch": null,
+    "children": [
+      "minecolonies:civilian/morebooks",
+      "minecolonies:civilian/nurture"
+    ],
+    "costs": [
+      {
+        "count": 3,
+        "item": "minecraft:book"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:residence",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/blockhutschool",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:civilian/hormones": {
+    "id": "minecolonies:civilian/hormones",
+    "name": "Hormones",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 3,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:civilian/nurture",
+    "children": [
+      "minecolonies:civilian/puberty"
+    ],
+    "costs": [
+      {
+        "count": 64,
+        "item": "minecraft:cooked_chicken"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:school",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/growthmultiplier",
+        "level": 2
+      }
+    ]
+  },
+  "minecolonies:civilian/indefatigability": {
+    "id": "minecolonies:civilian/indefatigability",
+    "name": "Indefatigability",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 6,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:civilian/fortitude",
+    "children": [],
+    "costs": [
+      {
+        "count": 64,
+        "item": "minecraft:golden_apple"
+      }
+    ],
+    "requirements": [],
+    "effects": [
+      {
+        "id": "minecolonies:effects/healingsaturationlimitaddition",
+        "level": 5
+      }
+    ]
+  },
+  "minecolonies:civilian/keen": {
+    "id": "minecolonies:civilian/keen",
+    "name": "Keen",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 1,
+    "sortOrder": 2,
+    "parentResearch": null,
+    "children": [
+      "minecolonies:civilian/diligent",
+      "minecolonies:civilian/haste",
+      "minecolonies:civilian/outpost",
+      "minecolonies:civilian/rails",
+      "minecolonies:civilian/vines"
+    ],
+    "costs": [
+      {
+        "count": 3,
+        "item": "minecraft:book"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:residence",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/blockhutlibrary",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:civilian/lifesaver": {
+    "id": "minecolonies:civilian/lifesaver",
+    "name": "Lifesaver",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 3,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:civilian/firstaid2",
+    "children": [
+      "minecolonies:civilian/lifesaver2"
+    ],
+    "costs": [
+      {
+        "count": 32,
+        "item": "minecraft:hay_block"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:single-building",
+        "building": "minecolonies:townhall",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/healthaddition",
+        "level": 3
+      }
+    ]
+  },
+  "minecolonies:civilian/lifesaver2": {
+    "id": "minecolonies:civilian/lifesaver2",
+    "name": "Lifesaver2",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 4,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:civilian/lifesaver",
+    "children": [
+      "minecolonies:civilian/guardianangel"
+    ],
+    "costs": [
+      {
+        "count": 64,
+        "item": "minecraft:hay_block"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:single-building",
+        "building": "minecolonies:townhall",
+        "level": 4
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/healthaddition",
+        "level": 4
+      }
+    ]
+  },
+  "minecolonies:civilian/masks": {
+    "id": "minecolonies:civilian/masks",
+    "name": "Masks",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 3,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:civilian/firstaid2",
+    "children": [
+      "minecolonies:civilian/vaccines"
+    ],
+    "costs": [
+      {
+        "count": 32,
+        "item": "minecraft:white_wool"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:library",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/masks",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:civilian/master": {
+    "id": "minecolonies:civilian/master",
+    "name": "Master",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 5,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:civilian/bachelor",
+    "children": [
+      "minecolonies:civilian/phd"
+    ],
+    "costs": [
+      {
+        "count": 32,
+        "item": "minecraft:bookshelf"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:library",
+        "level": 5
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/teachingmultiplier",
+        "level": 4
+      }
+    ]
+  },
+  "minecolonies:civilian/moq": {
+    "id": "minecolonies:civilian/moq",
+    "name": "Moq",
+    "branch": "minecolonies:technology",
+    "researchLevel": 3,
+    "sortOrder": 3,
+    "parentResearch": "minecolonies:technology/memoryaid",
+    "children": [],
+    "costs": [
+      {
+        "count": 1,
+        "item": "minecolonies:clipboard"
+      },
+      {
+        "count": 16,
+        "item": "minecraft:book"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:deliveryman",
+        "level": 9
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/min_order",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:civilian/morebooks": {
+    "id": "minecolonies:civilian/morebooks",
+    "name": "Morebooks",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 2,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:civilian/higherlearning",
+    "children": [
+      "minecolonies:civilian/bookworm"
+    ],
+    "costs": [
+      {
+        "count": 6,
+        "item": "minecraft:book"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:school",
+        "level": 1
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/teachingmultiplier",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:civilian/nightowl": {
+    "id": "minecolonies:civilian/nightowl",
+    "name": "Nightowl",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 3,
+    "sortOrder": 2,
+    "parentResearch": "minecolonies:civilian/circus",
+    "children": [
+      "minecolonies:civilian/nightowl2"
+    ],
+    "costs": [
+      {
+        "count": 25,
+        "item": "minecraft:golden_carrot"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:library",
+        "level": 2
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/workingdayhaddition",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:civilian/nightowl2": {
+    "id": "minecolonies:civilian/nightowl2",
+    "name": "Nightowl2",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 4,
+    "sortOrder": 2,
+    "parentResearch": "minecolonies:civilian/nightowl",
+    "children": [],
+    "costs": [
+      {
+        "count": 75,
+        "item": "minecraft:golden_carrot"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:single-building",
+        "building": "minecolonies:townhall",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/workingdayhaddition",
+        "level": 2
+      }
+    ]
+  },
+  "minecolonies:civilian/nimble": {
+    "id": "minecolonies:civilian/nimble",
+    "name": "Nimble",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 3,
+    "sortOrder": 3,
+    "parentResearch": "minecolonies:civilian/haste",
+    "children": [
+      "minecolonies:civilian/agile"
+    ],
+    "costs": [
+      {
+        "count": 4,
+        "item": "minecraft:rabbit_foot"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:single-building",
+        "building": "minecolonies:townhall",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/walkingmultiplier",
+        "level": 2
+      }
+    ]
+  },
+  "minecolonies:civilian/nurture": {
+    "id": "minecolonies:civilian/nurture",
+    "name": "Nurture",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 2,
+    "sortOrder": 2,
+    "parentResearch": "minecolonies:civilian/higherlearning",
+    "children": [
+      "minecolonies:civilian/hormones"
+    ],
+    "costs": [
+      {
+        "count": 32,
+        "item": "minecraft:cooked_chicken"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:school",
+        "level": 1
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/growthmultiplier",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:civilian/opera": {
+    "id": "minecolonies:civilian/opera",
+    "name": "Opera",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 5,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:civilian/spectacle",
+    "children": [
+      "minecolonies:civilian/theater"
+    ],
+    "costs": [
+      {
+        "count": 27,
+        "item": "minecraft:cake"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:cook",
+        "level": 5
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/happinessmultiplier",
+        "level": 4
+      }
+    ]
+  },
+  "minecolonies:civilian/outpost": {
+    "id": "minecolonies:civilian/outpost",
+    "name": "Outpost",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 2,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:civilian/keen",
+    "children": [
+      "minecolonies:civilian/hamlet"
+    ],
+    "costs": [
+      {
+        "count": 64,
+        "item": "minecraft:cooked_beef"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:residence",
+        "level": 4
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/citizencapaddition",
+        "level": 2
+      }
+    ]
+  },
+  "minecolonies:civilian/phd": {
+    "id": "minecolonies:civilian/phd",
+    "name": "Phd",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 6,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:civilian/master",
+    "children": [],
+    "costs": [
+      {
+        "count": 64,
+        "item": "minecraft:bookshelf"
+      }
+    ],
+    "requirements": [],
+    "effects": [
+      {
+        "id": "minecolonies:effects/teachingmultiplier",
+        "level": 5
+      }
+    ]
+  },
+  "minecolonies:civilian/puberty": {
+    "id": "minecolonies:civilian/puberty",
+    "name": "Puberty",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 4,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:civilian/hormones",
+    "children": [
+      "minecolonies:civilian/growth"
+    ],
+    "costs": [
+      {
+        "count": 128,
+        "item": "minecraft:cooked_chicken"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:library",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/growthmultiplier",
+        "level": 3
+      }
+    ]
+  },
+  "minecolonies:civilian/rails": {
+    "id": "minecolonies:civilian/rails",
+    "name": "Rails",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 2,
+    "sortOrder": 4,
+    "parentResearch": "minecolonies:civilian/keen",
+    "children": [],
+    "costs": [
+      {
+        "count": 64,
+        "item": "minecraft:rail"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:deliveryman",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/railsunlock",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:civilian/raisingthedead": {
+    "id": "minecolonies:civilian/raisingthedead",
+    "name": "Raisingthedead",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 4,
+    "sortOrder": 1,
+    "parentResearch": "minecolonies:civilian/resurrectchance2",
+    "children": [],
+    "costs": [
+      {
+        "count": 1,
+        "item": "minecraft:totem_of_undying"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:graveyard",
+        "level": 5
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/usetotemunlock",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:civilian/reflective": {
+    "id": "minecolonies:civilian/reflective",
+    "name": "Reflective",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 5,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:civilian/scholarly",
+    "children": [
+      "minecolonies:civilian/academic"
+    ],
+    "costs": [
+      {
+        "count": 48,
+        "item": "minecraft:book"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:library",
+        "level": 5
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/levelingmultiplier",
+        "level": 4
+      }
+    ]
+  },
+  "minecolonies:civilian/remembrance": {
+    "id": "minecolonies:civilian/remembrance",
+    "name": "Remembrance",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 1,
+    "sortOrder": 6,
+    "parentResearch": null,
+    "children": [
+      "minecolonies:civilian/gravedecaybonus1",
+      "minecolonies:civilian/resurrectchance1",
+      "minecolonies:civilian/undertakeremergency"
+    ],
+    "costs": [
+      {
+        "count": 8,
+        "item": "minecraft:bone"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:single-building",
+        "building": "minecolonies:townhall",
+        "level": 2
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/blockhutgraveyard",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:civilian/resilience": {
+    "id": "minecolonies:civilian/resilience",
+    "name": "Resilience",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 3,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:civilian/resistance",
+    "children": [
+      "minecolonies:civilian/vitality"
+    ],
+    "costs": [
+      {
+        "count": 8,
+        "item": "minecraft:golden_apple"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:cook",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/healingsaturationlimitaddition",
+        "level": 2
+      }
+    ]
+  },
+  "minecolonies:civilian/resistance": {
+    "id": "minecolonies:civilian/resistance",
+    "name": "Resistance",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 2,
+    "sortOrder": 2,
+    "parentResearch": "minecolonies:civilian/stamina",
+    "children": [
+      "minecolonies:civilian/resilience"
+    ],
+    "costs": [
+      {
+        "count": 1,
+        "item": "minecraft:golden_apple"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:cook",
+        "level": 2
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/healingsaturationlimitaddition",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:civilian/resurrectchance1": {
+    "id": "minecolonies:civilian/resurrectchance1",
+    "name": "Resurrectchance1",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 2,
+    "sortOrder": 1,
+    "parentResearch": "minecolonies:civilian/remembrance",
+    "children": [
+      "minecolonies:civilian/resurrectchance2"
+    ],
+    "costs": [
+      {
+        "count": 1,
+        "item": "minecraft:ghast_tear"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:graveyard",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/resurrectchanceaddition",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:civilian/resurrectchance2": {
+    "id": "minecolonies:civilian/resurrectchance2",
+    "name": "Resurrectchance2",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 3,
+    "sortOrder": 1,
+    "parentResearch": "minecolonies:civilian/resurrectchance1",
+    "children": [
+      "minecolonies:civilian/raisingthedead"
+    ],
+    "costs": [
+      {
+        "count": 16,
+        "item": "minecraft:chorus_fruit"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:graveyard",
+        "level": 5
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/resurrectchanceaddition",
+        "level": 2
+      }
+    ]
+  },
+  "minecolonies:civilian/scholarly": {
+    "id": "minecolonies:civilian/scholarly",
+    "name": "Scholarly",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 4,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:civilian/studious",
+    "children": [
+      "minecolonies:civilian/reflective"
+    ],
+    "costs": [
+      {
+        "count": 24,
+        "item": "minecraft:book"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:library",
+        "level": 4
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/levelingmultiplier",
+        "level": 3
+      }
+    ]
+  },
+  "minecolonies:civilian/spectacle": {
+    "id": "minecolonies:civilian/spectacle",
+    "name": "Spectacle",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 4,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:civilian/festival",
+    "children": [
+      "minecolonies:civilian/opera"
+    ],
+    "costs": [
+      {
+        "count": 18,
+        "item": "minecraft:cake"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:cook",
+        "level": 4
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/happinessmultiplier",
+        "level": 3
+      }
+    ]
+  },
+  "minecolonies:civilian/stamina": {
+    "id": "minecolonies:civilian/stamina",
+    "name": "Stamina",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 1,
+    "sortOrder": null,
+    "parentResearch": null,
+    "children": [
+      "minecolonies:civilian/bandaid",
+      "minecolonies:civilian/resistance"
+    ],
+    "costs": [
+      {
+        "count": 1,
+        "item": "minecraft:carrot"
+      }
+    ],
+    "requirements": [],
+    "effects": [
+      {
+        "id": "minecolonies:effects/blockhuthospital",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:civilian/studious": {
+    "id": "minecolonies:civilian/studious",
+    "name": "Studious",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 3,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:civilian/diligent",
+    "children": [
+      "minecolonies:civilian/scholarly"
+    ],
+    "costs": [
+      {
+        "count": 12,
+        "item": "minecraft:book"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:library",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/levelingmultiplier",
+        "level": 2
+      }
+    ]
+  },
+  "minecolonies:civilian/stuffer": {
+    "id": "minecolonies:civilian/stuffer",
+    "name": "Stuffer",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 4,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:civilian/gorger",
+    "children": [
+      "minecolonies:civilian/epicure"
+    ],
+    "costs": [
+      {
+        "count": 128,
+        "item": "minecraft:cookie"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:cook",
+        "level": 4
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/saturationmultiplier",
+        "level": 3
+      }
+    ]
+  },
+  "minecolonies:civilian/swift": {
+    "id": "minecolonies:civilian/swift",
+    "name": "Swift",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 5,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:civilian/agile",
+    "children": [
+      "minecolonies:civilian/athlete"
+    ],
+    "costs": [
+      {
+        "count": 32,
+        "item": "minecraft:rabbit_foot"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:single-building",
+        "building": "minecolonies:townhall",
+        "level": 5
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/walkingmultiplier",
+        "level": 4
+      }
+    ]
+  },
+  "minecolonies:civilian/theater": {
+    "id": "minecolonies:civilian/theater",
+    "name": "Theater",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 6,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:civilian/opera",
+    "children": [],
+    "costs": [
+      {
+        "count": 16,
+        "item": "minecraft:enchanted_golden_apple"
+      }
+    ],
+    "requirements": [],
+    "effects": [
+      {
+        "id": "minecolonies:effects/happinessmultiplier",
+        "level": 5
+      }
+    ]
+  },
+  "minecolonies:civilian/undertakeremergency": {
+    "id": "minecolonies:civilian/undertakeremergency",
+    "name": "Undertakeremergency",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 2,
+    "sortOrder": 3,
+    "parentResearch": "minecolonies:civilian/remembrance",
+    "children": [],
+    "costs": [
+      {
+        "count": 1,
+        "item": "minecraft:iron_boots"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:graveyard",
+        "level": 2
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/undertakerrun",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:civilian/vaccines": {
+    "id": "minecolonies:civilian/vaccines",
+    "name": "Vaccines",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 4,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:civilian/masks",
+    "children": [],
+    "costs": [
+      {
+        "count": 64,
+        "item": "minecraft:egg"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:hospital",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/vaccines",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:civilian/village": {
+    "id": "minecolonies:civilian/village",
+    "name": "Village",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 4,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:civilian/hamlet",
+    "children": [
+      "minecolonies:civilian/city"
+    ],
+    "costs": [
+      {
+        "count": 256,
+        "item": "minecraft:cooked_beef"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:single-building",
+        "building": "minecolonies:townhall",
+        "level": 4
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/citizencapaddition",
+        "level": 4
+      }
+    ]
+  },
+  "minecolonies:civilian/vines": {
+    "id": "minecolonies:civilian/vines",
+    "name": "Vines",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 2,
+    "sortOrder": 5,
+    "parentResearch": "minecolonies:civilian/keen",
+    "children": [],
+    "costs": [
+      {
+        "count": 64,
+        "item": "minecraft:vine"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:residence",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/vinesunlock",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:civilian/vitality": {
+    "id": "minecolonies:civilian/vitality",
+    "name": "Vitality",
+    "branch": "minecolonies:civilian",
+    "researchLevel": 4,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:civilian/resilience",
+    "children": [
+      "minecolonies:civilian/fortitude"
+    ],
+    "costs": [
+      {
+        "count": 16,
+        "item": "minecraft:golden_apple"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:cook",
+        "level": 4
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/healingsaturationlimitaddition",
+        "level": 3
+      }
+    ]
+  },
+  "minecolonies:combat/accuracy": {
+    "id": "minecolonies:combat/accuracy",
+    "name": "Accuracy",
+    "branch": "minecolonies:combat",
+    "researchLevel": 1,
+    "sortOrder": null,
+    "parentResearch": null,
+    "children": [
+      "minecolonies:combat/preciseshot",
+      "minecolonies:combat/quickdraw"
+    ],
+    "costs": [
+      {
+        "count": 16,
+        "item": "minecraft:iron_ingot"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:guardtower",
+        "level": 1
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/guardcrit",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:combat/agilearcher": {
+    "id": "minecolonies:combat/agilearcher",
+    "name": "Agilearcher",
+    "branch": "minecolonies:combat",
+    "researchLevel": 6,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:combat/improvedevasion",
+    "children": [],
+    "costs": [
+      {
+        "count": 64,
+        "item": "minecraft:diamond"
+      }
+    ],
+    "requirements": [],
+    "effects": [
+      {
+        "id": "minecolonies:effects/archerarmormultiplier",
+        "level": 5
+      }
+    ]
+  },
+  "minecolonies:combat/arrowpierce": {
+    "id": "minecolonies:combat/arrowpierce",
+    "name": "Arrowpierce",
+    "branch": "minecolonies:combat",
+    "researchLevel": 3,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:combat/arrowuse",
+    "children": [
+      "minecolonies:combat/whirlwind"
+    ],
+    "costs": [
+      {
+        "count": 64,
+        "item": "minecraft:arrow"
+      },
+      {
+        "count": 64,
+        "item": "minecraft:redstone"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:archery",
+        "level": 1
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/piercingarrowsunlock",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:combat/arrowuse": {
+    "id": "minecolonies:combat/arrowuse",
+    "name": "Arrowuse",
+    "branch": "minecolonies:combat",
+    "researchLevel": 2,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:combat/taunt",
+    "children": [
+      "minecolonies:combat/arrowpierce",
+      "minecolonies:combat/druidpotion"
+    ],
+    "costs": [
+      {
+        "count": 64,
+        "item": "minecraft:arrow"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:guardtower",
+        "level": 2
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/consumearrowsunlock",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:combat/avoid": {
+    "id": "minecolonies:combat/avoid",
+    "name": "Avoid",
+    "branch": "minecolonies:combat",
+    "researchLevel": 3,
+    "sortOrder": 2,
+    "parentResearch": "minecolonies:combat/regeneration",
+    "children": [
+      "minecolonies:combat/evade"
+    ],
+    "costs": [
+      {
+        "count": 8,
+        "item": "minecraft:emerald"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:guardtower",
+        "level": 4
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/fleeingspeedaddition",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:combat/avoidance": {
+    "id": "minecolonies:combat/avoidance",
+    "name": "Avoidance",
+    "branch": "minecolonies:combat",
+    "researchLevel": 1,
+    "sortOrder": 3,
+    "parentResearch": null,
+    "children": [
+      "minecolonies:combat/dodge",
+      "minecolonies:combat/parry"
+    ],
+    "costs": [
+      {
+        "count": 3,
+        "item": "minecraft:iron_block"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:guardtower",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/shieldusageunlock",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:combat/boiledleather": {
+    "id": "minecolonies:combat/boiledleather",
+    "name": "Boiledleather",
+    "branch": "minecolonies:combat",
+    "researchLevel": 2,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:combat/improvedleather",
+    "children": [
+      "minecolonies:combat/ironskin"
+    ],
+    "costs": [
+      {
+        "count": 64,
+        "item": "minecraft:leather"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:single-building",
+        "building": "minecolonies:townhall",
+        "level": 2
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/armordurabilitymultiplier",
+        "level": 2
+      }
+    ]
+  },
+  "minecolonies:combat/captainoftheguard": {
+    "id": "minecolonies:combat/captainoftheguard",
+    "name": "Captainoftheguard",
+    "branch": "minecolonies:combat",
+    "researchLevel": 6,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:combat/captaintraining",
+    "children": [],
+    "costs": [
+      {
+        "count": 27,
+        "item": "minecraft:shield"
+      }
+    ],
+    "requirements": [],
+    "effects": [
+      {
+        "id": "minecolonies:effects/blockattacksmultiplier",
+        "level": 4
+      }
+    ]
+  },
+  "minecolonies:combat/captaintraining": {
+    "id": "minecolonies:combat/captaintraining",
+    "name": "Captaintraining",
+    "branch": "minecolonies:combat",
+    "researchLevel": 5,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:combat/knighttraining",
+    "children": [
+      "minecolonies:combat/captainoftheguard"
+    ],
+    "costs": [
+      {
+        "count": 16,
+        "item": "minecraft:shield"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:combatacademy",
+        "level": 5
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/blockattacksmultiplier",
+        "level": 3
+      }
+    ]
+  },
+  "minecolonies:combat/cleave": {
+    "id": "minecolonies:combat/cleave",
+    "name": "Cleave",
+    "branch": "minecolonies:combat",
+    "researchLevel": 4,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:combat/powerattack",
+    "children": [
+      "minecolonies:combat/mightycleave"
+    ],
+    "costs": [
+      {
+        "count": 8,
+        "item": "minecraft:iron_block"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:guardtower",
+        "level": 10
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/meleedamageaddition",
+        "level": 3
+      }
+    ]
+  },
+  "minecolonies:combat/coffee": {
+    "id": "minecolonies:combat/coffee",
+    "name": "Coffee",
+    "branch": "minecolonies:combat",
+    "researchLevel": 2,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:combat/tactictraining",
+    "children": [],
+    "costs": [
+      {
+        "count": 4,
+        "item": "minecraft:golden_carrot"
+      }
+    ],
+    "requirements": [],
+    "effects": [
+      {
+        "id": "minecolonies:effects/sleeplessmultiplier",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:combat/deadlyaim": {
+    "id": "minecolonies:combat/deadlyaim",
+    "name": "Deadlyaim",
+    "branch": "minecolonies:combat",
+    "researchLevel": 6,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:combat/woundingshot",
+    "children": [],
+    "costs": [
+      {
+        "count": 256,
+        "item": "minecraft:flint"
+      }
+    ],
+    "requirements": [],
+    "effects": [
+      {
+        "id": "minecolonies:effects/archerdamageaddition",
+        "level": 5
+      }
+    ]
+  },
+  "minecolonies:combat/diamondskin": {
+    "id": "minecolonies:combat/diamondskin",
+    "name": "Diamondskin",
+    "branch": "minecolonies:combat",
+    "researchLevel": 6,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:combat/steelarmor",
+    "children": [],
+    "costs": [
+      {
+        "count": 64,
+        "item": "minecraft:diamond"
+      }
+    ],
+    "requirements": [],
+    "effects": [
+      {
+        "id": "minecolonies:effects/armordurabilitymultiplier",
+        "level": 6
+      }
+    ]
+  },
+  "minecolonies:combat/dodge": {
+    "id": "minecolonies:combat/dodge",
+    "name": "Dodge",
+    "branch": "minecolonies:combat",
+    "researchLevel": 2,
+    "sortOrder": 2,
+    "parentResearch": "minecolonies:combat/avoidance",
+    "children": [
+      "minecolonies:combat/improveddodge"
+    ],
+    "costs": [
+      {
+        "count": 16,
+        "item": "minecraft:leather"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:smeltery",
+        "level": 1
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/archerarmormultiplier",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:combat/druidpotion": {
+    "id": "minecolonies:combat/druidpotion",
+    "name": "Druidpotion",
+    "branch": "minecolonies:combat",
+    "researchLevel": 3,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:combat/arrowuse",
+    "children": [],
+    "costs": [
+      {
+        "count": 64,
+        "item": "minecolonies:mistletoe"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:barracks",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/consumepotions",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:combat/duelist": {
+    "id": "minecolonies:combat/duelist",
+    "name": "Duelist",
+    "branch": "minecolonies:combat",
+    "researchLevel": 4,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:combat/riposte",
+    "children": [
+      "minecolonies:combat/provost"
+    ],
+    "costs": [
+      {
+        "count": 64,
+        "item": "minecraft:iron_ingot"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:smeltery",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/meleearmormultiplier",
+        "level": 3
+      }
+    ]
+  },
+  "minecolonies:combat/evade": {
+    "id": "minecolonies:combat/evade",
+    "name": "Evade",
+    "branch": "minecolonies:combat",
+    "researchLevel": 4,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:combat/avoid",
+    "children": [
+      "minecolonies:combat/flee"
+    ],
+    "costs": [
+      {
+        "count": 16,
+        "item": "minecraft:emerald"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:guardtower",
+        "level": 8
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/fleeingspeedaddition",
+        "level": 2
+      }
+    ]
+  },
+  "minecolonies:combat/evasion": {
+    "id": "minecolonies:combat/evasion",
+    "name": "Evasion",
+    "branch": "minecolonies:combat",
+    "researchLevel": 4,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:combat/improveddodge",
+    "children": [
+      "minecolonies:combat/improvedevasion"
+    ],
+    "costs": [
+      {
+        "count": 64,
+        "item": "minecraft:leather"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:smeltery",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/archerarmormultiplier",
+        "level": 3
+      }
+    ]
+  },
+  "minecolonies:combat/fear": {
+    "id": "minecolonies:combat/fear",
+    "name": "Fear",
+    "branch": "minecolonies:combat",
+    "researchLevel": 4,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:combat/feint",
+    "children": [
+      "minecolonies:combat/retreat"
+    ],
+    "costs": [
+      {
+        "count": 16,
+        "item": "minecraft:emerald"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:guardtower",
+        "level": 8
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/fleeingdamagemultiplier",
+        "level": 2
+      }
+    ]
+  },
+  "minecolonies:combat/feint": {
+    "id": "minecolonies:combat/feint",
+    "name": "Feint",
+    "branch": "minecolonies:combat",
+    "researchLevel": 3,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:combat/regeneration",
+    "children": [
+      "minecolonies:combat/fear"
+    ],
+    "costs": [
+      {
+        "count": 8,
+        "item": "minecraft:emerald"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:guardtower",
+        "level": 4
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/fleeingdamagemultiplier",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:combat/flee": {
+    "id": "minecolonies:combat/flee",
+    "name": "Flee",
+    "branch": "minecolonies:combat",
+    "researchLevel": 5,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:combat/evade",
+    "children": [
+      "minecolonies:combat/hotfoot"
+    ],
+    "costs": [
+      {
+        "count": 32,
+        "item": "minecraft:emerald"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:guardtower",
+        "level": 12
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/fleeingspeedaddition",
+        "level": 3
+      }
+    ]
+  },
+  "minecolonies:combat/fullretreat": {
+    "id": "minecolonies:combat/fullretreat",
+    "name": "Fullretreat",
+    "branch": "minecolonies:combat",
+    "researchLevel": 6,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:combat/retreat",
+    "children": [],
+    "costs": [
+      {
+        "count": 64,
+        "item": "minecraft:emerald"
+      }
+    ],
+    "requirements": [],
+    "effects": [
+      {
+        "id": "minecolonies:effects/fleeingdamagemultiplier",
+        "level": 4
+      }
+    ]
+  },
+  "minecolonies:combat/hotfoot": {
+    "id": "minecolonies:combat/hotfoot",
+    "name": "Hotfoot",
+    "branch": "minecolonies:combat",
+    "researchLevel": 6,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:combat/flee",
+    "children": [],
+    "costs": [
+      {
+        "count": 64,
+        "item": "minecraft:emerald"
+      }
+    ],
+    "requirements": [],
+    "effects": [
+      {
+        "id": "minecolonies:effects/fleeingspeedaddition",
+        "level": 4
+      }
+    ]
+  },
+  "minecolonies:combat/improvedbows": {
+    "id": "minecolonies:combat/improvedbows",
+    "name": "Improvedbows",
+    "branch": "minecolonies:combat",
+    "researchLevel": 2,
+    "sortOrder": 2,
+    "parentResearch": "minecolonies:combat/tactictraining",
+    "children": [
+      "minecolonies:combat/trickshot"
+    ],
+    "costs": [
+      {
+        "count": 6,
+        "item": "minecraft:iron_block"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:barracks",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/blockhutarchery",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:combat/improveddodge": {
+    "id": "minecolonies:combat/improveddodge",
+    "name": "Improveddodge",
+    "branch": "minecolonies:combat",
+    "researchLevel": 3,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:combat/dodge",
+    "children": [
+      "minecolonies:combat/evasion"
+    ],
+    "costs": [
+      {
+        "count": 32,
+        "item": "minecraft:leather"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:archery",
+        "level": 1
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/archerarmormultiplier",
+        "level": 2
+      }
+    ]
+  },
+  "minecolonies:combat/improvedevasion": {
+    "id": "minecolonies:combat/improvedevasion",
+    "name": "Improvedevasion",
+    "branch": "minecolonies:combat",
+    "researchLevel": 5,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:combat/evasion",
+    "children": [
+      "minecolonies:combat/agilearcher"
+    ],
+    "costs": [
+      {
+        "count": 16,
+        "item": "minecraft:diamond"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:archery",
+        "level": 5
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/archerarmormultiplier",
+        "level": 4
+      }
+    ]
+  },
+  "minecolonies:combat/improvedleather": {
+    "id": "minecolonies:combat/improvedleather",
+    "name": "Improvedleather",
+    "branch": "minecolonies:combat",
+    "researchLevel": 1,
+    "sortOrder": 4,
+    "parentResearch": null,
+    "children": [
+      "minecolonies:combat/boiledleather",
+      "minecolonies:combat/regeneration"
+    ],
+    "costs": [
+      {
+        "count": 32,
+        "item": "minecraft:leather"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:single-building",
+        "building": "minecolonies:townhall",
+        "level": 1
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/armordurabilitymultiplier",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:combat/improvedswords": {
+    "id": "minecolonies:combat/improvedswords",
+    "name": "Improvedswords",
+    "branch": "minecolonies:combat",
+    "researchLevel": 2,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:combat/tactictraining",
+    "children": [
+      "minecolonies:combat/squiretraining"
+    ],
+    "costs": [
+      {
+        "count": 6,
+        "item": "minecraft:iron_block"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:barracks",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/blockhutcombatacademy",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:combat/ironarmor": {
+    "id": "minecolonies:combat/ironarmor",
+    "name": "Ironarmor",
+    "branch": "minecolonies:combat",
+    "researchLevel": 4,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:combat/ironskin",
+    "children": [
+      "minecolonies:combat/platearmor",
+      "minecolonies:combat/steelarmor"
+    ],
+    "costs": [
+      {
+        "count": 32,
+        "item": "minecraft:iron_ingot"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:single-building",
+        "building": "minecolonies:townhall",
+        "level": 4
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/armordurabilitymultiplier",
+        "level": 4
+      }
+    ]
+  },
+  "minecolonies:combat/ironskin": {
+    "id": "minecolonies:combat/ironskin",
+    "name": "Ironskin",
+    "branch": "minecolonies:combat",
+    "researchLevel": 3,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:combat/boiledleather",
+    "children": [
+      "minecolonies:combat/ironarmor",
+      "minecolonies:combat/telescope"
+    ],
+    "costs": [
+      {
+        "count": 16,
+        "item": "minecraft:iron_ingot"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:single-building",
+        "building": "minecolonies:townhall",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/armordurabilitymultiplier",
+        "level": 3
+      }
+    ]
+  },
+  "minecolonies:combat/knighttraining": {
+    "id": "minecolonies:combat/knighttraining",
+    "name": "Knighttraining",
+    "branch": "minecolonies:combat",
+    "researchLevel": 4,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:combat/squiretraining",
+    "children": [
+      "minecolonies:combat/captaintraining"
+    ],
+    "costs": [
+      {
+        "count": 8,
+        "item": "minecraft:shield"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:combatacademy",
+        "level": 4
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/blockattacksmultiplier",
+        "level": 2
+      }
+    ]
+  },
+  "minecolonies:combat/masterbowman": {
+    "id": "minecolonies:combat/masterbowman",
+    "name": "Masterbowman",
+    "branch": "minecolonies:combat",
+    "researchLevel": 6,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:combat/rapidshot",
+    "children": [],
+    "costs": [
+      {
+        "count": 27,
+        "item": "minecraft:bow"
+      }
+    ],
+    "requirements": [],
+    "effects": [
+      {
+        "id": "minecolonies:effects/doublearrowsmultiplier",
+        "level": 4
+      }
+    ]
+  },
+  "minecolonies:combat/masterswordsman": {
+    "id": "minecolonies:combat/masterswordsman",
+    "name": "Masterswordsman",
+    "branch": "minecolonies:combat",
+    "researchLevel": 6,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:combat/provost",
+    "children": [],
+    "costs": [
+      {
+        "count": 64,
+        "item": "minecraft:diamond"
+      }
+    ],
+    "requirements": [],
+    "effects": [
+      {
+        "id": "minecolonies:effects/meleearmormultiplier",
+        "level": 5
+      }
+    ]
+  },
+  "minecolonies:combat/mightycleave": {
+    "id": "minecolonies:combat/mightycleave",
+    "name": "Mightycleave",
+    "branch": "minecolonies:combat",
+    "researchLevel": 5,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:combat/cleave",
+    "children": [
+      "minecolonies:combat/savagestrike"
+    ],
+    "costs": [
+      {
+        "count": 16,
+        "item": "minecraft:iron_block"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:barracks",
+        "level": 5
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/meleedamageaddition",
+        "level": 4
+      }
+    ]
+  },
+  "minecolonies:combat/multishot": {
+    "id": "minecolonies:combat/multishot",
+    "name": "Multishot",
+    "branch": "minecolonies:combat",
+    "researchLevel": 4,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:combat/trickshot",
+    "children": [
+      "minecolonies:combat/rapidshot"
+    ],
+    "costs": [
+      {
+        "count": 9,
+        "item": "minecraft:bow"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:archery",
+        "level": 4
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/doublearrowsmultiplier",
+        "level": 2
+      }
+    ]
+  },
+  "minecolonies:combat/parry": {
+    "id": "minecolonies:combat/parry",
+    "name": "Parry",
+    "branch": "minecolonies:combat",
+    "researchLevel": 2,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:combat/avoidance",
+    "children": [
+      "minecolonies:combat/riposte"
+    ],
+    "costs": [
+      {
+        "count": 16,
+        "item": "minecraft:iron_ingot"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:smeltery",
+        "level": 1
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/meleearmormultiplier",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:combat/penetratingshot": {
+    "id": "minecolonies:combat/penetratingshot",
+    "name": "Penetratingshot",
+    "branch": "minecolonies:combat",
+    "researchLevel": 3,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:combat/preciseshot",
+    "children": [
+      "minecolonies:combat/piercingshot"
+    ],
+    "costs": [
+      {
+        "count": 32,
+        "item": "minecraft:flint"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:archery",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/archerdamageaddition",
+        "level": 2
+      }
+    ]
+  },
+  "minecolonies:combat/piercingshot": {
+    "id": "minecolonies:combat/piercingshot",
+    "name": "Piercingshot",
+    "branch": "minecolonies:combat",
+    "researchLevel": 4,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:combat/penetratingshot",
+    "children": [
+      "minecolonies:combat/woundingshot"
+    ],
+    "costs": [
+      {
+        "count": 64,
+        "item": "minecraft:flint"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:guardtower",
+        "level": 10
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/archerdamageaddition",
+        "level": 3
+      }
+    ]
+  },
+  "minecolonies:combat/platearmor": {
+    "id": "minecolonies:combat/platearmor",
+    "name": "Platearmor",
+    "branch": "minecolonies:combat",
+    "researchLevel": 5,
+    "sortOrder": 2,
+    "parentResearch": "minecolonies:combat/ironarmor",
+    "children": [],
+    "costs": [
+      {
+        "count": 32,
+        "item": "minecraft:iron_ingot"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:single-building",
+        "building": "minecolonies:blacksmith",
+        "level": 4
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/platearmorunlock",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:combat/powerattack": {
+    "id": "minecolonies:combat/powerattack",
+    "name": "Powerattack",
+    "branch": "minecolonies:combat",
+    "researchLevel": 3,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:combat/quickdraw",
+    "children": [
+      "minecolonies:combat/cleave"
+    ],
+    "costs": [
+      {
+        "count": 4,
+        "item": "minecraft:iron_block"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:combatacademy",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/meleedamageaddition",
+        "level": 2
+      }
+    ]
+  },
+  "minecolonies:combat/preciseshot": {
+    "id": "minecolonies:combat/preciseshot",
+    "name": "Preciseshot",
+    "branch": "minecolonies:combat",
+    "researchLevel": 2,
+    "sortOrder": 2,
+    "parentResearch": "minecolonies:combat/accuracy",
+    "children": [
+      "minecolonies:combat/penetratingshot"
+    ],
+    "costs": [
+      {
+        "count": 16,
+        "item": "minecraft:flint"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:barracks",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/archerdamageaddition",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:combat/provost": {
+    "id": "minecolonies:combat/provost",
+    "name": "Provost",
+    "branch": "minecolonies:combat",
+    "researchLevel": 5,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:combat/duelist",
+    "children": [
+      "minecolonies:combat/masterswordsman"
+    ],
+    "costs": [
+      {
+        "count": 16,
+        "item": "minecraft:diamond"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:combatacademy",
+        "level": 5
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/meleearmormultiplier",
+        "level": 4
+      }
+    ]
+  },
+  "minecolonies:combat/quickdraw": {
+    "id": "minecolonies:combat/quickdraw",
+    "name": "Quickdraw",
+    "branch": "minecolonies:combat",
+    "researchLevel": 2,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:combat/accuracy",
+    "children": [
+      "minecolonies:combat/powerattack"
+    ],
+    "costs": [
+      {
+        "count": 2,
+        "item": "minecraft:iron_block"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:barracks",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/meleedamageaddition",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:combat/rapidshot": {
+    "id": "minecolonies:combat/rapidshot",
+    "name": "Rapidshot",
+    "branch": "minecolonies:combat",
+    "researchLevel": 5,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:combat/multishot",
+    "children": [
+      "minecolonies:combat/masterbowman"
+    ],
+    "costs": [
+      {
+        "count": 18,
+        "item": "minecraft:bow"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:archery",
+        "level": 5
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/doublearrowsmultiplier",
+        "level": 3
+      }
+    ]
+  },
+  "minecolonies:combat/regeneration": {
+    "id": "minecolonies:combat/regeneration",
+    "name": "Regeneration",
+    "branch": "minecolonies:combat",
+    "researchLevel": 2,
+    "sortOrder": 2,
+    "parentResearch": "minecolonies:combat/improvedleather",
+    "children": [
+      "minecolonies:combat/avoid",
+      "minecolonies:combat/feint"
+    ],
+    "costs": [
+      {
+        "count": 1,
+        "item": "minecraft:emerald"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:guardtower",
+        "level": 2
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/retreatunlock",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:combat/retreat": {
+    "id": "minecolonies:combat/retreat",
+    "name": "Retreat",
+    "branch": "minecolonies:combat",
+    "researchLevel": 5,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:combat/fear",
+    "children": [
+      "minecolonies:combat/fullretreat"
+    ],
+    "costs": [
+      {
+        "count": 32,
+        "item": "minecraft:emerald"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:guardtower",
+        "level": 12
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/fleeingdamagemultiplier",
+        "level": 3
+      }
+    ]
+  },
+  "minecolonies:combat/riposte": {
+    "id": "minecolonies:combat/riposte",
+    "name": "Riposte",
+    "branch": "minecolonies:combat",
+    "researchLevel": 3,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:combat/parry",
+    "children": [
+      "minecolonies:combat/duelist"
+    ],
+    "costs": [
+      {
+        "count": 32,
+        "item": "minecraft:iron_ingot"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:combatacademy",
+        "level": 1
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/meleearmormultiplier",
+        "level": 2
+      }
+    ]
+  },
+  "minecolonies:combat/savagestrike": {
+    "id": "minecolonies:combat/savagestrike",
+    "name": "Savagestrike",
+    "branch": "minecolonies:combat",
+    "researchLevel": 6,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:combat/mightycleave",
+    "children": [],
+    "costs": [
+      {
+        "count": 32,
+        "item": "minecraft:iron_block"
+      }
+    ],
+    "requirements": [],
+    "effects": [
+      {
+        "id": "minecolonies:effects/meleedamageaddition",
+        "level": 5
+      }
+    ]
+  },
+  "minecolonies:combat/squiretraining": {
+    "id": "minecolonies:combat/squiretraining",
+    "name": "Squiretraining",
+    "branch": "minecolonies:combat",
+    "researchLevel": 3,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:combat/improvedswords",
+    "children": [
+      "minecolonies:combat/knighttraining"
+    ],
+    "costs": [
+      {
+        "count": 4,
+        "item": "minecraft:shield"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:combatacademy",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/blockattacksmultiplier",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:combat/standard": {
+    "id": "minecolonies:combat/standard",
+    "name": "Standard",
+    "branch": "minecolonies:combat",
+    "researchLevel": 5,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:combat/telescope",
+    "children": [],
+    "costs": [
+      {
+        "count": 32,
+        "item": "minecraft:emerald"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:barracks",
+        "level": 4
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/standard",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:combat/steelarmor": {
+    "id": "minecolonies:combat/steelarmor",
+    "name": "Steelarmor",
+    "branch": "minecolonies:combat",
+    "researchLevel": 5,
+    "sortOrder": 1,
+    "parentResearch": "minecolonies:combat/ironarmor",
+    "children": [
+      "minecolonies:combat/diamondskin"
+    ],
+    "costs": [
+      {
+        "count": 64,
+        "item": "minecraft:iron_ingot"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:single-building",
+        "building": "minecolonies:townhall",
+        "level": 5
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/armordurabilitymultiplier",
+        "level": 5
+      }
+    ]
+  },
+  "minecolonies:combat/tactictraining": {
+    "id": "minecolonies:combat/tactictraining",
+    "name": "Tactictraining",
+    "branch": "minecolonies:combat",
+    "researchLevel": 1,
+    "sortOrder": 2,
+    "parentResearch": null,
+    "children": [
+      "minecolonies:combat/coffee",
+      "minecolonies:combat/improvedbows",
+      "minecolonies:combat/improvedswords"
+    ],
+    "costs": [
+      {
+        "count": 3,
+        "item": "minecraft:iron_block"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:guardtower",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/blockhutbarracks",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:combat/taunt": {
+    "id": "minecolonies:combat/taunt",
+    "name": "Taunt",
+    "branch": "minecolonies:combat",
+    "researchLevel": 1,
+    "sortOrder": 5,
+    "parentResearch": null,
+    "children": [
+      "minecolonies:combat/arrowuse"
+    ],
+    "costs": [
+      {
+        "count": 8,
+        "item": "minecraft:rotten_flesh"
+      },
+      {
+        "count": 8,
+        "item": "minecraft:bone"
+      },
+      {
+        "count": 8,
+        "item": "minecraft:spider_eye"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:guardtower",
+        "level": 1
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/knighttauntmobsunlock",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:combat/telescope": {
+    "id": "minecolonies:combat/telescope",
+    "name": "Telescope",
+    "branch": "minecolonies:combat",
+    "researchLevel": 4,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:combat/ironskin",
+    "children": [
+      "minecolonies:combat/standard"
+    ],
+    "costs": [
+      {
+        "count": 16,
+        "item": "minecraft:emerald"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:barracks",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/telescope",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:combat/trickshot": {
+    "id": "minecolonies:combat/trickshot",
+    "name": "Trickshot",
+    "branch": "minecolonies:combat",
+    "researchLevel": 3,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:combat/improvedbows",
+    "children": [
+      "minecolonies:combat/multishot"
+    ],
+    "costs": [
+      {
+        "count": 5,
+        "item": "minecraft:bow"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:archery",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/doublearrowsmultiplier",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:combat/whirlwind": {
+    "id": "minecolonies:combat/whirlwind",
+    "name": "Whirlwind",
+    "branch": "minecolonies:combat",
+    "researchLevel": 4,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:combat/arrowpierce",
+    "children": [],
+    "costs": [
+      {
+        "count": 64,
+        "item": "minecraft:redstone"
+      },
+      {
+        "count": 64,
+        "item": "minecraft:gold_ingot"
+      },
+      {
+        "count": 128,
+        "item": "minecraft:lapis_lazuli"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:barracks",
+        "level": 4
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/whirlwindabilityunlock",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:combat/woundingshot": {
+    "id": "minecolonies:combat/woundingshot",
+    "name": "Woundingshot",
+    "branch": "minecolonies:combat",
+    "researchLevel": 5,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:combat/piercingshot",
+    "children": [
+      "minecolonies:combat/deadlyaim"
+    ],
+    "costs": [
+      {
+        "count": 128,
+        "item": "minecraft:flint"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:barracks",
+        "level": 5
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/archerdamageaddition",
+        "level": 4
+      }
+    ]
+  },
+  "minecolonies:technology/ability": {
+    "id": "minecolonies:technology/ability",
+    "name": "Ability",
+    "branch": "minecolonies:technology",
+    "researchLevel": 2,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/hittingiron",
+    "children": [
+      "minecolonies:technology/skills"
+    ],
+    "costs": [
+      {
+        "count": 64,
+        "item": "minecraft:iron_ingot"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:miner",
+        "level": 1
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/blockplacespeedmultiplier",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:technology/alchemist": {
+    "id": "minecolonies:technology/alchemist",
+    "name": "Alchemist",
+    "branch": "minecolonies:technology",
+    "researchLevel": 3,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/opennether",
+    "children": [
+      "minecolonies:technology/oceanheart"
+    ],
+    "costs": [
+      {
+        "count": 16,
+        "item": "minecraft:nether_wart"
+      }
+    ],
+    "requirements": [],
+    "effects": [
+      {
+        "id": "minecolonies:effects/blockhutalchemist",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:technology/amazingveins": {
+    "id": "minecolonies:technology/amazingveins",
+    "name": "Amazingveins",
+    "branch": "minecolonies:technology",
+    "researchLevel": 5,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/richveins",
+    "children": [
+      "minecolonies:technology/motherlode"
+    ],
+    "costs": [
+      {
+        "count": 64,
+        "tag": "minecraft:gold_ores"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:miner",
+        "level": 5
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/moreoresmultiplier",
+        "level": 4
+      }
+    ]
+  },
+  "minecolonies:technology/assistanthammers": {
+    "id": "minecolonies:technology/assistanthammers",
+    "name": "Assistanthammers",
+    "branch": "minecolonies:technology",
+    "researchLevel": 2,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/hittingiron",
+    "children": [],
+    "costs": [
+      {
+        "count": 2,
+        "item": "minecraft:iron_block"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:blacksmith",
+        "level": 1
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/assistanthammerunlock",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:technology/biodegradable": {
+    "id": "minecolonies:technology/biodegradable",
+    "name": "Biodegradable",
+    "branch": "minecolonies:technology",
+    "researchLevel": 1,
+    "sortOrder": null,
+    "parentResearch": null,
+    "children": [
+      "minecolonies:technology/bonemeal",
+      "minecolonies:technology/flowerpower",
+      "minecolonies:technology/greenrevolution",
+      "minecolonies:technology/letitgrow",
+      "minecolonies:technology/podzolchance",
+      "minecolonies:technology/rainbowheaven",
+      "minecolonies:technology/skilledbutcher"
+    ],
+    "costs": [
+      {
+        "count": 64,
+        "item": "minecraft:bone_meal"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:farmer",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/blockhutcomposter",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:technology/bonemeal": {
+    "id": "minecolonies:technology/bonemeal",
+    "name": "Bonemeal",
+    "branch": "minecolonies:technology",
+    "researchLevel": 2,
+    "sortOrder": 3,
+    "parentResearch": "minecolonies:technology/biodegradable",
+    "children": [
+      "minecolonies:technology/dung"
+    ],
+    "costs": [
+      {
+        "count": 64,
+        "item": "minecraft:wheat_seeds"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:alternate-building",
+        "alternate-buildings": [
+          "minecolonies:farmer",
+          "minecolonies:composter"
+        ],
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/farmingmultiplier",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:technology/buildermodes": {
+    "id": "minecolonies:technology/buildermodes",
+    "name": "Buildermodes",
+    "branch": "minecolonies:technology",
+    "researchLevel": 3,
+    "sortOrder": 4,
+    "parentResearch": "minecolonies:technology/memoryaid",
+    "children": [],
+    "costs": [
+      {
+        "count": 1,
+        "item": "minecraft:diamond_axe"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:builder",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/buildermodeunlock",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:technology/capacity": {
+    "id": "minecolonies:technology/capacity",
+    "name": "Capacity",
+    "branch": "minecolonies:technology",
+    "researchLevel": 4,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/space",
+    "children": [
+      "minecolonies:technology/fullstock"
+    ],
+    "costs": [
+      {
+        "count": 32,
+        "item": "minecolonies:blockminecoloniesrack"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:miner",
+        "level": 4
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/minimumstockmultiplier",
+        "level": 2
+      }
+    ]
+  },
+  "minecolonies:technology/cheatsheet": {
+    "id": "minecolonies:technology/cheatsheet",
+    "name": "Cheatsheet",
+    "branch": "minecolonies:technology",
+    "researchLevel": 3,
+    "sortOrder": 1,
+    "parentResearch": "minecolonies:technology/memoryaid",
+    "children": [
+      "minecolonies:technology/deeppockets",
+      "minecolonies:technology/recipebook"
+    ],
+    "costs": [
+      {
+        "count": 64,
+        "item": "minecraft:paper"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:sawmill",
+        "level": 2
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/recipesmultiplier",
+        "level": 2
+      }
+    ]
+  },
+  "minecolonies:technology/compost": {
+    "id": "minecolonies:technology/compost",
+    "name": "Compost",
+    "branch": "minecolonies:technology",
+    "researchLevel": 4,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/dung",
+    "children": [
+      "minecolonies:technology/fertilizer"
+    ],
+    "costs": [
+      {
+        "count": 256,
+        "item": "minecraft:wheat_seeds"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:alternate-building",
+        "alternate-buildings": [
+          "minecolonies:farmer",
+          "minecolonies:composter"
+        ],
+        "level": 5
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/farmingmultiplier",
+        "level": 3
+      }
+    ]
+  },
+  "minecolonies:technology/croprotation": {
+    "id": "minecolonies:technology/croprotation",
+    "name": "Croprotation",
+    "branch": "minecolonies:technology",
+    "researchLevel": 3,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/letitgrow",
+    "children": [
+      "minecolonies:technology/gargamel"
+    ],
+    "costs": [
+      {
+        "count": 32,
+        "item": "minecraft:sugar_cane"
+      },
+      {
+        "count": 32,
+        "item": "minecraft:cactus"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:plantation",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/plantationlarge",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:technology/deeppockets": {
+    "id": "minecolonies:technology/deeppockets",
+    "name": "Deeppockets",
+    "branch": "minecolonies:technology",
+    "researchLevel": 4,
+    "sortOrder": 2,
+    "parentResearch": "minecolonies:technology/cheatsheet",
+    "children": [
+      "minecolonies:technology/loaded"
+    ],
+    "costs": [
+      {
+        "count": 64,
+        "item": "minecraft:emerald"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:library",
+        "level": 4
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/citizeninvslotsaddition",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:technology/depthknowledge": {
+    "id": "minecolonies:technology/depthknowledge",
+    "name": "Depthknowledge",
+    "branch": "minecolonies:technology",
+    "researchLevel": 3,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/rockingroll",
+    "children": [],
+    "costs": [
+      {
+        "count": 64,
+        "item": "minecraft:deepslate"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:crusher",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/knowledgeofthedepthsunlock",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:technology/diamondcoated": {
+    "id": "minecolonies:technology/diamondcoated",
+    "name": "Diamondcoated",
+    "branch": "minecolonies:technology",
+    "researchLevel": 6,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/steelbracing",
+    "children": [],
+    "costs": [
+      {
+        "count": 128,
+        "item": "minecraft:diamond"
+      }
+    ],
+    "requirements": [],
+    "effects": [
+      {
+        "id": "minecolonies:effects/tooldurabilitymultiplier",
+        "level": 5
+      }
+    ]
+  },
+  "minecolonies:technology/dung": {
+    "id": "minecolonies:technology/dung",
+    "name": "Dung",
+    "branch": "minecolonies:technology",
+    "researchLevel": 3,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/bonemeal",
+    "children": [
+      "minecolonies:technology/compost"
+    ],
+    "costs": [
+      {
+        "count": 128,
+        "item": "minecraft:wheat_seeds"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:alternate-building",
+        "alternate-buildings": [
+          "minecolonies:farmer",
+          "minecolonies:composter"
+        ],
+        "level": 4
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/farmingmultiplier",
+        "level": 2
+      }
+    ]
+  },
+  "minecolonies:technology/enhanced_gates1": {
+    "id": "minecolonies:technology/enhanced_gates1",
+    "name": "Enhanced Gates1",
+    "branch": "minecolonies:technology",
+    "researchLevel": 3,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/whatyaneed",
+    "children": [
+      "minecolonies:technology/enhanced_gates2"
+    ],
+    "costs": [
+      {
+        "count": 64,
+        "item": "minecolonies:gate_wood"
+      },
+      {
+        "count": 2,
+        "item": "minecolonies:ancienttome"
+      },
+      {
+        "count": 5,
+        "item": "minecraft:iron_block"
+      }
+    ],
+    "requirements": [],
+    "effects": [
+      {
+        "id": "minecolonies:effects/enhancesgatedurabilityaddition",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:technology/enhanced_gates2": {
+    "id": "minecolonies:technology/enhanced_gates2",
+    "name": "Enhanced Gates2",
+    "branch": "minecolonies:technology",
+    "researchLevel": 4,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/enhanced_gates1",
+    "children": [],
+    "costs": [
+      {
+        "count": 64,
+        "item": "minecolonies:gate_iron"
+      },
+      {
+        "count": 2,
+        "item": "minecolonies:ancienttome"
+      },
+      {
+        "count": 32,
+        "item": "minecraft:obsidian"
+      }
+    ],
+    "requirements": [],
+    "effects": [
+      {
+        "id": "minecolonies:effects/enhancesgatedurabilityaddition",
+        "level": 2
+      }
+    ]
+  },
+  "minecolonies:technology/exoticfruits": {
+    "id": "minecolonies:technology/exoticfruits",
+    "name": "Exoticfruits",
+    "branch": "minecolonies:technology",
+    "researchLevel": 3,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/letitgrow",
+    "children": [],
+    "costs": [
+      {
+        "count": 32,
+        "item": "minecraft:glow_berries"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:plantation",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/plantationexotic",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:technology/fertilizer": {
+    "id": "minecolonies:technology/fertilizer",
+    "name": "Fertilizer",
+    "branch": "minecolonies:technology",
+    "researchLevel": 5,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/compost",
+    "children": [
+      "minecolonies:technology/magiccompost"
+    ],
+    "costs": [
+      {
+        "count": 512,
+        "item": "minecraft:wheat_seeds"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:smeltery",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/farmingmultiplier",
+        "level": 4
+      }
+    ]
+  },
+  "minecolonies:technology/flowerpower": {
+    "id": "minecolonies:technology/flowerpower",
+    "name": "Flowerpower",
+    "branch": "minecolonies:technology",
+    "researchLevel": 2,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/biodegradable",
+    "children": [],
+    "costs": [
+      {
+        "count": 64,
+        "item": "minecolonies:compost"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:composter",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/blockhutflorist",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:technology/fullstock": {
+    "id": "minecolonies:technology/fullstock",
+    "name": "Fullstock",
+    "branch": "minecolonies:technology",
+    "researchLevel": 5,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/capacity",
+    "children": [],
+    "costs": [
+      {
+        "count": 64,
+        "item": "minecolonies:blockminecoloniesrack"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:miner",
+        "level": 5
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/minimumstockmultiplier",
+        "level": 3
+      }
+    ]
+  },
+  "minecolonies:technology/gargamel": {
+    "id": "minecolonies:technology/gargamel",
+    "name": "Gargamel",
+    "branch": "minecolonies:technology",
+    "researchLevel": 4,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/croprotation",
+    "children": [],
+    "costs": [
+      {
+        "count": 16,
+        "item": "minecraft:crimson_fungus"
+      },
+      {
+        "count": 16,
+        "item": "minecraft:warped_fungus"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:plantation",
+        "level": 3
+      },
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:netherworker",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/plantationnether",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:technology/gildedhammer": {
+    "id": "minecolonies:technology/gildedhammer",
+    "name": "Gildedhammer",
+    "branch": "minecolonies:technology",
+    "researchLevel": 3,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/rockingroll",
+    "children": [],
+    "costs": [
+      {
+        "count": 64,
+        "item": "minecraft:gravel"
+      },
+      {
+        "count": 64,
+        "item": "minecraft:sand"
+      },
+      {
+        "count": 64,
+        "item": "minecraft:clay"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:crusher",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/crushing11unlock",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:technology/goodveins": {
+    "id": "minecolonies:technology/goodveins",
+    "name": "Goodveins",
+    "branch": "minecolonies:technology",
+    "researchLevel": 3,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/veinminer",
+    "children": [
+      "minecolonies:technology/richveins"
+    ],
+    "costs": [
+      {
+        "count": 64,
+        "tag": "minecraft:iron_ores"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:miner",
+        "level": 2
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/moreoresmultiplier",
+        "level": 2
+      }
+    ]
+  },
+  "minecolonies:technology/greenrevolution": {
+    "id": "minecolonies:technology/greenrevolution",
+    "name": "Greenrevolution",
+    "branch": "minecolonies:technology",
+    "researchLevel": 2,
+    "sortOrder": 3,
+    "parentResearch": "minecolonies:technology/biodegradable",
+    "children": [],
+    "costs": [
+      {
+        "count": 32,
+        "item": "minecolonies:compost"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:farmer",
+        "level": 4
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/greenrevolution",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:technology/hardened": {
+    "id": "minecolonies:technology/hardened",
+    "name": "Hardened",
+    "branch": "minecolonies:technology",
+    "researchLevel": 3,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/strong",
+    "children": [
+      "minecolonies:technology/reinforced"
+    ],
+    "costs": [
+      {
+        "count": 16,
+        "item": "minecraft:diamond"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:blacksmith",
+        "level": 2
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/tooldurabilitymultiplier",
+        "level": 2
+      }
+    ]
+  },
+  "minecolonies:technology/heavilyloaded": {
+    "id": "minecolonies:technology/heavilyloaded",
+    "name": "Heavilyloaded",
+    "branch": "minecolonies:technology",
+    "researchLevel": 6,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/loaded",
+    "children": [],
+    "costs": [
+      {
+        "count": 256,
+        "item": "minecraft:emerald"
+      }
+    ],
+    "requirements": [],
+    "effects": [
+      {
+        "id": "minecolonies:effects/citizeninvslotsaddition",
+        "level": 3
+      }
+    ]
+  },
+  "minecolonies:technology/heavymachinery": {
+    "id": "minecolonies:technology/heavymachinery",
+    "name": "Heavymachinery",
+    "branch": "minecolonies:technology",
+    "researchLevel": 4,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/redstonepowered",
+    "children": [
+      "minecolonies:technology/whatisthisspeed"
+    ],
+    "costs": [
+      {
+        "count": 512,
+        "item": "minecraft:redstone"
+      }
+    ],
+    "requirements": [],
+    "effects": [
+      {
+        "id": "minecolonies:effects/blockbreakspeedmultiplier",
+        "level": 3
+      }
+    ]
+  },
+  "minecolonies:technology/hittingiron": {
+    "id": "minecolonies:technology/hittingiron",
+    "name": "Hittingiron",
+    "branch": "minecolonies:technology",
+    "researchLevel": 1,
+    "sortOrder": 7,
+    "parentResearch": null,
+    "children": [
+      "minecolonies:technology/ability",
+      "minecolonies:technology/assistanthammers",
+      "minecolonies:technology/strong",
+      "minecolonies:technology/veinminer",
+      "minecolonies:technology/whatyaneed"
+    ],
+    "costs": [
+      {
+        "count": 1,
+        "item": "minecraft:anvil"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:miner",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/blockhutblacksmith",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:technology/honeypot": {
+    "id": "minecolonies:technology/honeypot",
+    "name": "Honeypot",
+    "branch": "minecolonies:technology",
+    "researchLevel": 3,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/rainbowheaven",
+    "children": [],
+    "costs": [
+      {
+        "count": 16,
+        "item": "minecraft:beehive"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:beekeeper",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/beekeep2unlock",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:technology/hot": {
+    "id": "minecolonies:technology/hot",
+    "name": "Hot",
+    "branch": "minecolonies:technology",
+    "researchLevel": 1,
+    "sortOrder": 6,
+    "parentResearch": null,
+    "children": [
+      "minecolonies:technology/isthisredstone",
+      "minecolonies:technology/thoselungs"
+    ],
+    "costs": [
+      {
+        "count": 4,
+        "item": "minecraft:lava_bucket"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:miner",
+        "level": 2
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/blockhutsmeltery",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:technology/hotboots": {
+    "id": "minecolonies:technology/hotboots",
+    "name": "Hotboots",
+    "branch": "minecolonies:technology",
+    "researchLevel": 3,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/stringwork",
+    "children": [],
+    "costs": [
+      {
+        "count": 32,
+        "item": "minecraft:leather"
+      },
+      {
+        "count": 16,
+        "item": "minecraft:iron_ingot"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:fletcher",
+        "level": 1
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/minerfireresunlock",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:technology/isthisredstone": {
+    "id": "minecolonies:technology/isthisredstone",
+    "name": "Isthisredstone",
+    "branch": "minecolonies:technology",
+    "researchLevel": 2,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/hot",
+    "children": [
+      "minecolonies:technology/redstonepowered"
+    ],
+    "costs": [
+      {
+        "count": 128,
+        "item": "minecraft:redstone"
+      }
+    ],
+    "requirements": [],
+    "effects": [
+      {
+        "id": "minecolonies:effects/blockbreakspeedmultiplier",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:technology/junglemaster": {
+    "id": "minecolonies:technology/junglemaster",
+    "name": "Junglemaster",
+    "branch": "minecolonies:technology",
+    "researchLevel": 3,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/letitgrow",
+    "children": [],
+    "costs": [
+      {
+        "count": 16,
+        "item": "minecraft:bamboo"
+      },
+      {
+        "count": 16,
+        "item": "minecraft:cocoa_beans"
+      },
+      {
+        "count": 16,
+        "item": "minecraft:vine"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:plantation",
+        "level": 2
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/plantationjungle",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:technology/knowtheend": {
+    "id": "minecolonies:technology/knowtheend",
+    "name": "Knowtheend",
+    "branch": "minecolonies:technology",
+    "researchLevel": 3,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/theflintstones",
+    "children": [],
+    "costs": [
+      {
+        "count": 64,
+        "item": "minecraft:chorus_fruit"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:baker",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/knowledgeoftheendunlock",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:technology/letitgrow": {
+    "id": "minecolonies:technology/letitgrow",
+    "name": "Letitgrow",
+    "branch": "minecolonies:technology",
+    "researchLevel": 2,
+    "sortOrder": 2,
+    "parentResearch": "minecolonies:technology/biodegradable",
+    "children": [
+      "minecolonies:technology/croprotation",
+      "minecolonies:technology/exoticfruits",
+      "minecolonies:technology/junglemaster",
+      "minecolonies:technology/takingdivinglessons"
+    ],
+    "costs": [
+      {
+        "count": 16,
+        "item": "minecolonies:compost"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:farmer",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/blockhutplantation",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:technology/lightning": {
+    "id": "minecolonies:technology/lightning",
+    "name": "Lightning",
+    "branch": "minecolonies:technology",
+    "researchLevel": 6,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/whatisthisspeed",
+    "children": [],
+    "costs": [
+      {
+        "count": 2048,
+        "item": "minecraft:redstone"
+      }
+    ],
+    "requirements": [],
+    "effects": [
+      {
+        "id": "minecolonies:effects/blockbreakspeedmultiplier",
+        "level": 5
+      }
+    ]
+  },
+  "minecolonies:technology/loaded": {
+    "id": "minecolonies:technology/loaded",
+    "name": "Loaded",
+    "branch": "minecolonies:technology",
+    "researchLevel": 5,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/deeppockets",
+    "children": [
+      "minecolonies:technology/heavilyloaded"
+    ],
+    "costs": [
+      {
+        "count": 128,
+        "item": "minecraft:emerald"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:library",
+        "level": 5
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/citizeninvslotsaddition",
+        "level": 2
+      }
+    ]
+  },
+  "minecolonies:technology/madness": {
+    "id": "minecolonies:technology/madness",
+    "name": "Madness",
+    "branch": "minecolonies:technology",
+    "researchLevel": 6,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/seemsautomatic",
+    "children": [],
+    "costs": [
+      {
+        "count": 1024,
+        "item": "minecraft:iron_ingot"
+      }
+    ],
+    "requirements": [],
+    "effects": [
+      {
+        "id": "minecolonies:effects/blockplacespeedmultiplier",
+        "level": 5
+      }
+    ]
+  },
+  "minecolonies:technology/magiccompost": {
+    "id": "minecolonies:technology/magiccompost",
+    "name": "Magiccompost",
+    "branch": "minecolonies:technology",
+    "researchLevel": 6,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/fertilizer",
+    "children": [],
+    "costs": [
+      {
+        "count": 2048,
+        "item": "minecraft:wheat_seeds"
+      }
+    ],
+    "requirements": [],
+    "effects": [
+      {
+        "id": "minecolonies:effects/farmingmultiplier",
+        "level": 5
+      }
+    ]
+  },
+  "minecolonies:technology/memoryaid": {
+    "id": "minecolonies:technology/memoryaid",
+    "name": "Memoryaid",
+    "branch": "minecolonies:technology",
+    "researchLevel": 2,
+    "sortOrder": 3,
+    "parentResearch": "minecolonies:technology/woodwork",
+    "children": [
+      "minecolonies:technology/buildermodes",
+      "minecolonies:technology/cheatsheet",
+      "minecolonies:technology/warehousemaster"
+    ],
+    "costs": [
+      {
+        "count": 32,
+        "item": "minecraft:paper"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:sawmill",
+        "level": 1
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/recipesmultiplier",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:technology/morescrolls": {
+    "id": "minecolonies:technology/morescrolls",
+    "name": "Morescrolls",
+    "branch": "minecolonies:technology",
+    "researchLevel": 1,
+    "sortOrder": 3,
+    "parentResearch": null,
+    "children": [
+      "minecolonies:technology/opennether"
+    ],
+    "costs": [
+      {
+        "count": 64,
+        "item": "minecraft:paper"
+      },
+      {
+        "count": 1,
+        "item": "minecolonies:ancienttome"
+      },
+      {
+        "count": 64,
+        "item": "minecraft:lapis_lazuli"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:enchanter",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/morescrollsunlock",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:technology/motherlode": {
+    "id": "minecolonies:technology/motherlode",
+    "name": "Motherlode",
+    "branch": "minecolonies:technology",
+    "researchLevel": 6,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/amazingveins",
+    "children": [],
+    "costs": [
+      {
+        "count": 64,
+        "tag": "minecraft:diamond_ores"
+      }
+    ],
+    "requirements": [],
+    "effects": [
+      {
+        "id": "minecolonies:effects/moreoresmultiplier",
+        "level": 5
+      }
+    ]
+  },
+  "minecolonies:technology/netherlog": {
+    "id": "minecolonies:technology/netherlog",
+    "name": "Netherlog",
+    "branch": "minecolonies:technology",
+    "researchLevel": 3,
+    "sortOrder": 4,
+    "parentResearch": "minecolonies:technology/opennether",
+    "children": [],
+    "costs": [
+      {
+        "count": 16,
+        "item": "minecraft:ender_eye"
+      },
+      {
+        "count": 1,
+        "item": "minecolonies:ancienttome"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:netherworker",
+        "level": 1
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/netherexpeditionlog",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:technology/oceanheart": {
+    "id": "minecolonies:technology/oceanheart",
+    "name": "Oceanheart",
+    "branch": "minecolonies:technology",
+    "researchLevel": 4,
+    "sortOrder": 4,
+    "parentResearch": "minecolonies:technology/alchemist",
+    "children": [],
+    "costs": [
+      {
+        "count": 1,
+        "item": "minecraft:heart_of_the_sea"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:fisherman",
+        "level": 4
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/fishingtreasure",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:technology/opennether": {
+    "id": "minecolonies:technology/opennether",
+    "name": "Opennether",
+    "branch": "minecolonies:technology",
+    "researchLevel": 2,
+    "sortOrder": 1,
+    "parentResearch": "minecolonies:technology/morescrolls",
+    "children": [
+      "minecolonies:technology/alchemist",
+      "minecolonies:technology/netherlog"
+    ],
+    "costs": [
+      {
+        "count": 3,
+        "item": "minecraft:gilded_blackstone"
+      }
+    ],
+    "requirements": [],
+    "effects": [
+      {
+        "id": "minecolonies:effects/blockhutnetherworker",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:technology/pavetheroad": {
+    "id": "minecolonies:technology/pavetheroad",
+    "name": "Pavetheroad",
+    "branch": "minecolonies:technology",
+    "researchLevel": 3,
+    "sortOrder": 2,
+    "parentResearch": "minecolonies:technology/rockingroll",
+    "children": [],
+    "costs": [
+      {
+        "count": 32,
+        "tag": "minecolonies:concrete"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:crusher",
+        "level": 1
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/blockhutconcretemixer",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:technology/podzolchance": {
+    "id": "minecolonies:technology/podzolchance",
+    "name": "Podzolchance",
+    "branch": "minecolonies:technology",
+    "researchLevel": 2,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/biodegradable",
+    "children": [
+      "minecolonies:technology/podzolchance2"
+    ],
+    "costs": [
+      {
+        "count": 8,
+        "item": "minecraft:podzol"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:composter",
+        "level": 2
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/podzolchancemultiplier",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:technology/podzolchance2": {
+    "id": "minecolonies:technology/podzolchance2",
+    "name": "Podzolchance2",
+    "branch": "minecolonies:technology",
+    "researchLevel": 3,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/podzolchance",
+    "children": [],
+    "costs": [
+      {
+        "count": 32,
+        "item": "minecraft:podzol"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:composter",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/podzolchancemultiplier",
+        "level": 2
+      }
+    ]
+  },
+  "minecolonies:technology/rainbowheaven": {
+    "id": "minecolonies:technology/rainbowheaven",
+    "name": "Rainbowheaven",
+    "branch": "minecolonies:technology",
+    "researchLevel": 2,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/biodegradable",
+    "children": [
+      "minecolonies:technology/honeypot"
+    ],
+    "costs": [
+      {
+        "count": 64,
+        "item": "minecraft:poppy"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:composter",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/blockhutdyer",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:technology/rainman": {
+    "id": "minecolonies:technology/rainman",
+    "name": "Rainman",
+    "branch": "minecolonies:technology",
+    "researchLevel": 6,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/rtm",
+    "children": [],
+    "costs": [
+      {
+        "count": 27,
+        "item": "minecraft:salmon_bucket"
+      }
+    ],
+    "requirements": [],
+    "effects": [
+      {
+        "id": "minecolonies:effects/workinginrainunlock",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:technology/recipebook": {
+    "id": "minecolonies:technology/recipebook",
+    "name": "Recipebook",
+    "branch": "minecolonies:technology",
+    "researchLevel": 4,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/cheatsheet",
+    "children": [
+      "minecolonies:technology/rtm"
+    ],
+    "costs": [
+      {
+        "count": 128,
+        "item": "minecraft:paper"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:sawmill",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/recipesmultiplier",
+        "level": 3
+      }
+    ]
+  },
+  "minecolonies:technology/redstonepowered": {
+    "id": "minecolonies:technology/redstonepowered",
+    "name": "Redstonepowered",
+    "branch": "minecolonies:technology",
+    "researchLevel": 3,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/isthisredstone",
+    "children": [
+      "minecolonies:technology/heavymachinery"
+    ],
+    "costs": [
+      {
+        "count": 256,
+        "item": "minecraft:redstone"
+      }
+    ],
+    "requirements": [],
+    "effects": [
+      {
+        "id": "minecolonies:effects/blockbreakspeedmultiplier",
+        "level": 2
+      }
+    ]
+  },
+  "minecolonies:technology/reinforced": {
+    "id": "minecolonies:technology/reinforced",
+    "name": "Reinforced",
+    "branch": "minecolonies:technology",
+    "researchLevel": 4,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/hardened",
+    "children": [
+      "minecolonies:technology/steelbracing"
+    ],
+    "costs": [
+      {
+        "count": 32,
+        "item": "minecraft:diamond"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:blacksmith",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/tooldurabilitymultiplier",
+        "level": 3
+      }
+    ]
+  },
+  "minecolonies:technology/richveins": {
+    "id": "minecolonies:technology/richveins",
+    "name": "Richveins",
+    "branch": "minecolonies:technology",
+    "researchLevel": 4,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/goodveins",
+    "children": [
+      "minecolonies:technology/amazingveins"
+    ],
+    "costs": [
+      {
+        "count": 32,
+        "tag": "minecraft:gold_ores"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:miner",
+        "level": 4
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/moreoresmultiplier",
+        "level": 3
+      }
+    ]
+  },
+  "minecolonies:technology/rockingroll": {
+    "id": "minecolonies:technology/rockingroll",
+    "name": "Rockingroll",
+    "branch": "minecolonies:technology",
+    "researchLevel": 2,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/stonecake",
+    "children": [
+      "minecolonies:technology/depthknowledge",
+      "minecolonies:technology/gildedhammer",
+      "minecolonies:technology/pavetheroad"
+    ],
+    "costs": [
+      {
+        "count": 64,
+        "item": "minecraft:stone"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:stonemason",
+        "level": 1
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/blockhutcrusher",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:technology/rtm": {
+    "id": "minecolonies:technology/rtm",
+    "name": "Rtm",
+    "branch": "minecolonies:technology",
+    "researchLevel": 5,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/recipebook",
+    "children": [
+      "minecolonies:technology/rainman"
+    ],
+    "costs": [
+      {
+        "count": 256,
+        "item": "minecraft:paper"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:sawmill",
+        "level": 4
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/recipesmultiplier",
+        "level": 4
+      }
+    ]
+  },
+  "minecolonies:technology/seemsautomatic": {
+    "id": "minecolonies:technology/seemsautomatic",
+    "name": "Seemsautomatic",
+    "branch": "minecolonies:technology",
+    "researchLevel": 5,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/tools",
+    "children": [
+      "minecolonies:technology/madness"
+    ],
+    "costs": [
+      {
+        "count": 512,
+        "item": "minecraft:iron_ingot"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:blacksmith",
+        "level": 5
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/blockplacespeedmultiplier",
+        "level": 4
+      }
+    ]
+  },
+  "minecolonies:technology/sieving": {
+    "id": "minecolonies:technology/sieving",
+    "name": "Sieving",
+    "branch": "minecolonies:technology",
+    "researchLevel": 2,
+    "sortOrder": 2,
+    "parentResearch": "minecolonies:technology/woodwork",
+    "children": [
+      "minecolonies:technology/space"
+    ],
+    "costs": [
+      {
+        "count": 64,
+        "item": "minecraft:string"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:fisherman",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/blockhutsifter",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:technology/skilledbutcher": {
+    "id": "minecolonies:technology/skilledbutcher",
+    "name": "Skilledbutcher",
+    "branch": "minecolonies:technology",
+    "researchLevel": 2,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/biodegradable",
+    "children": [],
+    "costs": [
+      {
+        "count": 1,
+        "item": "minecraft:diamond_axe"
+      },
+      {
+        "count": 1,
+        "item": "minecraft:enchanted_book"
+      },
+      {
+        "count": 1,
+        "item": "minecraft:anvil"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:enchanter",
+        "level": 2
+      },
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:blacksmith",
+        "level": 2
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/looting",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:technology/skills": {
+    "id": "minecolonies:technology/skills",
+    "name": "Skills",
+    "branch": "minecolonies:technology",
+    "researchLevel": 3,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/ability",
+    "children": [
+      "minecolonies:technology/tools"
+    ],
+    "costs": [
+      {
+        "count": 128,
+        "item": "minecraft:iron_ingot"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:miner",
+        "level": 2
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/blockplacespeedmultiplier",
+        "level": 2
+      }
+    ]
+  },
+  "minecolonies:technology/softshoes": {
+    "id": "minecolonies:technology/softshoes",
+    "name": "Softshoes",
+    "branch": "minecolonies:technology",
+    "researchLevel": 1,
+    "sortOrder": 2,
+    "parentResearch": null,
+    "children": [],
+    "costs": [
+      {
+        "count": 16,
+        "item": "minecraft:white_wool"
+      },
+      {
+        "count": 16,
+        "item": "minecraft:feather"
+      }
+    ],
+    "requirements": [],
+    "effects": [
+      {
+        "id": "minecolonies:effects/softshoesunlock",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:technology/space": {
+    "id": "minecolonies:technology/space",
+    "name": "Space",
+    "branch": "minecolonies:technology",
+    "researchLevel": 3,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/sieving",
+    "children": [
+      "minecolonies:technology/capacity"
+    ],
+    "costs": [
+      {
+        "count": 16,
+        "item": "minecolonies:blockminecoloniesrack"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:miner",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/minimumstockmultiplier",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:technology/steelbracing": {
+    "id": "minecolonies:technology/steelbracing",
+    "name": "Steelbracing",
+    "branch": "minecolonies:technology",
+    "researchLevel": 5,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/reinforced",
+    "children": [
+      "minecolonies:technology/diamondcoated"
+    ],
+    "costs": [
+      {
+        "count": 64,
+        "item": "minecraft:diamond"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:blacksmith",
+        "level": 5
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/tooldurabilitymultiplier",
+        "level": 4
+      }
+    ]
+  },
+  "minecolonies:technology/stonecake": {
+    "id": "minecolonies:technology/stonecake",
+    "name": "Stonecake",
+    "branch": "minecolonies:technology",
+    "researchLevel": 1,
+    "sortOrder": 4,
+    "parentResearch": null,
+    "children": [
+      "minecolonies:technology/rockingroll",
+      "minecolonies:technology/theflintstones"
+    ],
+    "costs": [
+      {
+        "count": 64,
+        "item": "minecraft:chiseled_stone_bricks"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:miner",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/blockhutstonemason",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:technology/stringwork": {
+    "id": "minecolonies:technology/stringwork",
+    "name": "Stringwork",
+    "branch": "minecolonies:technology",
+    "researchLevel": 2,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/woodwork",
+    "children": [
+      "minecolonies:technology/hotboots"
+    ],
+    "costs": [
+      {
+        "count": 16,
+        "item": "minecraft:string"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:sawmill",
+        "level": 1
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/blockhutfletcher",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:technology/strong": {
+    "id": "minecolonies:technology/strong",
+    "name": "Strong",
+    "branch": "minecolonies:technology",
+    "researchLevel": 2,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/hittingiron",
+    "children": [
+      "minecolonies:technology/hardened"
+    ],
+    "costs": [
+      {
+        "count": 8,
+        "item": "minecraft:diamond"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:blacksmith",
+        "level": 1
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/tooldurabilitymultiplier",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:technology/takingdivinglessons": {
+    "id": "minecolonies:technology/takingdivinglessons",
+    "name": "Takingdivinglessons",
+    "branch": "minecolonies:technology",
+    "researchLevel": 3,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/letitgrow",
+    "children": [],
+    "costs": [
+      {
+        "count": 16,
+        "item": "minecraft:kelp"
+      },
+      {
+        "count": 16,
+        "item": "minecraft:seagrass"
+      },
+      {
+        "count": 16,
+        "item": "minecraft:sea_pickle"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:plantation",
+        "level": 2
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/plantationsea",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:technology/theflintstones": {
+    "id": "minecolonies:technology/theflintstones",
+    "name": "Theflintstones",
+    "branch": "minecolonies:technology",
+    "researchLevel": 2,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/stonecake",
+    "children": [
+      "minecolonies:technology/knowtheend"
+    ],
+    "costs": [
+      {
+        "count": 64,
+        "item": "minecraft:brick"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:stonemason",
+        "level": 1
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/blockhutstonesmeltery",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:technology/thoselungs": {
+    "id": "minecolonies:technology/thoselungs",
+    "name": "Thoselungs",
+    "branch": "minecolonies:technology",
+    "researchLevel": 2,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/hot",
+    "children": [],
+    "costs": [
+      {
+        "count": 64,
+        "item": "minecraft:glass"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:smeltery",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/blockhutglassblower",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:technology/tools": {
+    "id": "minecolonies:technology/tools",
+    "name": "Tools",
+    "branch": "minecolonies:technology",
+    "researchLevel": 4,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/skills",
+    "children": [
+      "minecolonies:technology/seemsautomatic"
+    ],
+    "costs": [
+      {
+        "count": 256,
+        "item": "minecraft:iron_ingot"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:blacksmith",
+        "level": 4
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/blockplacespeedmultiplier",
+        "level": 3
+      }
+    ]
+  },
+  "minecolonies:technology/veinminer": {
+    "id": "minecolonies:technology/veinminer",
+    "name": "Veinminer",
+    "branch": "minecolonies:technology",
+    "researchLevel": 2,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/hittingiron",
+    "children": [
+      "minecolonies:technology/goodveins"
+    ],
+    "costs": [
+      {
+        "count": 32,
+        "tag": "minecraft:iron_ores"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:miner",
+        "level": 1
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/moreoresmultiplier",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:technology/warehousemaster": {
+    "id": "minecolonies:technology/warehousemaster",
+    "name": "Warehousemaster",
+    "branch": "minecolonies:technology",
+    "researchLevel": 3,
+    "sortOrder": 2,
+    "parentResearch": "minecolonies:technology/memoryaid",
+    "children": [],
+    "costs": [
+      {
+        "count": 3,
+        "item": "minecolonies:blockminecoloniesrack"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:warehouse",
+        "level": 3
+      },
+      {
+        "type": "minecolonies:alternate-building",
+        "alternate-buildings": [
+          "minecolonies:sawmill",
+          "minecolonies:stonemason"
+        ],
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/recipemodeunlock",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:technology/whatisthisspeed": {
+    "id": "minecolonies:technology/whatisthisspeed",
+    "name": "Whatisthisspeed",
+    "branch": "minecolonies:technology",
+    "researchLevel": 5,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/heavymachinery",
+    "children": [
+      "minecolonies:technology/lightning"
+    ],
+    "costs": [
+      {
+        "count": 1024,
+        "item": "minecraft:redstone"
+      }
+    ],
+    "requirements": [],
+    "effects": [
+      {
+        "id": "minecolonies:effects/blockbreakspeedmultiplier",
+        "level": 4
+      }
+    ]
+  },
+  "minecolonies:technology/whatyaneed": {
+    "id": "minecolonies:technology/whatyaneed",
+    "name": "Whatyaneed",
+    "branch": "minecolonies:technology",
+    "researchLevel": 2,
+    "sortOrder": null,
+    "parentResearch": "minecolonies:technology/hittingiron",
+    "children": [
+      "minecolonies:technology/enhanced_gates1"
+    ],
+    "costs": [
+      {
+        "count": 64,
+        "item": "minecraft:redstone"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:blacksmith",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/blockhutmechanic",
+        "level": 1
+      }
+    ]
+  },
+  "minecolonies:technology/woodwork": {
+    "id": "minecolonies:technology/woodwork",
+    "name": "Woodwork",
+    "branch": "minecolonies:technology",
+    "researchLevel": 1,
+    "sortOrder": 5,
+    "parentResearch": null,
+    "children": [
+      "minecolonies:technology/memoryaid",
+      "minecolonies:technology/sieving",
+      "minecolonies:technology/stringwork"
+    ],
+    "costs": [
+      {
+        "count": 64,
+        "tag": "minecraft:planks"
+      }
+    ],
+    "requirements": [
+      {
+        "type": "minecolonies:building",
+        "building": "minecolonies:lumberjack",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "id": "minecolonies:effects/blockhutsawmill",
+        "level": 1
+      }
+    ]
+  }
+}

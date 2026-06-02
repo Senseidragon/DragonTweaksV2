@@ -26,6 +26,15 @@ out/
 bin/
 !**/src/**/bin/
 
+### Environment / secrets ###
+.env
+*.env
+
+### Python ###
+.venv/
+__pycache__/
+*.pyc
+
 ### VS Code ###
 .vscode/
 
@@ -54,3 +63,6 @@ tools/mcp-poc/sandbox/
 
 # Generated NeoForge stubs
 docs/stubs/
+
+# MineColonies Wiki reference pages (local copy, not committed)
+docs/wiki-ref/

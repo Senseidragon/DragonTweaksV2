@@ -1,7 +1,7 @@
 **Title:** LevelEvent -- world lifecycle event subclass hierarchy
 **Type:** fact
 **Intent triggers:** LevelEvent, level load, level unload, level save, CreateSpawnPosition, PotentialSpawns, world lifecycle, mob spawning candidates
-**Source/evidence:** docs/stubs/net/neoforged/neoforge/event/level/LevelEvent.java, NeoForge 21.1.230 source stub
+**Source:** docs/stubs/net/neoforged/neoforge/event/level/LevelEvent.java, NeoForge 21.1.230 source stub
 **Rule or fact:** LevelEvent is abstract, fired on the NeoForge GAME event bus. All subclasses expose getLevel().
 
 Subclasses:

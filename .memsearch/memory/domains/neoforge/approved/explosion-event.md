@@ -1,7 +1,7 @@
 **Title:** ExplosionEvent -- Start (cancellable) and Detonate (mutable block/entity lists)
 **Type:** fact
 **Intent triggers:** ExplosionEvent, explosion cancel, ExplosionEvent.Start, ExplosionEvent.Detonate, getAffectedBlocks, getAffectedEntities, explosion modifier
-**Source/evidence:** docs/stubs/net/neoforged/neoforge/event/level/ExplosionEvent.java, NeoForge 21.1.230 source stub
+**Source:** docs/stubs/net/neoforged/neoforge/event/level/ExplosionEvent.java, NeoForge 21.1.230 source stub
 **Rule or fact:** ExplosionEvent is abstract, fired on the NeoForge GAME event bus. Provides getLevel() and getExplosion().
 
 Subclasses:

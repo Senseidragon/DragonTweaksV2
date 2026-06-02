@@ -1,7 +1,7 @@
 **Title:** EntityCapability and ItemCapability -- factory, query, and registration API
 **Type:** fact
 **Intent triggers:** EntityCapability, ItemCapability, entity capability, item capability, getCapability entity, registerEntity, registerItem, capability no invalidation
-**Source/evidence:** docs/stubs/net/neoforged/neoforge/capabilities/EntityCapability.java, NeoForge 21.1.230 source stub
+**Source:** docs/stubs/net/neoforged/neoforge/capabilities/EntityCapability.java, NeoForge 21.1.230 source stub
 **Rule or fact:** EntityCapability<T, C> provides access to objects of type T from entities.
 
 Query: entity.getCapability(EntityCapability) -- returns T or null.

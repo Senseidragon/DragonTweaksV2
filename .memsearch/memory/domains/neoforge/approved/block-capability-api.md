@@ -1,7 +1,7 @@
 **Title:** BlockCapability -- querying, providing, and invalidation rules
 **Type:** fact
 **Intent triggers:** BlockCapability, capability, getCapability, RegisterCapabilitiesEvent, invalidateCapabilities, BlockCapabilityCache, registerBlockEntity, registerBlock, capability invalidation
-**Source/evidence:** docs/stubs/net/neoforged/neoforge/capabilities/BlockCapability.java, NeoForge 21.1.230 source stub
+**Source:** docs/stubs/net/neoforged/neoforge/capabilities/BlockCapability.java, NeoForge 21.1.230 source stub
 **Rule or fact:** BlockCapability<T, C> provides flexible access to objects of type T at a block position.
 
 Querying:

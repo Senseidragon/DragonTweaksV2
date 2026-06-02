@@ -1,7 +1,7 @@
 **Title:** BlockEvent -- block lifecycle event subclass hierarchy
 **Type:** fact
 **Intent triggers:** BlockEvent, BreakEvent, EntityPlaceEvent, NeighborNotifyEvent, FluidPlaceBlockEvent, FarmlandTrampleEvent, PortalSpawnEvent, BlockToolModificationEvent, block break cancel, block place cancel
-**Source/evidence:** docs/stubs/net/neoforged/neoforge/event/level/BlockEvent.java, NeoForge 21.1.230 source stub
+**Source:** docs/stubs/net/neoforged/neoforge/event/level/BlockEvent.java, NeoForge 21.1.230 source stub
 **Rule or fact:** BlockEvent is abstract, fired on the NeoForge GAME event bus. All subclasses expose getLevel(), getPos(), getState().
 
 Subclasses:
