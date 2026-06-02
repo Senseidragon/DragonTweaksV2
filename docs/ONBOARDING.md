@@ -2,7 +2,7 @@
 
 ## Overview
 
-DragonTweaksV2 is a NeoForge mod for Minecraft 1.21.1, authored by SenseiDragon. It is currently at example/scaffold level — the mod loads, registers config, and logs lifecycle events, but no gameplay features are implemented yet. The codebase is set up as a clean foundation ready for feature development.
+DragonTweaksV2 is a NeoForge mod for Minecraft 1.21.1, authored by SenseiDragon. The mod is in active development with dual-domain memory (NeoForge + MineColonies), MineColonies integration wired as a `compileOnly` dependency, and an immersion-first advisor system in design. The codebase follows standard NeoForge patterns with comprehensive API documentation and gameplay context extracted from the MineColonies Wiki.
 
 ## Tech Stack
 
@@ -17,13 +17,15 @@ DragonTweaksV2 is a NeoForge mod for Minecraft 1.21.1, authored by SenseiDragon.
 
 ## Key Source Files
 
-There are currently only 3 Java files — the entire mod is scaffold:
+Core mod structure (3 primary Java files):
 
 | File | Purpose |
 |------|---------|
 | `DragonTweaksV2.java` | `@Mod` entry point. Wires mod bus listeners, registers config, subscribes to game bus events. |
-| `DragonTweaksV2Client.java` | Client-only code. Must never load on a dedicated server. |
+| `DragonTweaksV2Client.java` | Client-only code. Must never load on a dedicated server. Registers config GUI. |
 | `Config.java` | `ModConfigSpec` wrapper. Add config values here. Reacts to `ModConfigEvent` on reload. |
+
+Additional integration: MineColonies API wired as `compileOnly` dependency (v1.1.1299). Source stubs in `docs/stubs/minecolonies/`.
 
 ## Architecture
 
@@ -66,13 +68,18 @@ No test framework is configured — `./gradlew test` finds nothing.
 
 ## Memory & Knowledge System
 
-This project runs a MemSearch vector memory system backed by Milvus. Before any external reasoning, query it first:
+This project runs a MemSearch vector memory system backed by Milvus with 1110+ approved entries across multiple domains. Before any external reasoning, query it first:
 
 ```bash
 memsearch search "<query>" --top-k 5 -c ms_dragontweaksv2_4403422f
 ```
 
-NeoForge API knowledge lives in `.memsearch/memory/domains/neoforge/approved/`. Operating procedures are in `docs/framework/`. Use `docs/STUB_INDEX.md` to find NeoForge source stubs without bulk-loading them.
+**Domain Organization:**
+- **NeoForge domain** (`.memsearch/memory/domains/neoforge/approved/`) — Mod loader, event system, capabilities, registration APIs
+- **MineColonies domain** (`.memsearch/memory/domains/minecolonies/approved/`) — API layer (IColony, ICitizenData, IJob, IBuilding, IWorkOrder, etc.) + 65 wiki-derived gameplay/immersion entries covering buildings, research, citizen systems
+- **Framework domain** — Operating procedures in `docs/framework/`
+
+To find NeoForge source stubs without bulk-loading, see `.memsearch/memory/domains/neoforge/approved/` for API documentation or query the system directly.
 
 ## Conventions
 

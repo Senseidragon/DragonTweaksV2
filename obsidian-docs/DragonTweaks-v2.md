@@ -6,7 +6,7 @@ type: map-of-content
 # DragonTweaks V2 — Map of Content
 
 **Mod ID:** `dragontweaksv2` | **Author:** SenseiDragon | **Platform:** NeoForge 21.1.230 / Minecraft 1.21.1 / Java 21
-**Status:** Scaffold — loads, logs, config registered; no gameplay features implemented yet.
+**Status:** Active development — dual-domain memory (NeoForge + MineColonies), MineColonies integration wired, advisor system in design.
 
 ## Architecture
 - [[DragonTweaksV2-Main]] — `@Mod` entry point, event bus wiring, server lifecycle
@@ -29,7 +29,8 @@ type: map-of-content
 - [[Compliance-Testing]] — Model probe suite; scores instruction-following before models enter rotation
 
 ## MineColonies Integration
-- [[MineColonies-API]] — Deferred: MineColonies mod API integration layer
+- [[MineColonies-API]] — Integration layer: API reference (IColony, ICitizenData, IJob, IBuilding, IWorkOrder, research trees) + 65 wiki-derived gameplay/immersion entries
+- [[MineColonies-Domain]] — Domain memory status: 1110+ approved entries (API + gameplay)
 - [[Research-Tree]] — Planned: custom research nodes in University tree
 
 ## Blueprints
