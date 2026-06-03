@@ -69,3 +69,8 @@ docs/wiki-ref/
 
 # Dependency JARs
 libs/*.jar
+
+# MemSearch pipeline runtime artifacts
+.memsearch/candidates/
+.memsearch/test-quarantine/
+review-patches/

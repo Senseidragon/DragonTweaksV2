@@ -1,0 +1,82 @@
+$dir = "C:\Users\sense\Desktop\DragonTweaksV2\.memsearch\memory\domains\minecolonies\candidates\extracted"
+New-Item -ItemType Directory -Force -Path $dir | Out-Null
+
+# Candidate 1: Colony permissions system
+Set-Content "$dir\colony-permissions-2026-06-01.md" -Encoding UTF8 @'
+## Candidate 1
+
+Domain: MineColonies
+Change type: ADD
+Title: Colony permissions -- IPermissions, Rank, ColonyPlayer, Action
+Type: fact
+Intent triggers: IPermissions, colony member, player rank, isColonyMember, getRank, ColonyPlayer, Action, OWNER_RANK_ID, hasPermission, getPlayers, getPlayersByRank
+**Source:** [[docs/api/minecolonies/colony/permissions/IPermissions.java]], [[docs/api/minecolonies/colony/permissions/Rank.java]], [[docs/api/minecolonies/colony/permissions/ColonyPlayer.java]], [[docs/api/minecolonies/colony/permissions/Action.java]]
+Proposed fact/rule:
+IPermissions is the colony permission system; access via IColony.getPermissions().
+
+Pre-defined rank ID constants on IPermissions:
+  OWNER_RANK_ID=0, OFFICER_RANK_ID=1, FRIEND_RANK_ID=2, NEUTRAL_RANK_ID=3, HOSTILE_RANK_ID=4
+
+Membership and rank checks:
+  boolean member = colony.getPermissions().isColonyMember(player);
+  Rank rank = colony.getPermissions().getRank(player);       // Player overload
+  Rank rank = colony.getPermissions().getRank(playerUUID);   // UUID overload
+  boolean isOwner = rank.getId() == IPermissions.OWNER_RANK_ID;
+
+Named rank accessors (no magic numbers):
+  permissions.getRankOwner(), getRankOfficer(), getRankFriend(), getRankNeutral(), getRankHostile()
+
+Rank fields: getId(), getName(), isColonyManager(), isHostile(), isInitial(), getPermissions() (long bitmask)
+
+ColonyPlayer: data holder {UUID id, String name, Rank rank}.
+  getPlayers() -> Map<UUID, ColonyPlayer>
+  getPlayersByRank(Rank) -> Set<ColonyPlayer>
+  getFilteredPlayers(Predicate<Rank>) -> Set<ColonyPlayer>
+
+Action enum: bit-flag permissions. Notable values:
+  ACCESS_HUTS, MANAGE_HUTS, EDIT_PERMISSIONS, RECEIVE_MESSAGES, ATTACK_CITIZEN, TELEPORT_TO_COLONY
+  Check: permissions.hasPermission(player, Action.RECEIVE_MESSAGES)
+
+Key rule: IPermissions is server-side only. IColonyView provides limited client-side read.
+
+Reason flagged: Critical gap for advisor system -- gates member/officer checks and RECEIVE_MESSAGES permission before showing advisor content.
+Durability concern: Low -- direct source read from MineColonies API.
+Recommended action: APPROVE
+'@
+
+# Candidate 2: MineColonies internal event bus
+Set-Content "$dir\mod-event-bus-2026-06-01.md" -Encoding UTF8 @'
+## Candidate 2
+
+Domain: MineColonies
+Change type: ADD
+Title: MineColonies internal event bus -- EventBus, IModEvent, subscribe/post pattern
+Type: fact
+Intent triggers: EventBus, IModEvent, subscribe, post, DefaultEventBus, getEventBus, MineColonies event listener, colony event hook
+**Source:** [[docs/api/minecolonies/eventbus/EventBus.java]], [[docs/api/minecolonies/eventbus/IModEvent.java]], [[docs/api/minecolonies/eventbus/DefaultEventBus.java]]
+Proposed fact/rule:
+MineColonies has an internal event bus separate from NeoForge events. Access via:
+  IMinecoloniesAPI.getInstance().getEventBus()
+
+Subscribing to an event:
+  IMinecoloniesAPI.getInstance().getEventBus()
+      .subscribe(SomeModEvent.class, event -> { /* handler */ });
+
+IModEvent: marker interface with getEventId() -> UUID.
+All MineColonies internal events implement IModEvent.
+
+DefaultEventBus: stores handlers in a Map<Class, List<EventHandler>>; dispatches by exact class match.
+Exceptions in handlers are caught and logged as warnings -- they do not stop other handlers.
+
+Key rules:
+- Subscribe during mod init (e.g. FMLCommonSetupEvent), not on every tick.
+- Handler lambda is EventBus.EventHandler<T> -- a @FunctionalInterface.
+- IColonyEvent (raid/spawn events) uses a separate per-colony event manager, NOT this bus.
+  Use this bus only for IModEvent implementations broadcast mod-wide.
+
+Reason flagged: Gap for advisor system -- needed to hook into MineColonies-level events mod-wide.
+Durability concern: Low -- direct source read from MineColonies API.
+Recommended action: APPROVE
+'@
+
+Write-Host "Both candidates written."
