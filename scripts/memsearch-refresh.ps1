@@ -1,4 +1,4 @@
-$ErrorActionPreference = "Stop"
+﻿$ErrorActionPreference = "Stop"
 $env:PYTHONUTF8 = "1"
 
 $milvusDir   = "C:\Users\sense\.memsearch\milvus-docker"
@@ -13,6 +13,29 @@ docker compose up -d
 
 Write-Host "[2/4] Reindexing project memory into Claude Code plugin collection ($collection)..."
 Set-Location $repoRoot
+
+# INDEXING INVARIANT - READ BEFORE MODIFYING THIS PATH LIST
+#
+# Only approved/ subdirectories and explicitly approved seed/daily files may
+# appear in the memsearch index command below. This list IS the enforcement
+# boundary.
+#
+# PERMITTED paths:
+#   - Named seed/daily files (e.g. seed-framework-rules.md, 2026-05-25.md)
+#   - <domain>/approved/ and projects/<project>/approved/ directories
+#
+# PROHIBITED paths - never add these, even temporarily:
+#   - .memsearch/memory/      (indexes everything, including unsafe subtrees)
+#   - .memsearch/             (same problem, wider scope)
+#   - Any path containing: deprecated/  candidates/  rejected/  raw/
+#
+# WHY: Index: false in a memory file is policy metadata only. Memsearch does
+# NOT honor it at index time. Path selection here is the only technical
+# barrier preventing deprecated, candidate, and rejected entries from
+# polluting the live collection and being recalled as authoritative facts.
+#
+# If pending-reindex.txt names a path outside the approved list, STOP and
+# report to Dragon. Do not add it here without explicit authorization.
 memsearch index `
     "$memoryDir\seed-framework-rules.md" `
     "$memoryDir\2026-05-25.md" `
