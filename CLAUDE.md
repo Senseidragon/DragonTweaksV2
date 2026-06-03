@@ -91,4 +91,5 @@ The Obsidian vault at `obsidian-docs/` is the human-readable counterpart to the 
 
 ## Stub Library
 
-NeoForge 21.1.230 source stubs are in `docs/stubs/`. Do not bulk-load stubs. Use `docs/STUB_INDEX.md` to find the relevant package, then load only the specific file(s) needed for the current task.
+NeoForge 21.1.230 source stubs are in `docs/stubs/`. Do not bulk-load stubs. Query domain memory first (`memsearch search "<query>" -c ms_dragontweaksv2_4403422f`) — each approved entry's `Source` field points to
+   the exact stub file if deeper inspection is needed.
