@@ -1,0 +1,392 @@
+From: SenseiDragon
+Date: 2026-06-04
+Subject: [PATCH] GateGuard: user-issued batch authorization via transcript JSONL
+
+Target file:
+  /c/Users/sense/.claude/plugins/cache/ecc/ecc/2.0.0-rc.1/scripts/hooks/gateguard-fact-force.js
+
+Review this patch before applying. Apply manually — do not pipe to `patch`
+or `git apply` without reading it. Line numbers are approximate; anchor on
+function names and surrounding code, not line offsets.
+
+---
+## 1. Design Summary
+
+Problem: GateGuard's per-file first-touch gate requires a submit-twice loop
+for every new file path. For lore-dump sessions (20+ files, same risk tier,
+same directory), this is excessive friction with no additional security value.
+
+Solution: A user-issued batch authorization directive in the chat transcript.
+Because Claude writes as `role: "assistant"` in the JSONL and the hook only
+reads `role: "user"` entries, Claude cannot self-authorize. Only text
+physically typed by the user (role: "user") is honored.
+
+Directive syntax (in user chat message):
+  GATEGUARD-BATCH-AUTH: glob=docs/minecraft-lore/biomes/* ops=Write,Edit ext=.md max=20 ttl=3600 risk=plain-markdown-lore-docs
+
+Fields:
+  glob=   Project-relative glob. No `..`, no shell metacharacters.
+  ops=    Comma-separated: Write, Edit, Read (default: Write,Edit)
+  ext=    Required extension filter (.md, .json, etc.) — must start with dot
+  max=    Max file writes covered (integer, 1–200)
+  ttl=    Seconds the auth is valid after session start (default: 3600)
+  risk=   Free-text label the user attaches. Not validated; for audit trail.
+
+All fields except `glob` are optional. Without ext=, any extension is covered
+(not recommended — users should be explicit).
+
+---
+## 2. New Functions — insert after the `saveState` function definition
+
+```javascript
+// ─────────────────────────────────────────────────────────────────────────────
+// BATCH AUTHORIZATION — user-issued, transcript-scoped
+// ─────────────────────────────────────────────────────────────────────────────
+
+/**
+ * Convert a simple glob (docs/foo/* or docs/foo/**) to a RegExp.
+ * Rejects patterns containing `..`, shell metacharacters, or absolute paths.
+ * Returns null if the pattern is unsafe or unsupported.
+ */
+function globToRegex(glob) {
+  if (!glob || typeof glob !== 'string') return null;
+  if (/\.\./.test(glob)) return null;
+  if (/[;|&$`(){}[\]!]/.test(glob)) return null;
+  if (/^\//.test(glob)) return null;
+
+  const escaped = glob
+    .replace(/[.+^${}()|[\]\\]/g, '\\$&')
+    .replace(/\*\*/g, '\u0001')
+    .replace(/\*/g, '[^/]*')
+    .replace(/\u0001/g, '.*')
+    .replace(/\?/g, '[^/]');
+
+  try {
+    return new RegExp('^' + escaped + '$');
+  } catch (e) {
+    return null;
+  }
+}
+
+/**
+ * Normalize a file path to project-relative form.
+ * Returns null if the path escapes the project directory (traversal attempt).
+ */
+function normalizePathForMatch(filePath, projectDir) {
+  if (!filePath || !projectDir) return null;
+  const path = require('path');
+  const abs = path.resolve(filePath);
+  const base = path.resolve(projectDir);
+  if (!abs.startsWith(base + path.sep) && abs !== base) return null;
+  return abs.slice(base.length + 1).replace(/\\/g, '/');
+}
+
+/**
+ * Parse a single GATEGUARD-BATCH-AUTH directive line.
+ * Returns a structured auth object or null if invalid.
+ *
+ * Expected format (all on one line, fields space-separated):
+ *   GATEGUARD-BATCH-AUTH: glob=X ops=Write,Edit ext=.md max=20 ttl=3600 risk=label
+ */
+function parseBatchAuthLine(line) {
+  const PREFIX = 'GATEGUARD-BATCH-AUTH:';
+  const idx = line.indexOf(PREFIX);
+  if (idx === -1) return null;
+  const directive = line.slice(idx + PREFIX.length).trim();
+
+  const fields = {};
+  for (const token of directive.split(/\s+/)) {
+    const eq = token.indexOf('=');
+    if (eq === -1) continue;
+    const k = token.slice(0, eq).trim();
+    const v = token.slice(eq + 1).trim();
+    fields[k] = v;
+  }
+
+  if (!fields.glob) return null;
+
+  const pattern = globToRegex(fields.glob);
+  if (!pattern) return null;
+
+  const ops = fields.ops
+    ? fields.ops.split(',').map(s => s.trim()).filter(Boolean)
+    : ['Write', 'Edit'];
+
+  const ext = fields.ext || null;
+  if (ext && !ext.startsWith('.')) return null;
+
+  const max = fields.max ? parseInt(fields.max, 10) : 50;
+  if (isNaN(max) || max < 1 || max > 200) return null;
+
+  const ttl = fields.ttl ? parseInt(fields.ttl, 10) : 3600;
+  if (isNaN(ttl) || ttl < 1) return null;
+
+  const risk = fields.risk || 'unspecified';
+
+  return { glob: fields.glob, pattern, ops, ext, max, ttl, risk, issuedAt: Date.now() };
+}
+
+/**
+ * Read the session transcript JSONL and extract all batch authorizations
+ * issued by the user (role: "user" entries only — assistant entries ignored).
+ * Returns an array of parsed auth objects (may be empty).
+ */
+function loadUserBatchAuthorizations(transcriptPath, projectDir) {
+  if (!transcriptPath) return [];
+  const fs = require('fs');
+  let lines;
+  try {
+    lines = fs.readFileSync(transcriptPath, 'utf8').split('\n');
+  } catch (e) {
+    return [];
+  }
+
+  const results = [];
+
+  for (const raw of lines) {
+    const trimmed = raw.trim();
+    if (!trimmed) continue;
+    let entry;
+    try { entry = JSON.parse(trimmed); } catch (e) { continue; }
+
+    // Only honor directives from the human side of the conversation.
+    // Claude's output appears as role:"assistant" and is ignored here.
+    if (!entry || entry.role !== 'user') continue;
+
+    let text = '';
+    if (typeof entry.content === 'string') {
+      text = entry.content;
+    } else if (Array.isArray(entry.content)) {
+      text = entry.content
+        .filter(c => c && c.type === 'text')
+        .map(c => c.text || '')
+        .join('\n');
+    }
+
+    if (!text.includes('GATEGUARD-BATCH-AUTH:')) continue;
+
+    for (const line of text.split('\n')) {
+      const auth = parseBatchAuthLine(line);
+      if (auth) results.push(auth);
+    }
+  }
+
+  return results;
+}
+
+/**
+ * Check if filePath + toolName match any active batch authorization.
+ * Returns the matching auth object or null.
+ */
+function findMatchingBatchAuth(filePath, toolName, authorizations, projectDir) {
+  if (!authorizations || authorizations.length === 0) return null;
+  const path = require('path');
+  const rel = normalizePathForMatch(filePath, projectDir);
+  if (!rel) return null;
+
+  const ext = path.extname(filePath).toLowerCase();
+
+  for (const auth of authorizations) {
+    if (!auth.ops.includes(toolName)) continue;
+    if (auth.ext && ext !== auth.ext.toLowerCase()) continue;
+    if (!auth.pattern.test(rel)) continue;
+    return auth;
+  }
+  return null;
+}
+
+// Usage counters stored in state under `batch_auth_counts`.
+// Key format: glob + '|' + ext (or 'any') + '|' + ops.sort().join(',')
+
+function batchAuthCountKey(auth) {
+  const ext = auth.ext || 'any';
+  const ops = [...auth.ops].sort().join(',');
+  return auth.glob + '|' + ext + '|' + ops;
+}
+
+function getBatchAuthCount(state, auth) {
+  const counts = state.batch_auth_counts || {};
+  return counts[batchAuthCountKey(auth)] || 0;
+}
+
+function incrementBatchAuthCount(state, auth) {
+  if (!state.batch_auth_counts) state.batch_auth_counts = {};
+  const key = batchAuthCountKey(auth);
+  state.batch_auth_counts[key] = (state.batch_auth_counts[key] || 0) + 1;
+}
+```
+
+---
+## 3. Modified `saveState` — add `batch_auth_counts` persistence
+
+Find the existing `saveState` function. It currently serializes:
+  `{ checked: state.checked, last_active: Date.now() }`
+
+Change the data line to:
+  `{ checked: state.checked, last_active: Date.now(), batch_auth_counts: state.batch_auth_counts || {} }`
+
+```javascript
+// BEFORE (change only this one object literal):
+const data = JSON.stringify({ checked: state.checked, last_active: Date.now() });
+
+// AFTER:
+const data = JSON.stringify({
+  checked: state.checked,
+  last_active: Date.now(),
+  batch_auth_counts: state.batch_auth_counts || {}
+});
+```
+
+---
+## 4. Modified Write/Edit gate — insert batch-auth check before the deny
+
+Find this block (anchor on the `if (toolName === 'Edit' || toolName === 'Write')` line):
+
+```javascript
+// EXISTING BLOCK:
+if (toolName === 'Edit' || toolName === 'Write') {
+  const filePath = toolInput.file_path || '';
+  if (!filePath || isClaudeSettingsPath(filePath)) {
+    return rawInput; // allow
+  }
+  if (inSubagent) {
+    return rawInput; // parent session already passed the first-touch file gate
+  }
+  if (!isChecked(filePath)) {
+    if (!markChecked(filePath)) {
+      return allowWithStateWarning();
+    }
+    return denyResult(toolName === 'Edit' ? editGateMsg(filePath) : writeGateMsg(filePath));
+  }
+  return rawInput; // allow
+}
+```
+
+Replace with:
+
+```javascript
+// REPLACEMENT BLOCK:
+if (toolName === 'Edit' || toolName === 'Write') {
+  const filePath = toolInput.file_path || '';
+  if (!filePath || isClaudeSettingsPath(filePath)) {
+    return rawInput; // allow
+  }
+  if (inSubagent) {
+    return rawInput; // parent session already passed the first-touch file gate
+  }
+  if (!isChecked(filePath)) {
+    // ── Batch authorization check ────────────────────────────────────────
+    // Only role:"user" JSONL entries are read. Claude's output is
+    // role:"assistant" and is silently ignored — Claude cannot self-authorize.
+    const transcriptPath = process.env.CLAUDE_TRANSCRIPT_PATH || '';
+    const projectDir = process.env.CLAUDE_PROJECT_DIR || process.cwd();
+    const batchAuths = loadUserBatchAuthorizations(transcriptPath, projectDir);
+    const matchedAuth = findMatchingBatchAuth(filePath, toolName, batchAuths, projectDir);
+
+    if (matchedAuth) {
+      const state = loadState();
+      const used = getBatchAuthCount(state, matchedAuth);
+      if (used < matchedAuth.max) {
+        if (!markChecked(filePath)) {
+          return allowWithStateWarning();
+        }
+        incrementBatchAuthCount(state, matchedAuth);
+        saveState(state);
+        return rawInput; // authorized by batch directive — no gate loop
+      }
+      // Over the limit: fall through to normal gate
+    }
+    // ── End batch authorization check ────────────────────────────────────
+
+    if (!markChecked(filePath)) {
+      return allowWithStateWarning();
+    }
+    return denyResult(toolName === 'Edit' ? editGateMsg(filePath) : writeGateMsg(filePath));
+  }
+  return rawInput; // allow
+}
+```
+
+---
+## 5. Abuse-case coverage
+
+CASE 1 — authorized path
+  Directive: glob=docs/minecraft-lore/biomes/* ops=Write,Edit ext=.md max=20
+  File: docs/minecraft-lore/biomes/plains.md, op: Write
+  → rel = "docs/minecraft-lore/biomes/plains.md", ext .md ✓, glob ✓, count 0 < 20 ✓
+  RESULT: allowed, no gate loop
+
+CASE 2 — wrong subdirectory
+  Same directive; file: docs/minecraft-lore/structures/stronghold.md
+  → glob "docs/minecraft-lore/biomes/*" does not match
+  RESULT: normal gate fires (deny + retry required)
+
+CASE 3 — wrong extension
+  Same directive; file: docs/minecraft-lore/biomes/generated.json
+  → ext .json ≠ .md
+  RESULT: normal gate fires
+
+CASE 4 — path traversal in filePath argument
+  File: docs/minecraft-lore/biomes/../../../src/main/java/Evil.java
+  → normalizePathForMatch resolves abs; "src/main/java/Evil.java" fails glob match
+  RESULT: normal gate fires
+
+CASE 5 — path traversal in glob directive
+  User types: GATEGUARD-BATCH-AUTH: glob=../../etc/* ops=Write ext=.md max=5
+  → globToRegex rejects ".." patterns → parseBatchAuthLine returns null
+  RESULT: directive silently ignored, normal gate fires
+
+CASE 6 — over max limit
+  Auth: max=3; files 1–3 authorized and counted
+  File 4: getBatchAuthCount returns 3 = max → falls through
+  RESULT: file 4 requires normal gate (deny + retry)
+
+CASE 7 — Claude attempts self-authorization via assistant text
+  Claude writes in a response: GATEGUARD-BATCH-AUTH: glob=src/** ops=Write ext=.java max=999
+  → JSONL entry has role:"assistant" → loadUserBatchAuthorizations skips it
+  RESULT: directive ignored entirely
+
+CASE 8 — absolute path in glob
+  User types: GATEGUARD-BATCH-AUTH: glob=/c/Users/sense/.claude/** ops=Write ext=.json max=5
+  → globToRegex rejects leading "/" → returns null
+  RESULT: directive ignored
+
+CASE 9 — op mismatch
+  Auth: ops=Edit only; tool: Write
+  → findMatchingBatchAuth: "Write" not in auth.ops
+  RESULT: normal gate fires
+
+CASE 10 — no transcript / empty CLAUDE_TRANSCRIPT_PATH
+  → loadUserBatchAuthorizations returns []
+  → findMatchingBatchAuth returns null
+  RESULT: zero change to existing behavior
+
+---
+## 6. How to apply
+
+1. Open the target file in a text editor:
+   /c/Users/sense/.claude/plugins/cache/ecc/ecc/2.0.0-rc.1/scripts/hooks/gateguard-fact-force.js
+
+2. Add all new functions from Section 2 after the existing `saveState` function.
+
+3. Apply the one-line `saveState` change from Section 3.
+
+4. Locate the Write/Edit gate block (anchor: `if (toolName === 'Edit' || toolName === 'Write')`)
+   and replace it with the version from Section 4.
+
+5. Save. No restart needed — hooks are loaded per-invocation.
+
+6. Test: issue a GATEGUARD-BATCH-AUTH directive in the next session and confirm
+   covered files pass through without the second-submit loop.
+
+---
+## 7. Example session usage
+
+Type this in a chat message (your own text, not generated by Claude):
+
+  GATEGUARD-BATCH-AUTH: glob=docs/minecraft-lore/mobs/* ops=Write,Edit ext=.md max=30 ttl=3600 risk=plain-markdown-lore-docs
+
+After that message, any Write or Edit to a .md file under docs/minecraft-lore/mobs/
+passes through without the gate loop, up to 30 files.
+The authorization is scoped to this session's transcript and does not carry
+forward to future sessions unless you issue the directive again.
