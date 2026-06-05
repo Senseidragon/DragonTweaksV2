@@ -31,6 +31,7 @@ public class OpenRouterService {
     private final ExecutorService executor;
 
     private volatile boolean enabled = false;
+    private volatile String failureReason = null;
     private String apiKey;
     private String flavorModelId;
     private String advisoryModelId;
@@ -63,6 +64,7 @@ public class OpenRouterService {
             } catch (Exception ex) {
                 String reason = ex.getMessage() != null ? ex.getMessage() : "unexpected error";
                 LOGGER.debug("OpenRouter init failed: {}", reason);
+                failureReason = reason;
                 onFailure.accept(reason);
             }
         }, executor);
@@ -129,6 +131,7 @@ public class OpenRouterService {
     }
 
     public boolean isEnabled() { return enabled; }
+    public String getFailureReason() { return failureReason; }
     public String getFlavorModelId() { return flavorModelId; }
     public String getAdvisoryModelId() { return advisoryModelId; }
 

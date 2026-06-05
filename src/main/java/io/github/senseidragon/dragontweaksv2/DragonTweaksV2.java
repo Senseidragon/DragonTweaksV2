@@ -10,6 +10,7 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 import org.slf4j.Logger;
@@ -44,6 +45,17 @@ public class DragonTweaksV2 {
                 )
             );
         });
+    }
+
+    @SubscribeEvent
+    public void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
+        OpenRouterService service = OpenRouterService.getInstance();
+        String reason = service.getFailureReason();
+        if (reason != null) {
+            event.getEntity().sendSystemMessage(
+                Component.literal("[DragonTweaks] AI advisor unavailable — " + reason)
+            );
+        }
     }
 
     @SubscribeEvent
