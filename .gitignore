@@ -29,6 +29,7 @@ bin/
 ### Environment / secrets ###
 .env
 *.env
+model_config.json
 
 ### Python ###
 .venv/
