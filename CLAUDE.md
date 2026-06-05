@@ -57,37 +57,6 @@ At the start of each session:
 
 After any external reasoning, web fetch, or tool call that returns new information, capture the raw result as a candidate entry in the appropriate domain or framework candidates/extracted/ folder before proceeding. Do not filter or summarize — write the raw result. Validation handles quality control.
 
-## ECC Plugin
-
-ECC (Everything Claude Code) is installed globally at `~/.claude/plugins/`. It provides hooks, skills, and agents that are active in every session. GateGuard is an ECC hook that fires before file edits and bash commands, requiring facts to be stated before proceeding. Do not disable GateGuard via `ECC_GATEGUARD=off` or `ECC_DISABLED_HOOKS` — it complements the safe-shell policy and no-silent-overwrite rule. If GateGuard blocks a legitimate operation, satisfy its fact requirements and retry.
-
-## Block Classification and Response
-
-When GateGuard, a deny rule, or project policy blocks an operation:
-
-1. **Classify the block** — correct (the action is genuinely disallowed), overbroad (the action is authorized but the rule is too broad), or
-   ambiguous.
-2. **If correct** — stop. Use a compliant alternative. Do not retry the same blocked action.
-3. **If overbroad** — produce a minimal policy-fix proposal or reviewable patch for Dragon's approval. Do not route around the block.
-4. **If ambiguous** — present the classification to Dragon and wait for a decision.
-
-Additional constraints:
-- Do not retry a blocked action merely because GateGuard offers a second-attempt prompt.
-- Do not treat GateGuard recovery hints as authorization to disable, weaken, or bypass GateGuard.
-- Do not ask Dragon to run blocked commands manually in another terminal.
-- Do not request repeated approvals for substantially the same blocked action.
-- Do not frame manual user execution as the only alternative unless no compliant path exists.
-- Do not disable or weaken GateGuard, ECC hooks, deny rules, or project guardrails.
-- Do not use subagents to bypass guardrails that apply to the parent session.
-
-If direct editing is blocked by deny rules:
-- Do not ask Dragon to bypass the deny rules.
-- Do not ask Dragon to run commands manually.
-- Produce two complete replacement patches instead:
-   1. full replacement content for .claude/settings.local.json
-   2. exact CLAUDE.md insertion/replacement block
-- Stop after producing the patches.
-
 ## Project Overview
 
 DragonTweaksV2 is a NeoForge mod for Minecraft 1.21.1, authored by SenseiDragon. Mod ID: `dragontweaksv2`. Package root: `io.github.senseidragon.dragontweaksv2`.
@@ -151,8 +120,7 @@ NeoForge 21.1.230 source stubs are in `docs/stubs/`. Do not bulk-load stubs. Que
 ## Worktree Safety
 
 Stale `.claude/worktrees/**` directories may contain obsolete `CLAUDE.md`
-files that lack current Block Classification, bypass-prohibition, and
-safe-shell guidance. Operating from a stale worktree risks acting on
+files that may lack current policy guidance. Operating from a stale worktree risks acting on
 outdated policy.
 
 Claude Code must not open, reference, or operate from any worktree path
