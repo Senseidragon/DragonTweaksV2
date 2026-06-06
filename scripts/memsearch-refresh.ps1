@@ -42,6 +42,7 @@ memsearch index `
     "$memoryDir\framework\approved" `
     "$memoryDir\domains\neoforge\approved" `
     "$memoryDir\domains\minecolonies\approved" `
+    "$memoryDir\domains\minecraft\approved" `
     "$memoryDir\projects\dragontweaksv2\approved" `
     --force -c $collection
 

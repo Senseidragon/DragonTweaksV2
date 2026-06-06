@@ -1,12 +1,139 @@
 ---
 source_url: https://minecraft.wiki/w/Armadillo
-retrieved_at: 2026-06-04T22:39:08.068Z
+retrieved_at: 2026-06-05T15:00:00.000Z
 source_version: "1.21.1"
 tool: firecrawl
 format: markdown
 content_hash: 8e8485cc4d2f5ac3c4ddf81b0d143f48482c1f18e1dc6a8ed8ed3c039fd73cfc
 source_type: official_wiki
+repaired_at: 2026-06-05
+repair_reason: original entry truncated -- drops, behavior, breeding, and entity data were missing
 ---
+
+# Armadillo
+
+A passive mob found in badlands and savannas. Rolls up when hurt or threatened. The only source
+of armadillo scutes. Repels spiders and cave spiders.
+
+## Stats
+
+- Health: 12 HP (6 hearts)
+- Behavior: Passive
+- Mob type: Animal
+- Speed: 0.14
+- Hitbox (adult): 0.65 blocks tall, 0.7 blocks wide
+- Hitbox (baby): 0.39 blocks tall, 0.42 blocks wide
+
+## Spawning
+
+- Savannas, savanna plateaus, windswept savannas: groups of 2-3 (JE) / 4 (BE)
+- Badlands, eroded badlands, wooded badlands: groups of 1-2
+- Light level: 9+ (JE) / 7+ (BE)
+- Bedrock Edition: 5% chance to spawn as baby
+
+## Drops
+
+### Passive scute shedding
+
+Armadillos drop 1 armadillo scute every 5-10 minutes automatically, similar to chickens laying eggs.
+
+### On death
+
+- 1-3 XP if killed by a player or tamed wolf
+- Killing a baby armadillo yields no items or XP
+
+### Brushing
+
+- Use a brush on an armadillo to obtain 1 armadillo scute
+- Each brush use costs 16 durability
+- An unenchanted brush yields 4 scutes (JE) / 5 scutes (BE) before breaking
+- Dispensers can also brush armadillos
+
+### Breeding XP
+
+- 1-7 XP orbs dropped on successful breed
+
+## Behavior
+
+### Spider repulsion
+
+Spiders and cave spiders flee from armadillos within 6 blocks. Only applies when the armadillo
+is not rolled up.
+
+### Rolling up
+
+Triggers when the armadillo is:
+- Hurt
+- Near undead mobs
+- Near players who are sprinting or riding anything
+
+While rolled up:
+- Does not walk, cannot eat, not tempted by food
+- Damage reduced: (original damage - 1) / 2
+- Occasionally peeks out to check for threats
+- Unrolls after detecting no threats for 3 seconds (60 ticks)
+- Unrolls immediately if it touches water or is attached to a lead
+
+Does NOT roll up when:
+- Fleeing
+- In water
+- On fire (exception: campfires do trigger roll-up)
+- In the air
+- Being led
+
+Threat detection range: hitbox inflated by 7 blocks horizontally and 2 blocks vertically.
+
+### Breeding
+
+- Bred with spider eyes
+- Follows players holding spider eyes within 10 blocks (JE) / 16 blocks (BE)
+- Baby armadillos follow adults
+- Baby growth time: 24000 ticks (20 minutes)
+- Growth accelerated by spider eyes: each use removes 10% of remaining growth time
+- Breeding cooldown: 5 minutes
+- If armadillo rolls up after being fed but before reaching its mate, willingness is lost;
+  must be fed another spider eye
+
+## Entity Data (Java Edition)
+
+- scute_time (Int): ticks until next scute drop; resets to random value between 6000-12000
+- state (String): current posture
+  - "idle" -- standing normally, not rolled up
+  - "scared" -- rolled up, threatened
+  - "unrolling" -- playing unroll animation, exiting scared state
+  - Any other value defaults to idle behavior
+
+## Sound Identifiers (Java Edition)
+
+| Event | Identifier |
+|-------|-----------|
+| Ambient | entity.armadillo.ambient |
+| Death | entity.armadillo.death |
+| Hurt (unrolled) | entity.armadillo.hurt |
+| Hurt (rolled up) | entity.armadillo.hurt_reduced |
+| Eat | entity.armadillo.eat |
+| Footstep | entity.armadillo.step |
+| Rolls up (lands) | entity.armadillo.land |
+| Peeks | entity.armadillo.peek |
+| Rolls up | entity.armadillo.roll |
+| Starts unrolling | entity.armadillo.unroll_start |
+| Finishes unrolling | entity.armadillo.unroll_finish |
+| Brushed | entity.armadillo.brush |
+| Scute shed | entity.armadillo.scute_drop |
+
+## Trivia
+
+- Only mob vote winner released in a minor update (Armored Paws -- JE 1.20.5 / BE 1.20.80)
+  instead of the next major update.
+- Final mob added through a mob vote.
+- Shortest dev time of any mob vote winner -- added to snapshots two months after winning
+  Minecraft Live 2023.
+- Originally had eyes on the front of its face (Jasper Boerstra, for player connection);
+  reverted after feedback. Plush toy tag still uses the original front-eye design.
+- First iteration had simple animations due to sniffer feedback; later made more expressive.
+- Head originally peeked out while balled up in early dev because it was "deemed amusing";
+  removed before release.
+- Classified as passive but referred to as neutral on the official minecraft.net website.
 
 Armadillo
 =========

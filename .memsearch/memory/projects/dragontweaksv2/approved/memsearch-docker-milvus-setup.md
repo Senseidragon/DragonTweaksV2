@@ -1,4 +1,4 @@
----
+﻿---
 title: MemSearch Docker/Milvus Setup and Collection Trap
 type: operational-fact
 domain: projects/dragontweaksv2
@@ -39,9 +39,15 @@ docker compose up -d
 
 ## Reindex (correct collection)
 
+Run the guarded refresh script. Do NOT index .memsearch/memory/ directly:
+
 ```
-memsearch index "C:/Users/sense/Desktop/DragonTweaksV2/.memsearch/memory/" --force -c ms_dragontweaksv2_4403422f
+.\scripts\memsearch-refresh.ps1
 ```
+
+WARNING: Never run memsearch index against .memsearch/memory/ or any path
+containing candidates/, deprecated/, rejected/, or raw/. Those subtrees
+contain unvalidated memory and will pollute the collection.
 
 ## Manual flush (required after every index)
 

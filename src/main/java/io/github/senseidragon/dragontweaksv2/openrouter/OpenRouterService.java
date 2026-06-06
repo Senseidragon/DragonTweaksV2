@@ -130,6 +130,30 @@ public class OpenRouterService {
         LOGGER.debug("Model primed: {}", modelId);
     }
 
+    public String query(String role, String prompt) throws Exception {
+        if (!enabled) throw new IllegalStateException("OpenRouter service is not enabled.");
+        String modelId = role.equals("advisory") ? advisoryModelId : flavorModelId;
+        String body = String.format(
+            "{\"model\":\"%s\",\"messages\":[{\"role\":\"user\",\"content\":\"%s\"}]}",
+            modelId, prompt.replace("\"", "\\\"")
+        );
+        HttpRequest req = HttpRequest.newBuilder()
+            .uri(URI.create(BASE_URL + "/chat/completions"))
+            .header("Authorization", "Bearer " + apiKey)
+            .header("Content-Type", "application/json")
+            .POST(HttpRequest.BodyPublishers.ofString(body))
+            .build();
+        HttpResponse<String> resp = httpClient.send(req, HttpResponse.BodyHandlers.ofString());
+        if (resp.statusCode() < 200 || resp.statusCode() >= 300) {
+            throw new IllegalStateException("query failed with status " + resp.statusCode());
+        }
+        JsonObject json = GSON.fromJson(resp.body(), JsonObject.class);
+        return json.getAsJsonArray("choices")
+            .get(0).getAsJsonObject()
+            .getAsJsonObject("message")
+            .get("content").getAsString();
+    }
+
     public boolean isEnabled() { return enabled; }
     public String getFailureReason() { return failureReason; }
     public String getFlavorModelId() { return flavorModelId; }

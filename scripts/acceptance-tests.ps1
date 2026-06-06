@@ -11,16 +11,16 @@ $collection = "ms_dragontweaksv2_4403422f"
 $milvusUri  = "http://localhost:19530"
 $scriptDir  = Split-Path -Parent $MyInvocation.MyCommand.Path
 $repoRoot   = Split-Path -Parent $scriptDir
-$memoryDir  = Join-Path $repoRoot ".memsearch\memory"
 
 Write-Host "=== Retrieval Acceptance Tests ==="
 Write-Host "Collection : $collection"
-Write-Host "Memory dir : $memoryDir"
 Write-Host ""
 
-# Index memory so any newly added seed chunks are visible
-Write-Host "[Preflight] Indexing memory directory..."
-memsearch index $memoryDir --force -c $collection --milvus-uri $milvusUri
+# Preflight: index only approved memory using the guarded refresh script.
+# Do NOT index the whole .memsearch\memory tree -- that includes candidates/,
+# deprecated/, rejected/, and raw/ subtrees and pollutes the collection.
+Write-Host "[Preflight] Indexing approved memory via memsearch-refresh.ps1..."
+powershell.exe -NonInteractive -File (Join-Path $scriptDir "memsearch-refresh.ps1")
 Write-Host ""
 
 # Each test: issue a keyword query and assert all expected strings appear

@@ -26,7 +26,6 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
 class OpenRouterServiceTest {
-
     @TempDir Path tempDir;
     @Mock HttpClient mockClient;
     @Mock HttpResponse<String> okResponse;
@@ -131,6 +130,27 @@ class OpenRouterServiceTest {
         service.initAsync(failures::add).get(5, TimeUnit.SECONDS);
         assertFalse(service.isEnabled());
         assertTrue(failures.get(0).contains("did not respond"));
+    }
+
+    @Test
+    void queryReturnsNonBlankResponse() throws Exception {
+        String fakeReply = "{\"choices\":[{\"message\":{\"content\":\"I would avoid it.\"}}]}";
+        when(okResponse.body()).thenReturn(fakeReply);
+        doReturn(okResponse).when(mockClient).send(any(HttpRequest.class), any());
+
+        OpenRouterService service = new OpenRouterService(mockClient, tempDir);
+        service.initAsync(failures -> {}).get(5, TimeUnit.SECONDS);
+
+        String result = service.query("advisory", "how should I respond if I encounter a lone pillager?");
+        assertFalse(result.isBlank());
+        assertEquals("I would avoid it.", result);
+    }
+
+    @Test
+    void queryThrowsWhenNotEnabled() {
+        OpenRouterService service = new OpenRouterService(mockClient, tempDir);
+        assertThrows(IllegalStateException.class, () ->
+            service.query("advisory", "hello"));
     }
 
     @Test
