@@ -16,6 +16,7 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 
 public class OpenRouterService {
@@ -26,41 +27,47 @@ public class OpenRouterService {
 
     private static volatile OpenRouterService instance;
 
-    private final HttpClient httpClient;
     private final Path workingDir;
     private final ExecutorService executor;
+    private final HttpClient httpClient;
 
+    private final AtomicBoolean initStarted = new AtomicBoolean(false);
     private volatile boolean enabled = false;
     private volatile String failureReason = null;
-    private String apiKey;
-    private String flavorModelId;
-    private String advisoryModelId;
+    private volatile String apiKey;
+    private volatile String flavorModelId;
+    private volatile String advisoryModelId;
 
-    OpenRouterService(HttpClient httpClient, Path workingDir) {
-        this.httpClient = httpClient;
+    OpenRouterService(Path workingDir) {
         this.workingDir = workingDir;
         this.executor = Executors.newSingleThreadExecutor(r -> {
-            Thread t = new Thread(r, "openrouter-init");
+            Thread t = new Thread(r, "openrouter-worker");
             t.setDaemon(true);
             return t;
         });
+        this.httpClient = HttpClient.newBuilder().executor(executor).build();
     }
 
     public static OpenRouterService getInstance() {
         if (instance == null) {
-            instance = new OpenRouterService(
-                HttpClient.newHttpClient(),
-                Path.of(System.getProperty("user.dir"))
-            );
+            instance = new OpenRouterService(Path.of(System.getProperty("user.dir")));
         }
         return instance;
+    }
+
+    public boolean tryBeginInit() {
+        return initStarted.compareAndSet(false, true);
     }
 
     public CompletableFuture<Void> initAsync(Consumer<String> onFailure) {
         LOGGER.debug("OpenRouter init started");
         return CompletableFuture.runAsync(() -> {
             try {
-                init();
+                loadConfig();
+                enabled = true;
+                LOGGER.debug("OpenRouter ready. flavor={}, advisory={}", flavorModelId, advisoryModelId);
+                primeModel(flavorModelId);
+                primeModel(advisoryModelId);
             } catch (Exception ex) {
                 String reason = ex.getMessage() != null ? ex.getMessage() : "unexpected error";
                 LOGGER.debug("OpenRouter init failed: {}", reason);
@@ -70,18 +77,16 @@ public class OpenRouterService {
         }, executor);
     }
 
-    private void init() throws Exception {
+    private void loadConfig() throws Exception {
         Map<String, String> env;
         try {
             env = EnvLoader.load(workingDir.resolve(".env"));
         } catch (NoSuchFileException e) {
             throw new IllegalStateException(".env file not found.");
         }
-        LOGGER.debug("API key present: {}", env.containsKey("OPENROUTER_API_KEY"));
         apiKey = env.get("OPENROUTER_API_KEY");
-        if (apiKey == null || apiKey.isBlank()) {
+        if (apiKey == null || apiKey.isBlank())
             throw new IllegalStateException("OPENROUTER_API_KEY not set.");
-        }
 
         String configJson;
         try {
@@ -93,65 +98,52 @@ public class OpenRouterService {
         flavorModelId = ModelSelector.selectCheapest(config, "flavor");
         advisoryModelId = ModelSelector.selectCheapest(config, "advisory");
         LOGGER.debug("Selected models — flavor: {}, advisory: {}", flavorModelId, advisoryModelId);
-
-        HttpRequest keyRequest = HttpRequest.newBuilder()
-            .uri(URI.create(BASE_URL + "/auth/key"))
-            .header("Authorization", "Bearer " + apiKey)
-            .GET()
-            .build();
-        HttpResponse<String> keyResp = httpClient.send(keyRequest, HttpResponse.BodyHandlers.ofString());
-        if (keyResp.statusCode() < 200 || keyResp.statusCode() >= 300) {
-            throw new IllegalStateException("API key rejected by OpenRouter.");
-        }
-        LOGGER.debug("API key validated successfully");
-
-        primeModel(flavorModelId);
-        primeModel(advisoryModelId);
-
-        enabled = true;
-        LOGGER.debug("OpenRouter ready. flavor={}, advisory={}", flavorModelId, advisoryModelId);
     }
 
-    private void primeModel(String modelId) throws Exception {
+    private void primeModel(String modelId) {
         String body = String.format(
-            "{\"model\":\"%s\",\"messages\":[{\"role\":\"user\",\"content\":\"ping\"}]}",
+            "{\"model\":\"%s\",\"messages\":[{\"role\":\"user\",\"content\":\"ping\"}],\"max_tokens\":1}",
             modelId
         );
-        HttpRequest req = HttpRequest.newBuilder()
+        HttpRequest request = HttpRequest.newBuilder()
             .uri(URI.create(BASE_URL + "/chat/completions"))
             .header("Authorization", "Bearer " + apiKey)
             .header("Content-Type", "application/json")
             .POST(HttpRequest.BodyPublishers.ofString(body))
             .build();
-        HttpResponse<String> resp = httpClient.send(req, HttpResponse.BodyHandlers.ofString());
-        if (resp.statusCode() < 200 || resp.statusCode() >= 300) {
-            throw new IllegalStateException("model '" + modelId + "' did not respond.");
-        }
-        LOGGER.debug("Model primed: {}", modelId);
+        httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+            .thenAccept(r -> LOGGER.debug("Model primed: {} (status {})", modelId, r.statusCode()))
+            .exceptionally(ex -> {
+                LOGGER.warn("Prime failed for {}: {}", modelId, ex.getMessage());
+                return null;
+            });
     }
 
-    public String query(String role, String prompt) throws Exception {
-        if (!enabled) throw new IllegalStateException("OpenRouter service is not enabled.");
+    public CompletableFuture<String> query(String role, String prompt) {
+        if (!enabled)
+            return CompletableFuture.failedFuture(new IllegalStateException("OpenRouter service is not enabled."));
         String modelId = role.equals("advisory") ? advisoryModelId : flavorModelId;
         String body = String.format(
             "{\"model\":\"%s\",\"messages\":[{\"role\":\"user\",\"content\":\"%s\"}]}",
             modelId, prompt.replace("\"", "\\\"")
         );
-        HttpRequest req = HttpRequest.newBuilder()
+        HttpRequest request = HttpRequest.newBuilder()
             .uri(URI.create(BASE_URL + "/chat/completions"))
             .header("Authorization", "Bearer " + apiKey)
             .header("Content-Type", "application/json")
             .POST(HttpRequest.BodyPublishers.ofString(body))
             .build();
-        HttpResponse<String> resp = httpClient.send(req, HttpResponse.BodyHandlers.ofString());
-        if (resp.statusCode() < 200 || resp.statusCode() >= 300) {
-            throw new IllegalStateException("query failed with status " + resp.statusCode());
-        }
-        JsonObject json = GSON.fromJson(resp.body(), JsonObject.class);
-        return json.getAsJsonArray("choices")
-            .get(0).getAsJsonObject()
-            .getAsJsonObject("message")
-            .get("content").getAsString();
+        return httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+            .thenApply(response -> {
+                if (response.statusCode() < 200 || response.statusCode() >= 300)
+                    throw new RuntimeException("HTTP " + response.statusCode());
+                JsonObject json = GSON.fromJson(response.body(), JsonObject.class);
+                String content = json.getAsJsonArray("choices")
+                    .get(0).getAsJsonObject()
+                    .getAsJsonObject("message")
+                    .get("content").getAsString();
+                return content.replaceAll("[^\\x00-\\x7F]", "");
+            });
     }
 
     public boolean isEnabled() { return enabled; }
