@@ -1,9 +1,13 @@
-# core/entity/ai/workers Package Index
+<!-- GENERATED FILE — do not edit by hand.
+     Generator: scripts/rebuild-api-indexes.py
+     Source:    docs/api/minecolonies/core/entity/ai/workers
+-->
 
-`com.minecolonies.core.entity.ai.workers` — worker AI base classes.
+# WORKERS API Index
+
+**Source directory:** `docs/api/minecolonies/core/entity/ai/workers`
 
 ## Files
 
-### AbstractEntityAIBasic.java
-**Summary:** Base class for all custom worker AIs; provides state machine registration, pathfinding, inventory dump, tool/item request utilities.
-**Source:** [[docs/api/minecolonies/core/entity/ai/workers/AbstractEntityAIBasic.java]]
+- `AbstractEntityAIBasic.java`
+

@@ -1,22 +1,26 @@
-# colony/requestsystem Package Index
+<!-- GENERATED FILE — do not edit by hand.
+     Generator: scripts/rebuild-api-indexes.py
+     Source:    docs/api/minecolonies/colony/requestsystem
+-->
 
-`com.minecolonies.api.colony.requestsystem` — the MineColonies demand/supply coordination system.
+# REQUESTSYSTEM API Index
 
-## Subdirectories
-
-- [[data/]] — `IDataStoreManager` and data store interfaces
-- [[factory/]] — `IFactoryController`, serialization factories for request objects
-- [[location/]] — `ILocation` interface for request positions
-- [[management/]] — internal management helpers
-- [[manager/]] — `IRequestManager` — the colony-level request coordinator
-- [[request/]] — `IRequest`, `RequestState` enum
-- [[requestable/]] — `IRequestable` subtypes: `Stack`, `Tool`, `IDeliverable`, `RequestTag`
-- [[requester/]] — `IRequester` interface
-- [[resolver/]] — `IRequestResolver`, player and retrying resolver interfaces
-- [[token/]] — `IToken` opaque request identifier
+**Source directory:** `docs/api/minecolonies/colony/requestsystem`
 
 ## Files
 
-### StandardFactoryController.java
-**Summary:** Singleton factory controller for serializing and deserializing request system objects.
-**Source:** [[docs/api/minecolonies/colony/requestsystem/StandardFactoryController.java]]
+- `StandardFactoryController.java`
+
+## Subdirectories
+
+- [data/](data/DATA_INDEX.md)
+- [factory/](factory/FACTORY_INDEX.md)
+- [location/](location/LOCATION_INDEX.md)
+- [management/](management/MANAGEMENT_INDEX.md)
+- [manager/](manager/MANAGER_INDEX.md)
+- [request/](request/REQUEST_INDEX.md)
+- [requestable/](requestable/REQUESTABLE_INDEX.md)
+- [requester/](requester/REQUESTER_INDEX.md)
+- [resolver/](resolver/RESOLVER_INDEX.md)
+- [token/](token/TOKEN_INDEX.md)
+

@@ -1,12 +1,14 @@
-# core Package Index
+<!-- GENERATED FILE — do not edit by hand.
+     Generator: scripts/rebuild-api-indexes.py
+     Source:    docs/api/minecolonies/core
+-->
 
-`com.minecolonies.core` — implementation-layer classes (not part of the public API package, but included here as reference for extending MineColonies).
+# CORE API Index
+
+**Source directory:** `docs/api/minecolonies/core`
 
 ## Subdirectories
 
-- [[colony/]] — concrete job base classes
-- [[entity/]] — concrete AI base classes
+- [colony/](colony/COLONY_INDEX.md)
+- [entity/](entity/ENTITY_INDEX.md)
 
-## Notes
-
-Files in this directory tree are from `com.minecolonies.core.*`, not `com.minecolonies.api.*`. They are included because custom mod development requires extending these classes directly.

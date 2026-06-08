@@ -1,9 +1,13 @@
-# core/colony/jobs Package Index
+<!-- GENERATED FILE — do not edit by hand.
+     Generator: scripts/rebuild-api-indexes.py
+     Source:    docs/api/minecolonies/core/colony/jobs
+-->
 
-`com.minecolonies.core.colony.jobs` — concrete job base class.
+# JOBS API Index
+
+**Source directory:** `docs/api/minecolonies/core/colony/jobs`
 
 ## Files
 
-### AbstractJob.java
-**Summary:** Abstract base class all custom jobs must extend; implements `IJob`; only `generateAI()` is abstract.
-**Source:** [[docs/api/minecolonies/core/colony/jobs/AbstractJob.java]]
+- `AbstractJob.java`
+

@@ -1,7 +1,13 @@
-# core/entity Package Index
+<!-- GENERATED FILE — do not edit by hand.
+     Generator: scripts/rebuild-api-indexes.py
+     Source:    docs/api/minecolonies/core/entity
+-->
 
-`com.minecolonies.core.entity` — concrete entity and AI implementation classes.
+# ENTITY API Index
+
+**Source directory:** `docs/api/minecolonies/core/entity`
 
 ## Subdirectories
 
-- [[ai/]] — `AbstractEntityAIBasic` and the AI skeleton infrastructure
+- [ai/](ai/AI_INDEX.md)
+

@@ -1,7 +1,13 @@
-# core/entity/ai Package Index
+<!-- GENERATED FILE — do not edit by hand.
+     Generator: scripts/rebuild-api-indexes.py
+     Source:    docs/api/minecolonies/core/entity/ai
+-->
 
-`com.minecolonies.core.entity.ai` — concrete AI base classes.
+# AI API Index
+
+**Source directory:** `docs/api/minecolonies/core/entity/ai`
 
 ## Subdirectories
 
-- [[workers/]] — `AbstractEntityAIBasic`, the base class for all custom worker AIs
+- [workers/](workers/WORKERS_INDEX.md)
+

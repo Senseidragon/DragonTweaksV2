@@ -1,29 +1,21 @@
-# colony/jobs Package Index
+<!-- GENERATED FILE — do not edit by hand.
+     Generator: scripts/rebuild-api-indexes.py
+     Source:    docs/api/minecolonies/colony/jobs
+-->
 
-`com.minecolonies.api.colony.jobs` — citizen job interfaces and registry.
+# JOBS API Index
 
-## Subdirectories
-
-- [[registry/]] — `JobEntry`, `IJobRegistry`, `IJobDataManager`, `ModJobs`
+**Source directory:** `docs/api/minecolonies/colony/jobs`
 
 ## Files
 
-### IJob.java
-**Summary:** Server-side job contract: `generateAI()`, action counter, lifecycle hooks, assignment.
-**Source:** [[docs/api/minecolonies/colony/jobs/IJob.java]]
+- `IJob.java`
+- `IJobView.java`
+- `IJobWithColonyFlag.java`
+- `IJobWithExternalWorkStations.java`
+- `ModJobs.java`
 
-### IJobView.java
-**Summary:** Client-side job view interface for display and GUI purposes.
-**Source:** [[docs/api/minecolonies/colony/jobs/IJobView.java]]
+## Subdirectories
 
-### IJobWithColonyFlag.java
-**Summary:** Marker interface for jobs that use the colony flag in their UI.
-**Source:** [[docs/api/minecolonies/colony/jobs/IJobWithColonyFlag.java]]
+- [registry/](registry/REGISTRY_INDEX.md)
 
-### IJobWithExternalWorkStations.java
-**Summary:** Interface for jobs that work at positions outside the home building.
-**Source:** [[docs/api/minecolonies/colony/jobs/IJobWithExternalWorkStations.java]]
-
-### ModJobs.java
-**Summary:** Registry of all built-in MineColonies job entries as static `DeferredHolder` fields.
-**Source:** [[docs/api/minecolonies/colony/jobs/ModJobs.java]]

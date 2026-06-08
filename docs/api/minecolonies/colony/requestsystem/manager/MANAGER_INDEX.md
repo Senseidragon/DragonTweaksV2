@@ -1,17 +1,15 @@
-# colony/requestsystem/manager Package Index
+<!-- GENERATED FILE — do not edit by hand.
+     Generator: scripts/rebuild-api-indexes.py
+     Source:    docs/api/minecolonies/colony/requestsystem/manager
+-->
 
-`com.minecolonies.api.colony.requestsystem.manager` — colony-level request manager.
+# MANAGER API Index
+
+**Source directory:** `docs/api/minecolonies/colony/requestsystem/manager`
 
 ## Files
 
-### IRequestManager.java
-**Summary:** Colony request coordinator: create/assign/resolve requests, manage resolvers, lifecycle.
-**Source:** [[docs/api/minecolonies/colony/requestsystem/manager/IRequestManager.java]]
+- `AssigningStrategy.java`
+- `IRequestManager.java`
+- `RequestMappingHandler.java`
 
-### AssigningStrategy.java
-**Summary:** Enum defining strategies for assigning requests to resolvers.
-**Source:** [[docs/api/minecolonies/colony/requestsystem/manager/AssigningStrategy.java]]
-
-### RequestMappingHandler.java
-**Summary:** Utility for mapping request tokens to resolvers and tracking resolution state.
-**Source:** [[docs/api/minecolonies/colony/requestsystem/manager/RequestMappingHandler.java]]

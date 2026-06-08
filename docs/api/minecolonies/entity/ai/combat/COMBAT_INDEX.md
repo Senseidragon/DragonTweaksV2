@@ -1,0 +1,17 @@
+<!-- GENERATED FILE — do not edit by hand.
+     Generator: scripts/rebuild-api-indexes.py
+     Source:    docs/api/minecolonies/entity/ai/combat
+-->
+
+# COMBAT API Index
+
+**Source directory:** `docs/api/minecolonies/entity/ai/combat`
+
+## Files
+
+- `CombatAIStates.java`
+
+## Subdirectories
+
+- [threat/](threat/THREAT_INDEX.md)
+
