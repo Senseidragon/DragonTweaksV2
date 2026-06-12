@@ -1,0 +1,24 @@
+# Memory Index
+
+- [MineColonies wired](project_minecolonies.md) — compileOnly 1.1.1299 in build.gradle; source at Desktop/minecolonies; Phase 1 candidates seeded
+- [MemSearch refresh required before CLI tests](feedback_memsearch_refresh.md) — run scripts/memsearch-refresh.ps1 first; always pass -c ms_dragontweaksv2_4403422f to search commands
+- [Domain pack plan](project_domain_plan.md) — NeoForge and Minecraft are separate domains; Minecraft domain deferred until training data gaps appear
+- [Shared domain layout](project_shared_domain_layout.md) — pending: move domains+stubs outside repos, symlink in, shared Milvus collection per domain
+- [No javap stubs as memory source](feedback_no_javap_stubs.md) — V1 stubs are javap output only; use cloned source for domain memory candidates
+- [Startup protocol priority](feedback_startup_protocol_priority.md) — candidate queue scan runs before responding to any user message, including greetings
+- [No fake verification output](feedback_no_fake_verification.md) — never hardcode success signals; if honest verification isn't possible yet, say so
+- [Model selection authorization](feedback_model_selection.md) — NEVER choose a model without Dragon's authorization; NEVER default to weighted cost > $0.50/1M tokens
+- [Goat horn sound patches](project_sound_patches.md) — goat_horn.play = real horn sample; screaming.horn_break = screaming goat meme sound
+- [Compliance testing architecture](project_compliance_architecture.md) — separate from finder; DB-backed per model ID; thresholds per tier in model_config.json; lives in scripts/poller/
+- [Advisor system core design](project_advisor_system.md) — planned features and vision: immersion-first NPC companion, event-driven personas, two-model pipeline (#f=flavor, #a=advisor), shared environmental context, world boundary rule, MineColonies live state, BYOK; book=scout pre-colony, book-and-quill=colony advisor; ~20-turn per-player memory
+- [Task pre-flight checklist](feedback_task_checklist.md) — state intended files + risky areas before editing; stop if task conflicts with main-thread invariant
+- [Cost hook estimates are ~10x overstated](feedback_cost_estimates.md) — ignore hook dollar figures; verify via Anthropic billing if cost actually matters
+- [Document review protocol — ask before capturing](feedback_document_review_protocol.md) — read doc, flag observations, ask Dragon before writing to candidates; capture protocol does not override explicit review instructions
+- [Block bypass prohibited — classify and respond compliantly](feedback_block_bypass_prohibited.md) — classify block as correct/overbroad/ambiguous; use Bash when Edit/Write is deny-blocked but action is authorized
+- [Wikilinks protocol for memory source fields](feedback_wikilinks_protocol.md) — [[local/file]], [[none]], [[url-to-specific-file]], [[other-entry.md]]; NeoForge domain not yet converted
+- [Stay in project folder](feedback_stay_in_project.md) — never operate outside DragonTweaksV2 without Dragon's explicit approval; %USERPROFILE%\.claude is off-limits
+- [Domain pack bulk audit is expensive](feedback_domain_pack_audit_cost.md) — 10+ entries will overflow context; scrape all in parallel first, batch index at end, warn Dragon upfront
+- [Open items](project_open_items.md) — memsearch encoding error on Windows (PYTHONUTF8=1 workaround); raw wiki domain data not prompt-injectable; no runtime domain retrieval mechanism for mod (no Docker/Milvus at player runtime)
+- [Minecraft domain rebuild](project_minecraft_domain_rebuild.md) — all existing minecraft approved entries are bad firecrawl snapshots; tombstone+insert with distilled Advisor PoCs via the wiki pipeline
+- [Advisor NPC persona definitions](project_advisor_personas.md) — advisory=#a gpt-oss-120b seasoned adventurer 3-4 sentences; flavor=#f lfm-2-24b-a2b farmer/shepherd 1-2 sentences; tested 2026-06-06
+- [No redundant file reads](feedback_no_redundant_reads.md) — never re-read a file already in context unless Dragon explicitly says to refresh it

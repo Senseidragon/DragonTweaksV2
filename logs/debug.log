@@ -1,0 +1,6 @@
+[07Jun2026 05:38:05.087] [Test worker/DEBUG] [io.github.senseidragon.dragontweaksv2.openrouter.OpenRouterService/]: OpenRouter init started
+[07Jun2026 05:38:05.099] [openrouter-worker/DEBUG] [io.github.senseidragon.dragontweaksv2.openrouter.OpenRouterService/]: OpenRouter init failed: OPENROUTER_API_KEY not set.
+[07Jun2026 05:38:05.115] [Test worker/DEBUG] [io.github.senseidragon.dragontweaksv2.openrouter.OpenRouterService/]: OpenRouter init started
+[07Jun2026 05:38:05.116] [openrouter-worker/DEBUG] [io.github.senseidragon.dragontweaksv2.openrouter.OpenRouterService/]: OpenRouter init failed: .env file not found.
+[07Jun2026 05:38:05.122] [Test worker/DEBUG] [io.github.senseidragon.dragontweaksv2.openrouter.OpenRouterService/]: OpenRouter init started
+[07Jun2026 05:38:05.123] [openrouter-worker/DEBUG] [io.github.senseidragon.dragontweaksv2.openrouter.OpenRouterService/]: OpenRouter init failed: model_config.json unreadable.

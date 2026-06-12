@@ -1,0 +1,831 @@
+---
+source_url: https://minecraft.wiki/w/Bastion_Remnant
+title: "Bastion Remnant – Minecraft Wiki"
+source_version: "1.21.1"
+source_type: official_wiki
+cleaned: true
+---
+
+Bastion Remnant
+===============
+
+.
+
+Bastion Remnant
+
+*   Treasure room
+    
+*   Bridge
+    
+*   Housing units
+    
+*   Hoglin stables
+    
+
+|     |     |
+| --- | --- |
+| Biomes | *   <br>    Nether Wastes<br>    <br>*   <br>    Soul Sand Valley<br>    <br>*   <br>    Crimson Forest<br>    <br>*   <br>    Warped Forest |
+| Mobs | *   <br>    Hoglin<br>     (bridge and hoglin stables)<br>*   <br>    Magma Cube<br>     (from monster spawner<br>     in treasure room)<br>*   <br>    Piglin<br>    <br>*   <br>    Piglin Brute<br>    <br>*   <br>    Zombified Piglin<br>     (Can spawn if the biome is Nether Wastes)<br>*   <br>    Ghast<br>     (Can spawn in the treasure room, if correct biome)<br>*   <br>    Skeleton<br>     (Can spawn if the biome is Soul Sand Valley)<br>*   <br>    Enderman<br>     (Can spawn if the biome is Warped Forest)<br>*   <br>    Strider<br>     (Can spawn via lava pools) |
+| Consists of | *   See § Structure<br>    <br>*   See § Blocks |
+
+There is a related tutorial page for this topic!
+
+ 
+
+See Tutorial:Defeating a bastion remnant.
+
+**Bastion remnants**, also simply referred to as **bastions**,[\[1\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-1)
+ are large, castle-like generated structures found in the Nether in all of the biomes except basalt deltas. They generate in four distinct variants, each with a unique structure and set of loot. Piglins and piglin brutes spawn in these structures on generation, and hoglins may also spawn on generation in the bridge and hoglin stables variants. Bastion remnants are the only place to find gilded blackstone, the Pigstep music disc, the snout banner pattern and armor trim, monster spawners which spawn magma cubes, and the netherite upgrade smithing template.
+
+Contents
+--------
+
+*   1 Generation
+    
+*   2 Structure
+    *   2.1 File structure
+        
+    *   2.2 Bridge
+        
+    *   2.3 Hoglin stables
+        
+    *   2.4 Housing units
+        
+    *   2.5 Treasure room
+        
+    *   2.6 Blocks
+        
+*   3 Loot
+    *   3.1 Bridge
+        
+    *   3.2 Generic
+        
+    *   3.3 Hoglin Stable
+        
+    *   3.4 Treasure
+        
+*   4 Data values
+    *   4.1 ID
+        
+*   5 Advancements
+    
+*   6 History
+    *   6.1         
+    *   6.2         
+*   7 Issues
+    
+*   8 Trivia
+    
+*   9 Gallery
+    *   9.1 Screenshots
+        *   9.1.1 Bridge
+            
+        *   9.1.2 Hoglin stables
+            
+        *   9.1.3 Housing units
+            
+        *   9.1.4 Treasure room
+            
+    *   9.2 Promotional images
+        
+    *   9.3 In other media
+        
+*   10 Notes
+    
+*   11 External links
+    
+*   12 References
+    
+*   13 Navigation
+    
+
+Generation
+----------
+
+\[edit\
+ | edit source\
+\]
+
+Nether structure generation. The black lines represent each region and the dots represent coordinates. Green is where they can generate and red is where they cannot.
+
+Nether structure generation. The black lines represent each region and the dots represent coordinates. Green is where they can generate and red is where they cannot.
+
+Bastion remnants generate in all Nether biomes except basalt deltas, although a bastion may extend into one. If a bastion tries to generate in a basalt delta, the bastion does not generate and a Nether fortress generates instead. To generate the structure, the game splits the Nether into regions, in which either a Nether fortress or a bastion remnant can generate. The regions are 432×432 blocks in  and 480×480 blocks. Each region has a 4-chunk separation located on the south and east borders of the region in which neither a fortress nor a bastion can generate. This leaves only a 368×368 block section in  or 416×416 block section in  where a structure can generate. Two structures never generate in the same region, although they might overlap if they generate close to the separation border. the chance of a bastion generating instead of a fortress is 3⁄5 (60%), while in  the chance of a bastion generating instead of a fortress is 2⁄3 (66.6%). Each of the four variants of bastion remnants has an equal chance of generating.
+
+Piglins, piglin brutes, and hoglins that spawn upon generation in bastion remnants neither despawn naturally nor do they hunt each other. Piglin brutes also spawn exclusively here upon structure generation, and do not despawn unless killed, or if difficulty is set to Peaceful. Like shulkers in end cities, once these mobs are killed, they do not respawn, though the bastion remnant continues to spawn normal mobs depending on the biome it is located in.
+
+Structure
+---------
+
+\[edit\
+ | edit source\
+\]
+
+Main article: Bastion Remnant/Structure
+
+Bastion remnants generate as 4 types of structures: bridges, hoglin stables, housing units, and treasure rooms. Each type has its own set of structures that compose it. These structures may be supported by ramparts that contain cave-like paths. Piglins, piglin brutes, and hoglins spawn frequently throughout. Unlike Nether fortresses, when over the lava sea, they do not generate pillars of solid blocks down to the solid terrain beneath, but float above, entirely even.[\[2\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-2)
+
+All bastion remnant structures found below are located in the folder client.jar
+/data/minecraft/structures/bastion.
+
+### File structure
+
+\[edit\
+ | edit source\
+\]
+
+| List  |
+| --- |
+| *   bastion<br>    *   blocks<br>        *   air.nbt<br>        *   gold.nbt<br>    *   bridge<br>        *   bridge\_pieces<br>            *   bridge.nbt<br>        *   connectors<br>            *   back\_bridge\_bottom.nbt<br>            *   back\_bridge\_top.nbt<br>        *   legs<br>            *   leg\_0.nbt<br>            *   leg\_1.nbt<br>        *   ramparts<br>            *   rampart\_0.nbt<br>            *   rampart\_1.nbt<br>        *   rampart\_plates<br>            *   plate\_0.nbt<br>        *   starting\_pieces<br>            *   entrance.nbt<br>            *   entrance\_base.nbt<br>            *   entrance\_face.nbt<br>        *   walls<br>            *   wall\_base\_0.nbt<br>            *   wall\_base\_1.nbt<br>    *   hoglin\_stable<br>        *   air\_base.nbt<br>        *   connectors<br>            *   end\_post\_connector.nbt<br>        *   large\_stables<br>            *   inner\_0.nbt<br>            *   inner\_1.nbt<br>            *   inner\_2.nbt<br>            *   inner\_3.nbt<br>            *   inner\_4.nbt<br>            *   outer\_0.nbt<br>            *   outer\_1.nbt<br>            *   outer\_2.nbt<br>            *   outer\_3.nbt<br>            *   outer\_4.nbt<br>        *   posts<br>            *   end\_post.nbt<br>            *   stair\_post.nbt<br>        *   ramparts<br>            *   ramparts\_1.nbt<br>            *   ramparts\_2.nbt<br>            *   ramparts\_3.nbt<br>        *   rampart\_plates<br>            *   rampart\_plate\_1.nbt<br>        *   small\_stables<br>            *   inner\_0.nbt<br>            *   inner\_1.nbt<br>            *   inner\_2.nbt<br>            *   inner\_3.nbt<br>            *   outer\_0.nbt<br>            *   outer\_1.nbt<br>            *   outer\_2.nbt<br>            *   outer\_3.nbt<br>        *   stairs<br>            *   stairs\_0\_mirrored.nbt<br>            *   stairs\_1\_0.nbt<br>            *   stairs\_1\_1.nbt<br>            *   stairs\_1\_2.nbt<br>            *   stairs\_1\_3.nbt<br>            *   stairs\_1\_4.nbt<br>            *   stairs\_2.nbt<br>            *   stairs\_2\_0.nbt<br>            *   stairs\_2\_1.nbt<br>            *   stairs\_2\_2.nbt<br>            *   stairs\_2\_3.nbt<br>            *   stairs\_2\_4.nbt<br>            *   stairs\_3.nbt<br>            *   stairs\_3\_0.nbt<br>            *   stairs\_3\_1.nbt<br>            *   stairs\_3\_2.nbt<br>            *   stairs\_3\_3.nbt<br>            *   stairs\_3\_4.nbt<br>        *   starting\_pieces<br>            *   stairs\_0\_mirrored.nbt<br>            *   stairs\_1\_mirrored.nbt<br>            *   stairs\_2\_mirrored.nbt<br>            *   stairs\_3\_mirrored.nbt<br>            *   stairs\_4\_mirrored.nbt<br>            *   starting\_stairs\_0.nbt<br>            *   starting\_stairs\_1.nbt<br>            *   starting\_stairs\_2.nbt<br>            *   starting\_stairs\_3.nbt<br>            *   starting\_stairs\_4.nbt<br>        *   walls<br>            *   side\_wall\_0.nbt<br>            *   side\_wall\_1.nbt<br>            *   wall\_base.nbt<br>    *   mobs<br>        *   empty.nbt<br>        *   crossbow\_piglin.nbt<br>        *   hoglin.nbt<br>        *   melee\_piglin.nbt<br>        *   melee\_piglin\_always.nbt<br>        *   sword\_piglin.nbt<br>        *   melee\_piglin.mcstructure<br>        *   melee\_piglin\_always.mcstructure<br>        *   crossbow\_piglin.mcstructure<br>        *   hoglin.mcstructure<br>        *   sword\_piglin.mcstructure<br>    *   treasure<br>        *   big\_air\_full.nbt<br>        *   bases<br>            *   lava\_basin.nbt<br>            *   centers<br>                *   center\_0.nbt<br>                *   center\_1.nbt<br>                *   center\_2.nbt<br>                *   center\_3.nbt<br>        *   brains<br>            *   center\_brain.nbt<br>        *   connectors<br>            *   center\_to\_wall\_middle.nbt<br>            *   center\_to\_wall\_top.nbt<br>            *   center\_to\_wall\_top\_entrance.nbt<br>        *   corners<br>            *   bottom<br>                *   corner\_0.nbt<br>                *   corner\_1.nbt<br>            *   edges<br>                *   bottom.nbt<br>                *   middle.nbt<br>                *   top.nbt<br>            *   middle<br>                *   corner\_0.nbt<br>                *   corner\_1.nbt<br>            *   top<br>                *   corner\_0.nbt<br>                *   corner\_1.nbt<br>        *   entrances<br>            *   entrance\_0.nbt<br>        *   extensions<br>            *   empty.nbt<br>            *   fire\_room.nbt<br>            *   house\_0.nbt<br>            *   house\_1.nbt<br>            *   large\_bridge\_0.nbt<br>            *   large\_bridge\_1.nbt<br>            *   large\_bridge\_2.nbt<br>            *   large\_bridge\_3.nbt<br>            *   roofed\_bridge.nbt<br>            *   small\_bridge\_0.nbt<br>            *   small\_bridge\_1.nbt<br>            *   small\_bridge\_2.nbt<br>            *   small\_bridge\_3.nbt<br>        *   ramparts<br>            *   bottom\_wall\_0.nbt<br>            *   lava\_basin.nbt<br>            *   lava\_basin\_main.nbt<br>            *   lava\_basin\_side.nbt<br>            *   mid\_wall\_main.nbt<br>            *   mid\_wall\_side.nbt<br>            *   top\_wall.nbt<br>        *   roofs<br>            *   center\_roof.nbt<br>            *   corner\_roof.nbt<br>            *   wall\_roof.nbt<br>        *   stairs<br>            *   lower\_stairs.nbt<br>        *   walls<br>            *   entrance\_wall.nbt<br>            *   lava\_wall.nbt<br>            *   bottom<br>                *   wall\_0.nbt<br>                *   wall\_1.nbt<br>                *   wall\_2.nbt<br>                *   wall\_3.nbt<br>            *   mid<br>                *   wall\_0.nbt<br>                *   wall\_1.nbt<br>                *   wall\_2.nbt<br>            *   outer<br>                *   bottom\_corner.nbt<br>                *   medium\_outer\_wall.nbt<br>                *   mid\_corner.nbt<br>                *   outer\_wall.nbt<br>                *   tall\_outer\_wall.nbt<br>                *   top\_corner.nbt<br>            *   top<br>                *   main\_entrance.nbt<br>                *   wall\_0.nbt<br>                *   wall\_1.nbt<br>    *   units<br>        *   air\_base.nbt<br>        *   center\_pieces<br>            *   center\_0.nbt<br>            *   center\_1.nbt<br>            *   center\_2.nbt<br>        *   edges<br>            *   edge\_0.nbt<br>        *   fillers<br>            *   stage\_0.nbt<br>        *   pathways<br>            *   pathway\_0.nbt<br>            *   pathway\_wall\_0.nbt<br>        *   ramparts<br>            *   ramparts\_0.nbt<br>            *   ramparts\_1.nbt<br>            *   ramparts\_2.nbt<br>        *   rampart\_plates<br>            *   plate\_0.nbt<br>        *   stages<br>            *   stage\_0\_0.nbt<br>            *   stage\_0\_1.nbt<br>            *   stage\_0\_2.nbt<br>            *   stage\_0\_3.nbt<br>            *   stage\_1\_0.nbt<br>            *   stage\_1\_1.nbt<br>            *   stage\_1\_2.nbt<br>            *   stage\_1\_3.nbt<br>            *   stage\_2\_0.nbt<br>            *   stage\_2\_1.nbt<br>            *   stage\_3\_0.nbt<br>            *   stage\_3\_1.nbt<br>            *   stage\_3\_2.nbt<br>            *   stage\_3\_3.nbt<br>            *   rot<br>                *   stage\_1\_0.nbt<br>        *   walls<br>            *   connected\_wall.nbt<br>            *   wall\_base.nbt<br>        *   wall\_units<br>            *   edge\_0.nbt<br>            *   edge\_0\_large.nbt<br>            *   unit\_0.nbt |
+
+### Bridge
+
+\[edit\
+ | edit source\
+\]
+
+The **bridge** consists of a large ruined rampart structure with a piglin face carved into it. The inside of the "mouth" consists of multiple levels of walkways surrounded by lava. A damaged bridge goes out from the mouth, with a support pillar on the far side.
+
+| Structure name | Description | Consists of | Image |
+| --- | --- | --- | --- |
+| `bastion/bridge/bridge_pieces/bridge` | The double deck bridge. Only 1 generates per bastion. | 1384 <br>Polished Blackstone Bricks<br>  <br>316 <br>Blackstone<br>  <br>155 <br>Basalt<br>  <br>45 <br>Polished Basalt<br>  <br>16 <br>Block of Gold<br>  <br>8 <br>Polished Blackstone Brick Stairs<br>  <br>5 <br>Iron Chain<br>  <br>5 <br>Lantern<br>  <br>4 <br>Chiseled Polished Blackstone<br>  <br>4 <br>Block of Quartz<br>  <br>2 <br>Smooth Quartz Block<br>  <br>2 <br>Smooth Quartz Slab<br>  <br>1 <br>Piglin<br> or <br>Piglin brute<br>[\[n 1\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_group-3) |  |
+| `bastion/bridge/connectors/back_bridge_bottom` | First floor of the double deck bridge behind the rampart. | 75 <br>Polished Blackstone Bricks<br>  <br>16 <br>Blackstone |  |
+| `bastion/bridge/connectors/back_bridge_top` | Second floor of the double deck bridge behind the rampart. | 48 <br>Polished Blackstone Bricks<br>  <br>40 <br>Blackstone |  |
+| `bastion/bridge/legs/leg_0` | A pillar under the bridge. | 115 <br>Polished Blackstone Bricks<br>  <br>40 <br>Blackstone |  |
+| `bastion/bridge/legs/leg_1` | A pillar under the bridge. | 120 <br>Polished Blackstone Bricks<br>  <br>38 <br>Blackstone |  |
+| `bastion/bridge/rampart_plates/plate_0` | A wall on `bastion/bridge/ramparts/rampart_1`. | 260 <br>Polished Blackstone Bricks<br>  <br>82 <br>Basalt<br>  <br>38 <br>Blackstone<br>  <br>26 <br>Cracked Polished Blackstone Bricks |  |
+| `bastion/bridge/ramparts/rampart_0` | The upper half of one side of the rampart. 2 of these generate per bastion. | 2954 <br>Polished Blackstone Bricks<br>  <br>491 <br>Blackstone<br>  <br>235 <br>Basalt<br>  <br>89 <br>Cracked Polished Blackstone Bricks<br>  <br>15 <br>Polished Blackstone Brick Stairs<br>  <br>1 <br>Blackstone Stairs<br>  <br>1 Loot <br>Chest<br> (Generic)  <br>1 <br>Gilded Blackstone<br>  <br>2 <br>Piglin<br> or <br>Piglin brute<br>[\[n 1\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_group-3) |  |
+| `bastion/bridge/ramparts/rampart_1` | 4361 <br>Polished Blackstone Bricks<br>  <br>496 <br>Blackstone<br>  <br>346 <br>Basalt<br>  <br>146 <br>Cracked Polished Blackstone Bricks<br>  <br>40 <br>Polished Blackstone Brick Stairs<br>  <br>11 <br>Gilded Blackstone<br>  <br>3 Loot <br>Chest<br> (Generic)  <br>1 <br>Lantern<br>  <br>3 <br>Piglin<br> or <br>Piglin brute<br>[\[n 1\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_group-3)<br>  <br>3 <br>Piglin<br> or <br>Piglin brute<br>[\[n 2\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_melee_group-4) |  |
+| `bastion/bridge/starting_pieces/entrance` | The upper half of the rampart. Only 1 generates per bastion. | 6548 <br>Polished Blackstone Bricks<br>  <br>849 <br>Blackstone<br>  <br>328 <br>Basalt<br>  <br>47 <br>Polished Basalt<br>  <br>38 <br>Polished Blackstone Brick Stairs<br>  <br>30 <br>Lava<br> (source blocks)  <br>11 <br>Chiseled Polished Blackstone<br>  <br>11 <br>Cracked Polished Blackstone Bricks<br>  <br>9 <br>Blackstone Slab<br>  <br>7 <br>Block of Gold<br>  <br>5 <br>Gilded Blackstone<br>  <br>3 <br>Iron Chain<br>  <br>2 <br>Lantern<br>  <br>1 Loot <br>Chest<br> (Bridge)  <br>14 <br>Piglin<br> or <br>Piglin brute<br>[\[n 1\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_group-3)<br>  <br>2 <br>Hoglin<br>[\[n 3\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-hoglin_group-5)<br>  <br>1 <br>Piglin<br> or <br>Piglin brute<br>[\[n 2\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_melee_group-4) |  |
+| `bastion/bridge/starting_pieces/entrance_base` | The lower half of the rampart. Only 1 generates per bastion. | 10685 <br>Blackstone<br>  <br>2953 <br>Polished Blackstone Bricks<br>  <br>396 <br>Cracked Polished Blackstone Bricks<br>  <br>52 <br>Lava<br> (source blocks)  <br>10 <br>Basalt<br>  <br>7 <br>Chiseled Polished Blackstone<br>  <br>2 <br>Block of Gold<br>  <br>2 <br>Lantern<br>  <br>1 <br>Iron Chain<br>  <br>1 <br>Polished Blackstone Brick Stairs<br>  <br>7 <br>Piglin<br> or <br>Piglin brute<br>[\[n 1\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_group-3) |  |
+| `bastion/bridge/starting_pieces/entrance_face` | Structure in front of the rampart resembling a face. | 517 <br>Polished Blackstone Bricks<br>  <br>136 <br>Basalt<br>  <br>49 <br>Blackstone<br>  <br>13 <br>Polished Basalt<br>  <br>12 <br>Netherrack |  |
+| `bastion/bridge/walls/wall_base_0` | The lower half of one side of the rampart. | 4854 <br>Blackstone<br>  <br>228 <br>Cracked Polished Blackstone Bricks<br>  <br>3 <br>Block of Gold<br>  <br>2 <br>Chiseled Polished Blackstone<br>  <br>2 <br>Lantern<br>  <br>2 <br>Piglin<br> or <br>Piglin brute<br>[\[n 1\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_group-3) |  |
+| `bastion/bridge/walls/wall_base_1` | The lower half of one side of the rampart. | 5034 <br>Blackstone<br>  <br>213 <br>Cracked Polished Blackstone Bricks<br>  <br>2 <br>Chiseled Polished Blackstone<br>  <br>2 <br>Lantern<br>  <br>1 <br>Polished Blackstone Bricks |  |
+
+### Hoglin stables
+
+\[edit\
+ | edit source\
+\]
+
+The **hoglin stables** consist of a three-part rampart with damaged hoglin stables on either side. Hoglin stables' pieces are contained in the subfolder hoglin\_stable. They contain the hoglin stable chests.
+
+| Structure name | Description | Consists of | Image |
+| --- | --- | --- | --- |
+| `bastion/hoglin_stable/air_base` | A technical connecting part. | None | N/A |
+| `bastion/hoglin_stable/connectors/end_post_connector` | A technical connecting part between posts. | None | N/A |
+| `bastion/hoglin_stable/large_stables/inner_0` | Large stables for hoglins. | 168 <br>Polished Blackstone Bricks<br>  <br>74 <br>Basalt<br>  <br>7 <br>Polished Blackstone Brick Stairs<br>  <br>5 <br>Blackstone Slab<br>  <br>5 <br>Blackstone Wall<br>  <br>1 <br>Lantern |  |
+| `bastion/hoglin_stable/large_stables/inner_1` | 146 <br>Polished Blackstone Bricks<br>  <br>61 <br>Basalt<br>  <br>19 <br>Cracked Polished Blackstone Bricks<br>  <br>16 <br>Blackstone<br>  <br>11 <br>Blackstone Slab<br>  <br>7 <br>Polished Blackstone Brick Stairs<br>  <br>2 <br>Blackstone Wall<br>  <br>2 <br>Lantern<br>  <br>2 <br>Soul Sand<br>  <br>1 <br>Hoglin<br>[\[n 3\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-hoglin_group-5) |  |
+| `bastion/hoglin_stable/large_stables/inner_2` | 225 <br>Polished Blackstone Bricks<br>  <br>39 <br>Basalt<br>  <br>29 <br>Cracked Polished Blackstone Bricks<br>  <br>7 <br>Blackstone Slab<br>  <br>5 <br>Polished Blackstone Brick Stairs<br>  <br>3 <br>Soul Sand<br>  <br>2 <br>Blackstone Wall<br>  <br>2 <br>Lantern<br>  <br>1 <br>Hoglin<br>[\[n 3\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-hoglin_group-5) |  |
+| `bastion/hoglin_stable/large_stables/inner_3` | 246 <br>Polished Blackstone Bricks<br>  <br>33 <br>Cracked Polished Blackstone Bricks<br>  <br>32 <br>Basalt<br>  <br>7 <br>Gilded Blackstone<br>  <br>3 <br>Lantern<br>  <br>2 <br>Blackstone Wall<br>  <br>2 <br>Lava<br>  <br>1 <br>Blackstone<br>  <br>1 Loot <br>Chest<br> (Hoglin Stable)  <br>2 <br>Piglin<br> or <br>Piglin brute<br>[\[n 1\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_group-3) |  |
+| `bastion/hoglin_stable/large_stables/inner_4` | 235 <br>Polished Blackstone Bricks<br>  <br>47 <br>Basalt<br>  <br>47 <br>Cracked Polished Blackstone Bricks<br>  <br>3 <br>Blackstone Wall<br>  <br>1 <br>Lantern<br>  <br>1 <br>Hoglin<br>[\[n 3\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-hoglin_group-5) |  |
+| `bastion/hoglin_stable/large_stables/outer_0` | 166 <br>Polished Blackstone Bricks<br>  <br>76 <br>Basalt<br>  <br>7 <br>Polished Blackstone Brick Stairs<br>  <br>5 <br>Blackstone Slab<br>  <br>3 <br>Blackstone Wall<br>  <br>3 <br>Lantern<br>  <br>1 <br>Iron Chain<br>  <br>2 <br>Piglin<br> or <br>Piglin brute<br>[\[n 1\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_group-3) |  |
+| `bastion/hoglin_stable/large_stables/outer_1` | 145 <br>Polished Blackstone Bricks<br>  <br>62 <br>Basalt<br>  <br>19 <br>Cracked Polished Blackstone Bricks<br>  <br>15 <br>Blackstone<br>  <br>12 <br>Blackstone Slab<br>  <br>7 <br>Polished Blackstone Brick Stairs<br>  <br>2 <br>Lantern<br>  <br>2 <br>Soul Sand<br>  <br>1 <br>Blackstone Wall<br>  <br>1 <br>Block of Gold<br>[\[n 4\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-gold_group-6)<br>  <br>1 <br>Hoglin<br>[\[n 3\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-hoglin_group-5) |  |
+| `bastion/hoglin_stable/large_stables/outer_2` | 225 <br>Polished Blackstone Bricks<br>  <br>38 <br>Basalt<br>  <br>30 <br>Cracked Polished Blackstone Bricks<br>  <br>7 <br>Blackstone Slab<br>  <br>5 <br>Polished Blackstone Brick Stairs<br>  <br>3 <br>Soul Sand<br>  <br>2 <br>Blackstone Wall<br>  <br>2 <br>Lantern<br>  <br>2 <br>Piglin<br> or <br>Piglin brute<br>[\[n 1\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_group-3) |  |
+| `bastion/hoglin_stable/large_stables/outer_3` | 252 <br>Polished Blackstone Bricks<br>  <br>33 <br>Basalt<br>  <br>32 <br>Cracked Polished Blackstone Bricks<br>  <br>5 <br>Blackstone Wall<br>  <br>4 <br>Blackstone<br>  <br>1 <br>Lantern<br>  <br>1 <br>Lava<br> (source block) |  |
+| `bastion/hoglin_stable/large_stables/outer_4` | 235 <br>Polished Blackstone Bricks<br>  <br>48 <br>Cracked Polished Blackstone Bricks<br>  <br>46 <br>Basalt<br>  <br>4 <br>Blackstone Wall<br>  <br>1 <br>Lantern |  |
+| `bastion/hoglin_stable/posts/end_post` | A post between stables. | 96 <br>Polished Blackstone Bricks |  |
+| `bastion/hoglin_stable/posts/stair_post` | Two posts between stables. | 192 <br>Polished Blackstone Bricks |  |
+| `bastion/hoglin_stable/rampart_plates/rampart_plate_1` | A wall on `bastion/hoglin_stable/ramparts/ramparts_1`. | 260 <br>Polished Blackstone Bricks<br>  <br>81 <br>Basalt<br>  <br>38 <br>Blackstone<br>  <br>26 <br>Cracked Polished Blackstone Bricks |  |
+| `bastion/hoglin_stable/ramparts/ramparts_1` | The upper half of a part of the rampart. 3 of these generate per bastion. | 4055 <br>Polished Blackstone Bricks<br>  <br>459 <br>Blackstone<br>  <br>346 <br>Basalt<br>  <br>130 <br>Cracked Polished Blackstone Bricks<br>  <br>40 <br>Polished Blackstone Brick Stairs<br>  <br>9 <br>Gilded Blackstone<br>  <br>4 <br>Block of Gold<br>  <br>4 <br>Lantern<br>  <br>3 Loot <br>Chest<br> (Generic)  <br>3 <br>Chiseled Polished Blackstone<br>  <br>6 <br>Piglin<br> or <br>Piglin brute<br>[\[n 1\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_group-3)<br>  <br>2 <br>Piglin<br> or <br>Piglin brute<br>[\[n 2\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_melee_group-4) |  |
+| `bastion/hoglin_stable/ramparts/ramparts_2` | 2885 <br>Polished Blackstone Bricks<br>  <br>440 <br>Blackstone<br>  <br>236 <br>Basalt<br>  <br>77 <br>Cracked Polished Blackstone Bricks<br>  <br>15 <br>Polished Blackstone Brick Stairs<br>  <br>7 <br>Gilded Blackstone<br>  <br>2 Loot <br>Chest<br> (Generic)  <br>2 <br>Lantern<br>  <br>1 <br>Blackstone Stairs<br>  <br>2 <br>Piglin<br> or <br>Piglin brute<br>[\[n 1\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_group-3)<br>  <br>1 <br>Piglin<br> or <br>Piglin brute<br>[\[n 2\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_melee_group-4) |  |
+| `bastion/hoglin_stable/ramparts/ramparts_3` | 1281 <br>Polished Blackstone Bricks<br>  <br>467 <br>Blackstone<br>  <br>74 <br>Basalt<br>  <br>10 <br>Cracked Polished Blackstone Bricks<br>  <br>4 <br>Gilded Blackstone<br>  <br>1 Loot <br>Chest<br> (Generic)  <br>1 <br>Piglin<br> or <br>Piglin brute<br>[\[n 1\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_group-3)<br>  <br>1 <br>Piglin<br> or <br>Piglin brute<br>[\[n 2\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_melee_group-4) |  |
+| `bastion/hoglin_stable/small_stables/inner_0` | Small stables for hoglin. | 69 <br>Polished Blackstone Bricks<br>  <br>53 <br>Basalt<br>  <br>35 <br>Blackstone<br>  <br>29 <br>Cracked Polished Blackstone Bricks<br>  <br>9 <br>Blackstone Slab<br>  <br>4 <br>Polished Blackstone Brick Stairs<br>  <br>2 <br>Blackstone Wall<br>  <br>1 <br>Lantern<br>  <br>1 <br>Hoglin<br>[\[n 3\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-hoglin_group-5) |  |
+| `bastion/hoglin_stable/small_stables/inner_1` | 91 <br>Polished Blackstone Bricks<br>  <br>43 <br>Basalt<br>  <br>17 <br>Cracked Polished Blackstone Bricks<br>  <br>14 <br>Blackstone Slab<br>  <br>9 <br>Blackstone<br>  <br>3 <br>Polished Blackstone Brick Stairs<br>  <br>2 <br>Blackstone Wall<br>  <br>1 <br>Block of Gold<br>[\[n 4\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-gold_group-6)<br>  <br>1 <br>Lantern<br>  <br>1 <br>Hoglin<br>[\[n 3\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-hoglin_group-5) |  |
+| `bastion/hoglin_stable/small_stables/inner_2` | 127 <br>Polished Blackstone Bricks<br>  <br>59 <br>Basalt<br>  <br>21 <br>Blackstone<br>  <br>21 <br>Cracked Polished Blackstone Bricks<br>  <br>12 <br>Blackstone Slab<br>  <br>7 <br>Polished Blackstone Brick Stairs<br>  <br>3 <br>Lantern<br>  <br>2 <br>Blackstone Wall<br>  <br>2 <br>Soul Sand<br>  <br>1 Loot <br>Chest<br> (Hoglin Stable)  <br>1 <br>Gilded Blackstone<br>  <br>1 <br>Hoglin<br>[\[n 3\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-hoglin_group-5)<br>  <br>1 <br>Piglin<br> or <br>Piglin brute<br>[\[n 1\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_group-3)<br>  <br>1 <br>Piglin<br> or <br>Piglin brute<br>[\[n 2\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_melee_group-4) |  |
+| `bastion/hoglin_stable/small_stables/inner_3` | 84 <br>Polished Blackstone Bricks<br>  <br>31 <br>Basalt<br>  <br>25 <br>Cracked Polished Blackstone Bricks<br>  <br>14 <br>Blackstone Slab<br>  <br>6 <br>Blackstone<br>  <br>3 <br>Polished Blackstone Brick Stairs<br>  <br>2 <br>Blackstone Wall<br>  <br>1 <br>Lantern<br>  <br>1 <br>Piglin<br> or <br>Piglin brute<br>[\[n 1\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_group-3) |  |
+| `bastion/hoglin_stable/small_stables/outer_0` | 69 <br>Polished Blackstone Bricks<br>  <br>53 <br>Basalt<br>  <br>35 <br>Blackstone<br>  <br>28 <br>Cracked Polished Blackstone Bricks<br>  <br>9 <br>Blackstone Slab<br>  <br>4 <br>Blackstone Wall<br>  <br>4 <br>Polished Blackstone Brick Stairs<br>  <br>2 <br>Lantern<br>  <br>2 <br>Piglin<br> or <br>Piglin brute<br>[\[n 1\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_group-3) |  |
+| `bastion/hoglin_stable/small_stables/outer_1` | 90 <br>Polished Blackstone Bricks<br>  <br>43 <br>Basalt<br>  <br>17 <br>Cracked Polished Blackstone Bricks<br>  <br>14 <br>Blackstone Slab<br>  <br>10 <br>Blackstone<br>  <br>4 <br>Blackstone Wall<br>  <br>3 <br>Polished Blackstone Brick Stairs<br>  <br>1 <br>Block of Gold<br>[\[n 4\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-gold_group-6)<br>  <br>1 <br>Lantern<br>  <br>1 <br>Hoglin<br>[\[n 3\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-hoglin_group-5) |  |
+| `bastion/hoglin_stable/small_stables/outer_2` | 126 <br>Polished Blackstone Bricks<br>  <br>59 <br>Basalt<br>  <br>22 <br>Cracked Polished Blackstone Bricks<br>  <br>21 <br>Blackstone<br>  <br>12 <br>Blackstone Slab<br>  <br>7 <br>Polished Blackstone Brick Stairs<br>  <br>2 <br>Blackstone Wall<br>  <br>2 <br>Soul Sand<br>  <br>1 <br>Iron Chain<br>  <br>1 <br>Lantern<br>  <br>1 <br>Hoglin<br>[\[n 3\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-hoglin_group-5) |  |
+| `bastion/hoglin_stable/small_stables/outer_3` | 86 <br>Polished Blackstone Bricks<br>  <br>32 <br>Basalt<br>  <br>25 <br>Cracked Polished Blackstone Bricks<br>  <br>14 <br>Blackstone Slab<br>  <br>6 <br>Blackstone<br>  <br>4 <br>Blackstone Wall<br>  <br>3 <br>Polished Blackstone Brick Stairs<br>  <br>1 <br>Lantern<br>  <br>1 <br>Hoglin<br>[\[n 3\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-hoglin_group-5) |  |
+| `bastion/hoglin_stable/stairs/stairs_1_0` | Stairs connecting floors of stables. | 180 <br>Polished Blackstone Bricks<br>  <br>57 <br>Basalt<br>  <br>31 <br>Blackstone<br>  <br>18 <br>Cracked Polished Blackstone Bricks<br>  <br>6 <br>Magma Block<br>  <br>4 <br>Polished Blackstone Brick Stairs<br>  <br>3 <br>Lantern<br>  <br>3 <br>Polished Basalt<br>  <br>1 <br>Blackstone Stairs |  |
+| `bastion/hoglin_stable/stairs/stairs_1_1` | 225 <br>Polished Blackstone Bricks<br>  <br>49 <br>Basalt<br>  <br>27 <br>Cracked Polished Blackstone Bricks<br>  <br>24 <br>Blackstone<br>  <br>12 <br>Polished Blackstone Brick Stairs<br>  <br>4 <br>Magma Block<br>  <br>3 <br>Polished Basalt<br>  <br>2 <br>Iron Chain<br>  <br>1 <br>Blackstone Stairs<br>  <br>1 <br>Lantern |  |
+| `bastion/hoglin_stable/stairs/stairs_1_2` | 184 <br>Polished Blackstone Bricks<br>  <br>49 <br>Basalt<br>  <br>25 <br>Blackstone<br>  <br>14 <br>Cracked Polished Blackstone Bricks<br>  <br>10 <br>Polished Blackstone Brick Stairs<br>  <br>3 <br>Polished Basalt<br>  <br>1 <br>Blackstone Stairs<br>  <br>1 <br>Iron Chain<br>  <br>1 <br>Lantern |  |
+| `bastion/hoglin_stable/stairs/stairs_1_3` | 167 <br>Polished Blackstone Bricks<br>  <br>65 <br>Blackstone<br>  <br>39 <br>Basalt<br>  <br>30 <br>Cracked Polished Blackstone Bricks<br>  <br>11 <br>Polished Blackstone Brick Stairs<br>  <br>2 <br>Magma Block<br>  <br>2 <br>Polished Basalt<br>  <br>1 <br>Blackstone Stairs<br>  <br>1 <br>Lantern |  |
+| `bastion/hoglin_stable/stairs/stairs_1_4` | 129 <br>Polished Blackstone Bricks<br>  <br>51 <br>Blackstone<br>  <br>32 <br>Basalt<br>  <br>14 <br>Cracked Polished Blackstone Bricks<br>  <br>6 <br>Magma Block<br>  <br>3 <br>Polished Blackstone Brick Stairs<br>  <br>1 <br>Lantern<br>  <br>1 <br>Polished Basalt |  |
+| `bastion/hoglin_stable/stairs/stairs_2_0` | 185 <br>Polished Blackstone Bricks<br>  <br>57 <br>Basalt<br>  <br>28 <br>Blackstone<br>  <br>21 <br>Cracked Polished Blackstone Bricks<br>  <br>4 <br>Polished Blackstone Brick Stairs<br>  <br>3 <br>Lantern<br>  <br>3 <br>Polished Basalt<br>  <br>1 <br>Blackstone Stairs |  |
+| `bastion/hoglin_stable/stairs/stairs_2_1` | 227 <br>Polished Blackstone Bricks<br>  <br>49 <br>Basalt<br>  <br>28 <br>Cracked Polished Blackstone Bricks<br>  <br>25 <br>Blackstone<br>  <br>12 <br>Polished Blackstone Brick Stairs<br>  <br>3 <br>Polished Basalt<br>  <br>2 <br>Lantern<br>  <br>1 <br>Blackstone Stairs |  |
+| `bastion/hoglin_stable/stairs/stairs_2_2` | 184 <br>Polished Blackstone Bricks<br>  <br>49 <br>Basalt<br>  <br>25 <br>Blackstone<br>  <br>14 <br>Cracked Polished Blackstone Bricks<br>  <br>10 <br>Polished Blackstone Brick Stairs<br>  <br>3 <br>Polished Basalt<br>  <br>2 <br>Lantern<br>  <br>1 <br>Blackstone Stairs |  |
+| `bastion/hoglin_stable/stairs/stairs_2_3` | 170 <br>Polished Blackstone Bricks<br>  <br>64 <br>Blackstone<br>  <br>44 <br>Basalt<br>  <br>26 <br>Cracked Polished Blackstone Bricks<br>  <br>11 <br>Polished Blackstone Brick Stairs<br>  <br>2 <br>Lantern<br>  <br>2 <br>Polished Basalt<br>  <br>1 <br>Blackstone Stairs |  |
+| `bastion/hoglin_stable/stairs/stairs_2_4` | 130 <br>Polished Blackstone Bricks<br>  <br>53 <br>Blackstone<br>  <br>32 <br>Basalt<br>  <br>14 <br>Cracked Polished Blackstone Bricks<br>  <br>3 <br>Polished Blackstone Brick Stairs<br>  <br>2 <br>Lantern<br>  <br>1 <br>Iron Chain<br>  <br>1 <br>Polished Basalt |  |
+| `bastion/hoglin_stable/stairs/stairs_3_0` | 182 <br>Polished Blackstone Bricks<br>  <br>57 <br>Basalt<br>  <br>27 <br>Blackstone<br>  <br>19 <br>Cracked Polished Blackstone Bricks<br>  <br>9 <br>Magma Block<br>  <br>4 <br>Polished Blackstone Brick Stairs<br>  <br>3 <br>Polished Basalt<br>  <br>1 <br>Blackstone Stairs<br>  <br>1 <br>Lantern |  |
+| `bastion/hoglin_stable/stairs/stairs_3_1` | 217 <br>Polished Blackstone Bricks<br>  <br>49 <br>Basalt<br>  <br>28 <br>Cracked Polished Blackstone Bricks<br>  <br>26 <br>Blackstone<br>  <br>12 <br>Polished Blackstone Brick Stairs<br>  <br>9 <br>Magma Block<br>  <br>3 <br>Polished Basalt<br>  <br>2 <br>Lantern<br>  <br>1 <br>Blackstone Stairs |  |
+| `bastion/hoglin_stable/stairs/stairs_3_2` | 184 <br>Polished Blackstone Bricks<br>  <br>49 <br>Basalt<br>  <br>25 <br>Blackstone<br>  <br>14 <br>Cracked Polished Blackstone Bricks<br>  <br>10 <br>Polished Blackstone Brick Stairs<br>  <br>3 <br>Polished Basalt<br>  <br>2 <br>Lantern<br>  <br>2 <br>Magma Block<br>  <br>1 <br>Blackstone Stairs |  |
+| `bastion/hoglin_stable/stairs/stairs_3_3` | 170 <br>Polished Blackstone Bricks<br>  <br>63 <br>Blackstone<br>  <br>44 <br>Basalt<br>  <br>26 <br>Cracked Polished Blackstone Bricks<br>  <br>11 <br>Polished Blackstone Brick Stairs<br>  <br>3 <br>Lantern<br>  <br>2 <br>Polished Basalt<br>  <br>1 <br>Blackstone Stairs<br>  <br>1 <br>Iron Chain |  |
+| `bastion/hoglin_stable/stairs/stairs_3_4` | 127 <br>Polished Blackstone Bricks<br>  <br>53 <br>Blackstone<br>  <br>32 <br>Basalt<br>  <br>14 <br>Cracked Polished Blackstone Bricks<br>  <br>4 <br>Magma Block<br>  <br>3 <br>Polished Blackstone Brick Stairs<br>  <br>2 <br>Lantern<br>  <br>1 <br>Iron Chain<br>  <br>1 <br>Polished Basalt |  |
+| `bastion/hoglin_stable/starting_pieces/stairs_0_mirrored` | 185 <br>Polished Blackstone Bricks<br>  <br>58 <br>Basalt<br>  <br>28 <br>Blackstone<br>  <br>21 <br>Cracked Polished Blackstone Bricks<br>  <br>4 <br>Glowstone<br>  <br>4 <br>Polished Blackstone Brick Stairs<br>  <br>3 <br>Polished Basalt<br>  <br>1 <br>Blackstone Stairs |  |
+| `bastion/hoglin_stable/starting_pieces/stairs_1_mirrored` | 227 <br>Polished Blackstone Bricks<br>  <br>50 <br>Basalt<br>  <br>28 <br>Cracked Polished Blackstone Bricks<br>  <br>25 <br>Blackstone<br>  <br>12 <br>Polished Blackstone Brick Stairs<br>  <br>3 <br>Polished Basalt<br>  <br>1 <br>Blackstone Stairs |  |
+| `bastion/hoglin_stable/starting_pieces/stairs_2_mirrored` | 184 <br>Polished Blackstone Bricks<br>  <br>50 <br>Basalt<br>  <br>25 <br>Blackstone<br>  <br>14 <br>Cracked Polished Blackstone Bricks<br>  <br>10 <br>Polished Blackstone Brick Stairs<br>  <br>3 <br>Polished Basalt<br>  <br>1 <br>Blackstone Stairs |  |
+| `bastion/hoglin_stable/starting_pieces/stairs_3_mirrored` | 170 <br>Polished Blackstone Bricks<br>  <br>63 <br>Blackstone<br>  <br>45 <br>Basalt<br>  <br>26 <br>Cracked Polished Blackstone Bricks<br>  <br>11 <br>Polished Blackstone Brick Stairs<br>  <br>2 <br>Polished Basalt<br>  <br>1 <br>Blackstone Stairs |  |
+| `bastion/hoglin_stable/starting_pieces/stairs_4_mirrored` | 131 <br>Polished Blackstone Bricks<br>  <br>53 <br>Blackstone<br>  <br>33 <br>Basalt<br>  <br>14 <br>Cracked Polished Blackstone Bricks<br>  <br>3 <br>Polished Blackstone Brick Stairs<br>  <br>1 <br>Polished Basalt |  |
+| `bastion/hoglin_stable/starting_pieces/starting_stairs_0` | 184 <br>Polished Blackstone Bricks<br>  <br>57 <br>Basalt<br>  <br>27 <br>Blackstone<br>  <br>21 <br>Cracked Polished Blackstone Bricks<br>  <br>8 <br>Magma Block<br>  <br>4 <br>Polished Blackstone Brick Stairs<br>  <br>3 <br>Polished Basalt<br>  <br>1 <br>Blackstone Stairs<br>  <br>1 <br>Lantern |  |
+| `bastion/hoglin_stable/starting_pieces/starting_stairs_1` | 227 <br>Polished Blackstone Bricks<br>  <br>47 <br>Basalt<br>  <br>28 <br>Cracked Polished Blackstone Bricks<br>  <br>25 <br>Blackstone<br>  <br>12 <br>Polished Blackstone Stairs<br>  <br>3 <br>Polished Basalt<br>  <br>2 <br>Lantern<br>  <br>2 <br>Magma Block<br>  <br>1 <br>Blackstone Stairs |  |
+| `bastion/hoglin_stable/starting_pieces/starting_stairs_2` | 184 <br>Polished Blackstone Bricks<br>  <br>49 <br>Basalt<br>  <br>25 <br>Blackstone<br>  <br>12 <br>Cracked Polished Blackstone Bricks<br>  <br>10 <br>Polished Blackstone Brick Stairs<br>  <br>3 <br>Polished Basalt<br>  <br>2 <br>Magma Block<br>  <br>1 <br>Blackstone Stairs<br>  <br>1 <br>Lantern |  |
+| `bastion/hoglin_stable/starting_pieces/starting_stairs_3` | 167 <br>Polished Blackstone Bricks<br>  <br>55 <br>Blackstone<br>  <br>44 <br>Basalt<br>  <br>23 <br>Cracked Polished Blackstone Bricks<br>  <br>14 <br>Magma Block<br>  <br>11 <br>Polished Blackstone Brick Stairs<br>  <br>2 <br>Lantern<br>  <br>2 <br>Polished Basalt<br>  <br>1 <br>Blackstone Stairs |  |
+| `bastion/hoglin_stable/starting_pieces/starting_stairs_4` | 129 <br>Polished Blackstone Bricks<br>  <br>51 <br>Blackstone<br>  <br>32 <br>Basalt<br>  <br>14 <br>Cracked Polished Blackstone Bricks<br>  <br>4 <br>Magma Block<br>  <br>3 <br>Polished Blackstone Brick Stairs<br>  <br>2 <br>Lantern<br>  <br>1 <br>Polished Basalt |  |
+| `bastion/hoglin_stable/walls/side_wall_0` | The lower half of a part of the rampart. 3 of these generate per bastion. There is always 1 wall base in the middle, and the outer two walls are randomly chosen to be either side wall 0 or side wall 1. | 4680 <br>Blackstone<br>  <br>220 <br>Cracked Polished Blackstone Bricks<br>  <br>12 <br>Chiseled Polished Blackstone<br>  <br>6 <br>Polished Blackstone Bricks<br>  <br>3 <br>Gilded Blackstone<br>  <br>2 <br>Lantern<br>  <br>1 <br>Iron Chain<br>  <br>1 Loot <br>Chest<br> (Generic)  <br>3 <br>Piglin<br> or <br>Piglin brute<br>[\[n 1\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_group-3) |  |
+| `bastion/hoglin_stable/walls/side_wall_1` | 4924 <br>Blackstone<br>  <br>173 <br>Cracked Polished Blackstone Bricks<br>  <br>26 <br>Chiseled Polished Blackstone<br>  <br>12 <br>Block of Gold<br>  <br>7 <br>Polished Blackstone Bricks<br>  <br>2 <br>Lantern<br>  <br>1 <br>Iron Chain<br>  <br>5 <br>Piglin<br> or <br>Piglin brute<br>[\[n 1\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_group-3) |  |
+| `bastion/hoglin_stable/walls/wall_base` | 5286 <br>Blackstone<br>  <br>66 <br>Cracked Polished Blackstone Bricks<br>  <br>27 <br>Blackstone Stairs<br>  <br>4 <br>Chiseled Polished Blackstone<br>  <br>3 <br>Gilded Blackstone<br>  <br>1 Loot <br>Chest<br> (Generic)  <br>1 <br>Piglin<br> or <br>Piglin brute<br>[\[n 2\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_melee_group-4) |  |
+
+### Housing units
+
+\[edit\
+ | edit source\
+\]
+
+The **housing unit** consists of multiple ruined two-part ramparts arranged around a central courtyard with nether wart growing in the middle. Housing unit pieces are contained in the subfolder units.
+
+| Structure name | Description | Consists of | Image |
+| --- | --- | --- | --- |
+| `bastion/units/center_pieces/center_0` | Central courtyards with Nether wart<br> growing in the middle. Only 1 generates per bastion. | 72 <br>Polished Blackstone Bricks<br>  <br>21 <br>Blackstone<br>  <br>15 <br>Chiseled Polished Blackstone<br>  <br>15 <br>Soul Sand<br>  <br>9 <br>Cracked Polished Blackstone Bricks<br>  <br>7 <br>Blackstone Slab<br>  <br>6 <br>Nether Wart<br>  <br>2 <br>Blackstone Wall<br>  <br>1 Loot <br>Chest<br> (Generic) |  |
+| `bastion/units/center_pieces/center_1` | 32 <br>Polished Blackstone Bricks<br>  <br>23 <br>Blackstone<br>  <br>11 <br>Blackstone Slab<br>  <br>7 <br>Chiseled Polished Blackstone<br>  <br>7 <br>Soul Sand<br>  <br>4 <br>Cracked Polished Blackstone Bricks<br>  <br>1 Loot <br>Chest<br> (Generic)  <br>1 <br>Nether Wart |  |
+| `bastion/units/center_pieces/center_2` | 71 <br>Polished Blackstone Bricks<br>  <br>26 <br>Blackstone<br>  <br>22 <br>Soul Sand<br>  <br>8 <br>Cracked Polished Blackstone Bricks<br>  <br>5 <br>Blackstone Slab<br>  <br>5 <br>Chiseled Polished Blackstone<br>  <br>5 <br>Nether Wart<br>  <br>1 <br>Blackstone Wall<br>  <br>1 Loot <br>Chest<br> (Generic) |  |
+| `bastion/units/pathways/pathway_0` | Pathways connecting the center and the house units. | 6 <br>Blackstone |  |
+| `bastion/units/pathways/pathway_wall_0` | 6 <br>Blackstone |  |
+| `bastion/units/rampart_plates/plate_0` | A wall on `bastion/units/ramparts/ramparts_0`. | 260 <br>Polished Blackstone Bricks<br>  <br>81 <br>Basalt<br>  <br>38 <br>Blackstone<br>  <br>26 <br>Cracked Polished Blackstone Bricks |  |
+| `bastion/units/ramparts/ramparts_0` | The upper half of one side of the rampart. 2 of these generate per bastion. | 4441 <br>Polished Blackstone Bricks<br>  <br>494 <br>Blackstone<br>  <br>342 <br>Basalt<br>  <br>114 <br>Cracked Polished Blackstone Bricks<br>  <br>40 <br>Polished Blackstone Brick Stairs<br>  <br>3 Loot <br>Chest<br> (Generic)  <br>2 <br>Piglin<br> or <br>Piglin brute<br>[\[n 1\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_group-3)<br>  <br>2 <br>Piglin<br> or <br>Piglin brute<br>[\[n 2\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_melee_group-4) |  |
+| `bastion/units/ramparts/ramparts_1` | 3022 <br>Polished Blackstone Bricks<br>  <br>482 <br>Blackstone<br>  <br>236 <br>Basalt<br>  <br>79 <br>Cracked Polished Blackstone Bricks<br>  <br>15 <br>Polished Blackstone Brick Stairs<br>  <br>6 <br>Blackstone Stairs<br>  <br>1 Loot <br>Chest<br> (Generic)  <br>1 <br>Piglin<br> or <br>Piglin brute<br>[\[n 2\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_melee_group-4) |  |
+| `bastion/units/ramparts/ramparts_2` | 1417 <br>Polished Blackstone Bricks<br>  <br>531 <br>Blackstone<br>  <br>74 <br>Basalt<br>  <br>13 <br>Cracked Polished Blackstone Bricks |  |
+| `bastion/units/edges/edge_0` | House units and some roofs. They generate a `stage_0`, then a `stage_1`, a `stage_2`, and finally a `stage_3` on top. | 240 <br>Polished Blackstone Bricks<br>  <br>31 <br>Basalt<br>  <br>6 <br>Blackstone<br>  <br>3 <br>Polished Blackstone Brick Stairs |  |
+| `bastion/units/fillers/stage_0` | 241 <br>Polished Blackstone Bricks<br>  <br>30 <br>Basalt<br>  <br>6 <br>Blackstone<br>  <br>2 <br>Polished Blackstone Brick Stairs |  |
+| `bastion/units/stages/rot/stage_1_0` | 177 <br>Polished Blackstone Bricks<br>  <br>29 <br>Basalt<br>  <br>24 <br>Blackstone<br>  <br>13 <br>Cracked Polished Blackstone Bricks |  |
+| `bastion/units/stages/stage_0_0` | 239 <br>Polished Blackstone Bricks<br>  <br>31 <br>Basalt<br>  <br>6 <br>Blackstone<br>  <br>4 <br>Polished Blackstone Brick Stairs<br>  <br>1 <br>Block of Gold<br>[\[n 4\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-gold_group-6)<br>  <br>1 <br>Piglin<br> or <br>Piglin brute<br>[\[n 1\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_group-3) |  |
+| `bastion/units/stages/stage_0_1` | 268 <br>Polished Blackstone Bricks<br>  <br>34 <br>Basalt<br>  <br>9 <br>Cracked Polished Blackstone Bricks<br>  <br>6 <br>Blackstone<br>  <br>4 <br>Polished Blackstone Bricks<br>  <br>1 <br>Iron Chain<br>  <br>1 <br>Lava<br>  <br>1 <br>Piglin<br> or <br>Piglin brute<br>[\[n 1\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_group-3) |  |
+| `bastion/units/stages/stage_0_2` | 279 <br>Polished Blackstone Bricks<br>  <br>27 <br>Basalt<br>  <br>7 <br>Cracked Polished Blackstone Bricks<br>  <br>6 <br>Polished Blackstone Brick Stairs<br>  <br>1 <br>Block of Gold<br>[\[n 4\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-gold_group-6)<br>  <br>1 <br>Iron Chain<br>  <br>1 Loot <br>Chest<br> (Generic)  <br>1 <br>Lantern<br>  <br>1 <br>Piglin<br> or <br>Piglin brute<br>[\[n 1\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_group-3)<br>  <br>1 <br>Piglin<br> or <br>Piglin brute<br>[\[n 2\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_melee_group-4) |  |
+| `bastion/units/stages/stage_0_3` | 231 <br>Polished Blackstone Bricks<br>  <br>31 <br>Basalt<br>  <br>13 <br>Blackstone<br>  <br>10 <br>Cracked Polished Blackstone Bricks<br>  <br>1 <br>Block of Gold<br>[\[n 4\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-gold_group-6)<br>  <br>1 <br>Piglin<br> or <br>Piglin brute<br>[\[n 1\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_group-3) |  |
+| `bastion/units/stages/stage_1_0` | 178 <br>Polished Blackstone Bricks<br>  <br>29 <br>Basalt<br>  <br>24 <br>Blackstone<br>  <br>13 <br>Cracked Polished Blackstone Bricks<br>  <br>2 <br>Iron Chain<br>  <br>1 <br>Block of Gold<br>[\[n 4\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-gold_group-6)<br>  <br>1 <br>Piglin<br> or <br>Piglin brute<br>[\[n 1\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_group-3) |  |
+| `bastion/units/stages/stage_1_1` | 281 <br>Polished Blackstone Bricks<br>  <br>8 <br>Polished Blackstone Brick Stairs<br>  <br>3 <br>Cracked Polished Blackstone Bricks<br>  <br>1 <br>Block of Gold<br>[\[n 4\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-gold_group-6)<br>  <br>1 <br>Lava |  |
+| `bastion/units/stages/stage_1_2` | 244 <br>Polished Blackstone Bricks<br>  <br>18 <br>Basalt<br>  <br>4 <br>Polished Blackstone Brick Stairs<br>  <br>1 Loot <br>Chest<br> (Generic)  <br>1 <br>Lantern<br>  <br>1 <br>Piglin<br> or <br>Piglin brute<br>[\[n 2\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_melee_group-4) |  |
+| `bastion/units/stages/stage_1_3` | 279 <br>Polished Blackstone Bricks<br>  <br>9 <br>Basalt<br>  <br>5 <br>Polished Blackstone Brick Stairs<br>  <br>1 <br>Block of Gold<br>[\[n 4\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-gold_group-6)<br>  <br>1 <br>Cracked Polished Blackstone Bricks<br>  <br>2 <br>Piglin<br> or <br>Piglin brute<br>[\[n 1\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_group-3) |  |
+| `bastion/units/stages/stage_2_0` | 176 <br>Polished Blackstone Bricks<br>  <br>29 <br>Basalt<br>  <br>23 <br>Blackstone<br>  <br>13 <br>Cracked Polished Blackstone Bricks<br>  <br>1 <br>Piglin<br> or <br>Piglin brute<br>[\[n 1\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_group-3) |  |
+| `bastion/units/stages/stage_2_1` | 170 <br>Polished Blackstone Bricks<br>  <br>29 <br>Basalt<br>  <br>23 <br>Blackstone<br>  <br>13 <br>Cracked Polished Blackstone Bricks<br>  <br>1 <br>Piglin<br> or <br>Piglin brute<br>[\[n 1\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_group-3) |  |
+| `bastion/units/stages/stage_3_0` | 79 <br>Polished Blackstone Bricks<br>  <br>6 <br>Blackstone<br>  <br>2 <br>Polished Blackstone Brick Stairs |  |
+| `bastion/units/stages/stage_3_1` | 69 <br>Polished Blackstone Bricks<br>  <br>8 <br>Blackstone<br>  <br>2 <br>Polished Blackstone Brick Stairs |  |
+| `bastion/units/stages/stage_3_2` | 69 <br>Polished Blackstone Bricks<br>  <br>20 <br>Blackstone<br>  <br>2 <br>Cracked Polished Blackstone Bricks<br>  <br>1 <br>Lava |  |
+| `bastion/units/stages/stage_3_3` | 60 <br>Polished Blackstone Bricks<br>  <br>15 <br>Blackstone<br>  <br>2 <br>Polished Blackstone Brick Stairs<br>  <br>1 <br>Cracked Polished Blackstone Bricks<br>  <br>1 <br>Lava |  |
+| `bastion/units/wall_units/edge_0_large` | 290 <br>Polished Blackstone Bricks<br>  <br>31 <br>Basalt<br>  <br>12 <br>Blackstone<br>  <br>3 <br>Polished Blackstone Brick Stairs<br>  <br>1 <br>Cracked Polished Blackstone Bricks |  |
+| `bastion/units/wall_units/unit_0` | 241 <br>Polished Blackstone Bricks<br>  <br>31 <br>Basalt<br>  <br>6 <br>Blackstone<br>  <br>3 <br>Polished Blackstone Brick Stairs<br>  <br>1 <br>Block of Gold<br>[\[n 4\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-gold_group-6) |  |
+| `bastion/units/walls/connected_wall` | The lower half of the rampart on the side. Only 1 generates per bastion. | 4806 <br>Blackstone<br>  <br>158 <br>Cracked Polished Blackstone Bricks<br>  <br>12 <br>Basalt<br>  <br>5 <br>Block of Gold<br>  <br>1 <br>Chiseled Polished Blackstone<br>  <br>2 <br>Piglin<br> or <br>Piglin brute<br>[\[n 1\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_group-3)<br>  <br>1 <br>Piglin<br> or <br>Piglin brute<br>[\[n 2\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_melee_group-4) |  |
+| `bastion/units/walls/wall_base` | The lower half of one side of the rampart connects with house units. Only 1 generates per bastion. | 4654 <br>Blackstone<br>  <br>191 <br>Cracked Polished Blackstone Bricks<br>  <br>16 <br>Blackstone Stairs<br>  <br>12 <br>Block of Gold<br>  <br>11 <br>Chiseled Polished Blackstone<br>  <br>8 <br>Polished Blackstone Bricks<br>  <br>2 Loot <br>Chest<br> (Generic)  <br>7 <br>Piglin<br> or <br>Piglin brute<br>[\[n 1\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_group-3) |  |
+| `bastion/units/air_base` | A technical connection part. | 1 <br>Polished Blackstone Bricks |  |
+
+### Treasure room
+
+\[edit\
+ | edit source\
+\]
+
+The **treasure room** structure consists of a large rampart supported by buttresses, with a bridge going between it and the treasure room itself. The rampart contains several treasure chests and a handful of blocks of gold.
+
+The treasure room consists of many bridges suspended above a lava floor. At the bottom of a treasure room, there is a magma cube monster spawner, and a center loot area consisting of blocks of gold, as well as 1 or 2 treasure chests. Additional chests generate in the bastion remnant, but they use the "generic" loot table instead of the "treasure" loot table. Treasure room pieces are contained in the subfolder treasure.
+
+Ghasts may spawn in the treasure room if the room is in the correct biome, which can create a difficult experience for the player. Their group size depends on the biome and edition.
+
+| Structure name | Description | Consists of | Image |
+| --- | --- | --- | --- |
+| `bastion/treasure/bases/centers/center_0` | Center loot areas on the lava basin in the treasure room. Only 1 generates per bastion. | 121 <br>Polished Blackstone Bricks<br>  <br>19 <br>Block of Gold<br>  <br>14 <br>Blackstone<br>  <br>4 <br>Blackstone Wall<br>  <br>1 Loot <br>Chest<br> (Treasure)  <br>1 <br>Piglin brute |  |
+| `bastion/treasure/bases/centers/center_1` | 118 <br>Polished Blackstone Bricks<br>  <br>17 <br>Blackstone<br>  <br>12 <br>Block of Gold<br>  <br>2 Loot <br>Chest<br> (Treasure)  <br>2 <br>Piglin brute |  |
+| `bastion/treasure/bases/centers/center_2` | 134 <br>Polished Blackstone Bricks<br>  <br>16 <br>Block of Gold<br>  <br>11 <br>Blackstone<br>  <br>6 <br>Blackstone Wall<br>  <br>1 <br>Chest<br>  <br>1 <br>Piglin<br> or <br>Piglin brute<br>[\[n 1\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_group-3)<br>  <br>1 <br>Piglin brute |  |
+| `bastion/treasure/bases/centers/center_3` | 75 <br>Polished Blackstone Bricks<br>  <br>13 <br>Block of Gold<br>  <br>5 <br>Blackstone<br>  <br>1 Loot <br>Chest<br> (Treasure)  <br>1 <br>Piglin brute |  |
+| `bastion/treasure/bases/lava_basin` | The lava basin at the bottom of the treasure room and a bridge on it. Only 1 generates per bastion. | 956 <br>Lava<br>  <br>802 <br>Polished Blackstone Bricks<br>  <br>129 <br>Blackstone<br>  <br>3 <br>Polished Blackstone Brick Stairs<br>  <br>1 <br>Iron Chain<br>  <br>1 Magma Cube <br>Monster Spawner<br>  <br>1 <br>Piglin<br> or <br>Piglin brute<br>[\[n 2\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_melee_group-4)<br>  <br>1 <br>Piglin brute |  |
+| `bastion/treasure/brains/center_brain` | Technical connection parts. | N/A | N/A |
+| `bastion/treasure/connectors/center_to_wall_middle` | N/A | N/A |
+| `bastion/treasure/connectors/center_to_wall_top` | N/A | N/A |
+| `bastion/treasure/connectors/center_to_wall_top_entrance` | N/A | N/A |
+| `bastion/treasure/corners/bottom/corner_0` | The corners of the corridors of the first, second, and third floors are shown in the treasure room. | 191 <br>Polished Blackstone Bricks<br>  <br>20 <br>Cracked Polished Blackstone Bricks<br>  <br>19 <br>Basalt<br>  <br>7 <br>Blackstone<br>  <br>7 <br>Polished Blackstone Brick Stairs |  |
+| `bastion/treasure/corners/bottom/corner_1` | 89 <br>Polished Blackstone Bricks<br>  <br>60 <br>Cracked Polished Blackstone Bricks<br>  <br>43 <br>Basalt<br>  <br>1 <br>Lantern<br>  <br>1 <br>Iron Chain<br>  <br>1 <br>Polished Basalt |  |
+| `bastion/treasure/corners/edges/bottom` | The corners of walls. | 64 <br>Polished Blackstone Bricks |  |
+| `bastion/treasure/corners/edges/middle` | 60 <br>Polished Blackstone Bricks |  |
+| `bastion/treasure/corners/edges/top` | 68 <br>Polished Blackstone Bricks |  |
+| `bastion/treasure/corners/middle/corner_0` | The corners of the corridors of the fourth, fifth, and sixth floors of the treasure room. | 86 <br>Polished Blackstone Bricks<br>  <br>25 <br>Basalt<br>  <br>21 <br>Blackstone<br>  <br>2 <br>Cracked Polished Blackstone Bricks<br>  <br>2 <br>Polished Blackstone Brick Stairs<br>  <br>1 <br>Blackstone Slab |  |
+| `bastion/treasure/corners/middle/corner_1` | 74 <br>Polished Blackstone Bricks<br>  <br>29 <br>Cracked Polished Blackstone Bricks<br>  <br>27 <br>Basalt<br>  <br>5 <br>Blackstone<br>  <br>2 <br>Iron Chain<br>  <br>1 <br>Lantern |  |
+| `bastion/treasure/corners/top/corner_0` | The corners of the corridors of the seventh and eighth floors of the treasure room. | 67 <br>Polished Blackstone Bricks<br>  <br>40 <br>Basalt<br>  <br>25 <br>Blackstone<br>  <br>19 <br>Cracked Polished Blackstone Bricks |  |
+| `bastion/treasure/corners/top/corner_1` | 74 <br>Polished Blackstone Bricks<br>  <br>39 <br>Basalt<br>  <br>14 <br>Cracked Polished Blackstone Bricks<br>  <br>11 <br>Blackstone<br>  <br>1 <br>Polished Blackstone Stairs |  |
+| `bastion/treasure/entrances/entrance_0` | The bridge going between the entrance and the treasure room. | 292 <br>Polished Blackstone Bricks<br>  <br>13 <br>Blackstone<br>  <br>2 <br>Block of Gold<br>  <br>1 <br>Piglin<br> or <br>Piglin brute<br>[\[n 1\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_group-3) |  |
+| `bastion/treasure/extensions/empty` | Structures extending from the corridors. | 1 <br>Basalt | _JE1_BE1.png) |
+| `bastion/treasure/extensions/fire_room` | 355 <br>Polished Blackstone Bricks<br>  <br>66 <br>Blackstone<br>  <br>18 <br>Basalt<br>  <br>13 <br>Cracked Polished Blackstone Bricks<br>  <br>4 <br>Fire<br>  <br>4 <br>Netherrack<br>  <br>1 <br>Blackstone Slab |  |
+| `bastion/treasure/extensions/house_0` | 124 <br>Polished Blackstone Bricks<br>  <br>47 <br>Blackstone<br>  <br>7 <br>Basalt<br>  <br>1 <br>Polished Blackstone Stairs |  |
+| `bastion/treasure/extensions/house_1` | 151 <br>Polished Blackstone Bricks<br>  <br>42 <br>Blackstone<br>  <br>11 <br>Basalt<br>  <br>2 <br>Polished Blackstone Brick Stairs<br>  <br>1 <br>Blackstone Slab |  |
+| `bastion/treasure/extensions/large_bridge_0` | Large bridges extending from the corridors. | 20 <br>Polished Blackstone Bricks<br>  <br>18 <br>Blackstone<br>  <br>9 <br>Basalt |  |
+| `bastion/treasure/extensions/large_bridge_1` | 20 <br>Polished Blackstone Bricks<br>  <br>8 <br>Blackstone<br>  <br>7 <br>Basalt |  |
+| `bastion/treasure/extensions/large_bridge_2` | 37 <br>Blackstone<br>  <br>31 <br>Polished Blackstone Bricks<br>  <br>1 <br>Lava |  |
+| `bastion/treasure/extensions/large_bridge_3` | 46 <br>Polished Blackstone Bricks<br>  <br>42 <br>Basalt<br>  <br>3 <br>Blackstone |  |
+| `bastion/treasure/extensions/roofed_bridge` | A bridge with a roof extending from the corridors. | 92 <br>Polished Blackstone Bricks<br>  <br>27 <br>Blackstone |  |
+| `bastion/treasure/extensions/small_bridge_0` | Small bridges extending from the corridors. | 7 <br>Polished Blackstone Bricks<br>  <br>6 <br>Blackstone |  |
+| `bastion/treasure/extensions/small_bridge_1` | 19 <br>Polished Blackstone Bricks<br>  <br>12 <br>Basalt |  |
+| `bastion/treasure/extensions/small_bridge_2` | 11 <br>Polished Blackstone Bricks<br>  <br>10 <br>Blackstone |  |
+| `bastion/treasure/extensions/small_bridge_3` | 34 <br>Polished Blackstone Bricks<br>  <br>23 <br>Basalt |  |
+| `bastion/treasure/ramparts/bottom_wall_0` | One side of the lower half of the rampart. | 2571 <br>Blackstone<br>  <br>109 <br>Cracked Polished Blackstone Bricks<br>  <br>16 <br>Magma Block<br>  <br>12 <br>Basalt<br>  <br>24 <br>Lava<br> Source  <br>2 <br>Polished Blackstone Bricks<br>  <br>1 <br>Chiseled Polished Blackstone |  |
+| `bastion/treasure/ramparts/lava_basin_main` | Lava basin under the bridge between the rampart and the treasure room. Only 1 generates per bastion. | 7250 <br>Polished Blackstone Bricks<br>  <br>357 <br>Lava<br> (Source)  <br>55 <br>Cracked Polished Blackstone Bricks<br>  <br>13 <br>Chiseled Polished Blackstone |  |
+| `bastion/treasure/ramparts/lava_basin_side` | Lava basin on the left between the rampart and the treasure room. Only 1 generates per bastion. | 7250 <br>Polished Blackstone Bricks<br>  <br>357 <br>Lava<br> (Source)  <br>55 <br>Cracked Polished Blackstone Bricks<br>  <br>13 <br>Chiseled Polished Blackstone |  |
+| `bastion/treasure/ramparts/mid_wall_main` | The middle right part of the rampart that connects to the bridge. Only 1 generates per bastion. | 3088 <br>Polished Blackstone Bricks<br>  <br>86 <br>Basalt<br>  <br>42 <br>Cracked Polished Blackstone Bricks<br>  <br>41 <br>Polished Blackstone Brick Stairs<br>  <br>29 <br>Blackstone<br>  <br>6 <br>Lantern<br>  <br>2 Loot <br>Chest<br> (Generic)  <br>1 <br>Block of Gold<br>  <br>2 <br>Piglin<br> or <br>Piglin brute<br>[\[n 2\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_melee_group-4)<br>  <br>1 <br>Piglin<br> or <br>Piglin brute<br>[\[n 1\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_group-3)<br>  <br>1 <br>Piglin brute |  |
+| `bastion/treasure/ramparts/mid_wall_side` | The middle left part of the rampart. Only 1 generates per bastion. | 2941 <br>Polished Blackstone Bricks<br>  <br>103 <br>Basalt<br>  <br>47 <br>Polished Blackstone Brick Stairs<br>  <br>26 <br>Blackstone<br>  <br>15 <br>Cracked Polished Blackstone Bricks<br>  <br>5 <br>Lantern<br>  <br>2 Loot <br>Chest<br> (Generic)  <br>1 <br>Block of Gold<br>  <br>3 <br>Piglin<br> or <br>Piglin brute<br>[\[n 2\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_melee_group-4)<br>  <br>2 <br>Piglin<br> or <br>Piglin brute<br>[\[n 1\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_group-3) |  |
+| `bastion/treasure/ramparts/top_wall` | The upper half of one side of the rampart. | 1187 <br>Polished Blackstone Bricks<br>  <br>39 <br>Blackstone<br>  <br>38 <br>Basalt<br>  <br>25 <br>Polished Blackstone Brick Stairs<br>  <br>6 <br>Block of Gold<br>[\[n 5\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-gold_group_treasure-7)<br>  <br>2 <br>Lantern |  |
+| `bastion/treasure/roofs/center_roof` | The roof of the treasure room. | 1152 <br>Polished Blackstone Bricks |  |
+| `bastion/treasure/roofs/corner_roof` | 50 <br>Polished Blackstone Bricks |  |
+| `bastion/treasure/roofs/wall_roof` | 240 <br>Polished Blackstone Bricks |  |
+| `bastion/treasure/stairs/lower_stairs` | Stairs on the bridge of `bastion/treasure/bases/lava_basin`. | 13 <br>Polished Blackstone Bricks<br>  <br>10 <br>Polished Blackstone Brick Stairs<br>  <br>7 <br>Blackstone |  |
+| `bastion/treasure/walls/bottom/wall_0` | The corridors of the first, second, and third floors of the treasure room. 4 generate per bastion, 1 on each side. | 1043 <br>Polished Blackstone Bricks<br>  <br>83 <br>Blackstone<br>  <br>45 <br>Basalt<br>  <br>37 <br>Cracked Polished Blackstone Bricks<br>  <br>15 <br>Iron Chain<br>  <br>6 <br>Polished Blackstone Brick Stairs<br>  <br>4 <br>Lantern<br>  <br>1 <br>Chest<br>  <br>(Generic) 1 <br>Lava<br>  <br>1 <br>Piglin<br> or <br>Piglin brute<br>[\[n 1\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_group-3)<br>  <br>1 <br>Piglin brute |  |
+| `bastion/treasure/walls/bottom/wall_1` | 983 <br>Polished Blackstone Bricks<br>  <br>108 <br>Basalt<br>  <br>40 <br>Cracked Polished Blackstone Bricks<br>  <br>30 <br>Blackstone<br>  <br>21 <br>Polished Blackstone Brick Stairs<br>  <br>3 <br>Lantern<br>  <br>2 <br>Piglin<br> or <br>Piglin brute<br>[\[n 1\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_group-3) |  |
+| `bastion/treasure/walls/bottom/wall_2` | 1075 <br>Polished Blackstone Bricks<br>  <br>111 <br>Basalt<br>  <br>54 <br>Blackstone<br>  <br>12 <br>Polished Blackstone Brick Stairs<br>  <br>10 <br>Cracked Polished Blackstone Bricks<br>  <br>4 <br>Lantern<br>  <br>3 <br>Piglin<br> or <br>Piglin brute<br>[\[n 1\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_group-3) |  |
+| `bastion/treasure/walls/bottom/wall_3` | 952 <br>Polished Blackstone Bricks<br>  <br>130 <br>Basalt<br>  <br>51 <br>Blackstone<br>  <br>26 <br>Cracked Polished Blackstone Bricks<br>  <br>9 <br>Polished Blackstone Brick Stairs<br>  <br>3 <br>Lantern<br>  <br>1 <br>Lava<br>  <br>2 <br>Piglin<br> or <br>Piglin brute<br>[\[n 1\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_group-3) |  |
+| `bastion/treasure/walls/mid/wall_0` | The corridors of the fourth, fifth, and sixth floors of the treasure room. 4 generate per bastion, 1 on each side. | 434 <br>Polished Blackstone Bricks<br>  <br>123 <br>Basalt<br>  <br>27 <br>Blackstone<br>  <br>25 <br>Cracked Polished Blackstone Bricks<br>  <br>20 <br>Polished Basalt<br>  <br>13 <br>Polished Blackstone Brick Stairs<br>  <br>3 <br>Lava<br>  <br>1 <br>Blackstone Stairs<br>  <br>1 Loot <br>Chest<br> (Generic)  <br>1 <br>Lantern<br>  <br>2 <br>Piglin<br> or <br>Piglin brute<br>[\[n 1\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_group-3)<br>  <br>1 <br>Piglin brute |  |
+| `bastion/treasure/walls/mid/wall_1` | 412 <br>Polished Blackstone Bricks<br>  <br>198 <br>Basalt<br>  <br>77 <br>Blackstone<br>  <br>40 <br>Cracked Polished Blackstone Bricks<br>  <br>2 <br>Iron Chain<br>  <br>2 <br>Lantern<br>  <br>2 <br>Lava<br>  <br>2 <br>Polished Blackstone Brick Stairs<br>  <br>1 <br>Polished Basalt<br>  <br>3 <br>Piglin<br> or <br>Piglin brute<br>[\[n 1\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_group-3) |  |
+| `bastion/treasure/walls/mid/wall_2` | 575 <br>Polished Blackstone Bricks<br>  <br>130 <br>Basalt<br>  <br>33 <br>Blackstone<br>  <br>21 <br>Cracked Polished Blackstone Bricks<br>  <br>3 <br>Iron Chain<br>  <br>3 <br>Lava<br> (Source)  <br>2 <br>Blackstone Stairs<br>  <br>2 <br>Lantern<br>  <br>1 <br>Polished Basalt<br>  <br>2 <br>Piglin<br> or <br>Piglin brute<br>[\[n 1\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_group-3) |  |
+| `bastion/treasure/walls/outer/bottom_corner` | The walls of the treasure room. | 160 <br>Polished Blackstone Bricks |  |
+| `bastion/treasure/walls/outer/medium_outer_wall` | 768 <br>Polished Blackstone Bricks |  |
+| `bastion/treasure/walls/outer/mid_corner` | 150 <br>Polished Blackstone Bricks |  |
+| `bastion/treasure/walls/outer/outer_wall` | 720 <br>Polished Blackstone Bricks |  |
+| `bastion/treasure/walls/outer/tall_outer_wall` | 816 <br>Polished Blackstone Bricks |  |
+| `bastion/treasure/walls/outer/top_corner` | 170 <br>Polished Blackstone Bricks |  |
+| `bastion/treasure/walls/top/main_entrance` | The corridors of the seventh and eighth floors of the treasure room connect to the bridge outside. | 593 <br>Polished Blackstone Bricks<br>  <br>105 <br>Basalt<br>  <br>79 <br>Blackstone<br>  <br>72 <br>Cracked Polished Blackstone Bricks<br>  <br>11 <br>Polished Basalt<br>  <br>8 <br>Polished Blackstone Brick Stairs<br>  <br>6 <br>Lantern<br>  <br>2 <br>Piglin<br> or <br>Piglin brute<br>[\[n 2\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_melee_group-4)<br>  <br>1 <br>Piglin brute |  |
+| `bastion/treasure/walls/top/wall_0` | The corridors of the seventh and eighth floors of the treasure room. | 502 <br>Polished Blackstone Bricks<br>  <br>102 <br>Blackstone<br>  <br>55 <br>Basalt<br>  <br>53 <br>Cracked Polished Blackstone Bricks<br>  <br>10 <br>Polished Blackstone Brick Stairs<br>  <br>7 <br>Lantern<br>  <br>6 <br>Blackstone Stairs<br>  <br>2 <br>Blackstone Slab<br>  <br>2 <br>Iron Chain<br>  <br>2 <br>Chiseled Polished Blackstone<br>  <br>2 <br>Lava |  |
+| `bastion/treasure/walls/top/wall_1` | 602 <br>Polished Blackstone Bricks<br>  <br>134 <br>Basalt<br>  <br>116 <br>Blackstone<br>  <br>52 <br>Cracked Polished Blackstone Bricks<br>  <br>8 <br>Blackstone Wall<br>  <br>5 <br>Iron Chain<br>  <br>3 <br>Blackstone Slab<br>  <br>3 <br>Lantern<br>  <br>1 <br>Lava<br> (Source)  <br>2 <br>Piglin<br> or <br>Piglin brute<br>[\[n 1\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-piglin_group-3) |  |
+| `bastion/treasure/walls/entrance_wall` | The wall of the treasure room connects with the bridge outside. | 763 <br>Polished Blackstone Bricks<br>  <br>12 <br>Basalt |  |
+| `bastion/treasure/walls/lava_wall` | The wall between the treasure room and the lava basin on the left. | 840 <br>Polished Blackstone Bricks |  |
+| `bastion/treasure/big_air_full` | A technical connection part. | None | N/A |
+
+### Blocks
+
+\[edit\
+ | edit source\
+\]
+
+*   
+    Basalt
+    
+*   
+    Polished Basalt
+    
+*   
+    Blackstone
+    
+*   
+    Blackstone Slab
+    
+*   
+    Blackstone Stairs
+    
+*   
+    Blackstone Wall
+    
+*   
+    Gilded Blackstone
+    
+*   
+    Polished Blackstone Bricks
+    
+*   
+    Polished Blackstone Brick Stairs
+    
+*   
+    Cracked Polished Blackstone Bricks
+    
+*   
+    Chiseled Polished Blackstone
+    
+*   
+    Block of Gold
+    
+*   
+    Iron Chain
+    
+*   
+    Chest
+    
+*   
+    Fire
+    
+*   
+    Glowstone
+    
+*   
+    Lantern
+    
+*   
+    Lava
+    
+*   
+    Magma Block
+    
+*   
+    Nether Wart
+    
+*   
+    Netherrack
+    
+*   
+    Block of Quartz
+    
+*   
+    Smooth Quartz Block
+    
+*   
+    Smooth Quartz Slab
+    
+*   
+    Soul Sand
+    
+*   
+    Monster Spawner
+    
+
+Loot
+----
+
+\[edit\
+ | edit source\
+\]
+
+See also: Chest loot
+
+### Bridge
+
+\[edit\
+ | edit source\
+\]
+
+This loot appears in some structures in bridge bastion remnants.
+
+Each bastion bridge chest contains items drawn from 5 pools, with the following distribution:
+
+| Item | Stack Size [\[A\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-stacksize-8) |     |     |     |     | Weight [\[B\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-weight-9) |     |     |     |     | Chance [\[C\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-chance-10) | Avg.  <br>per chest [\[D\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-items-11) | hide Avg. # chests  <br>to search [\[E\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-chests-12) |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1×  | 1–2× | 2–4× | 1×  | 1×  | 1×  | 1–2× | 2–4× | 1×  | 1×  |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| <br>Lodestone | 1   | —   | —   | —   | —   | 1⁄1 | —   | —   | —   | —   | 100.0% | 1.000 | 1.0 |
+| Nothing[\[F\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-nothing-13) | —   | —   | —   | 1   | 1   | —   | —   | —   | 11⁄12 | 9⁄10 | 99.2% | 1.817 | 1.0 |
+| <br>Arrow | —   | —   | 5–17 | —   | —   | —   | —   | 1⁄5 | —   | —   | 47.9% | 6.600 | 2.1 |
+| <br>Iron Nugget | —   | —   | 2–6 | —   | —   | —   | —   | 1⁄5 | —   | —   | 47.9% | 2.400 | 2.1 |
+| <br>Gold Nugget | —   | —   | 2–6 | —   | —   | —   | —   | 1⁄5 | —   | —   | 47.9% | 2.400 | 2.1 |
+| <br>String | —   | —   | 1–6 | —   | —   | —   | —   | 1⁄5 | —   | —   | 47.9% | 2.100 | 2.1 |
+| <br>Leather | —   | —   | 1–3 | —   | —   | —   | —   | 1⁄5 | —   | —   | 47.9% | 1.200 | 2.1 |
+| <br>Spectral Arrow | —   | 10–28 | —   | —   | —   | —   | 1⁄13 | —   | —   | —   | 11.2% | 2.192 | 8.9 |
+| <br>Gilded Blackstone | —   | 8–12 | —   | —   | —   | —   | 1⁄13 | —   | —   | —   | 11.2% | 1.154 | 8.9 |
+| <br>Iron Ingot | —   | 4–9 | —   | —   | —   | —   | 1⁄13 | —   | —   | —   | 11.2% | 0.750 | 8.9 |
+| <br>Gold Ingot | —   | 4–9 | —   | —   | —   | —   | 1⁄13 | —   | —   | —   | 11.2% | 0.750 | 8.9 |
+| <br>Crying Obsidian | —   | 3–8 | —   | —   | —   | —   | 1⁄13 | —   | —   | —   | 11.2% | 0.635 | 8.9 |
+| <br>Damaged Enchanted Crossbow<br>[\[G\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-enchant-randomly-14)<br>[\[H\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-damaged-0.1-0.5-15) | —   | 1   | —   | —   | —   | —   | 1⁄13 | —   | —   | —   | 11.2% | 0.115 | 8.9 |
+| <br>Block of Gold | —   | 1   | —   | —   | —   | —   | 1⁄13 | —   | —   | —   | 11.2% | 0.115 | 8.9 |
+| <br>Golden Sword | —   | 1   | —   | —   | —   | —   | 1⁄13 | —   | —   | —   | 11.2% | 0.115 | 8.9 |
+| <br>Enchanted Golden Axe<br>[\[G\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-enchant-randomly-14) | —   | 1   | —   | —   | —   | —   | 1⁄13 | —   | —   | —   | 11.2% | 0.115 | 8.9 |
+| <br>Enchanted Golden Helmet<br>[\[G\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-enchant-randomly-14) | —   | 1   | —   | —   | —   | —   | 1⁄13 | —   | —   | —   | 11.2% | 0.115 | 8.9 |
+| <br>Enchanted Golden Chestplate<br>[\[G\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-enchant-randomly-14) | —   | 1   | —   | —   | —   | —   | 1⁄13 | —   | —   | —   | 11.2% | 0.115 | 8.9 |
+| <br>Enchanted Golden Leggings<br>[\[G\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-enchant-randomly-14) | —   | 1   | —   | —   | —   | —   | 1⁄13 | —   | —   | —   | 11.2% | 0.115 | 8.9 |
+| <br>Enchanted Golden Boots<br>[\[G\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-enchant-randomly-14) | —   | 1   | —   | —   | —   | —   | 1⁄13 | —   | —   | —   | 11.2% | 0.115 | 8.9 |
+| <br>Netherite Upgrade Smithing Template | —   | —   | —   | —   | 1   | —   | —   | —   | —   | 1⁄10 | 10.0% | 0.100 | 10.0 |
+| <br>Snout Armor Trim Smithing Template | —   | —   | —   | 1   | —   | —   | —   | —   | 1⁄12 | —   | 8.3% | 0.083 | 12.0 |
+
+| Item | Stack Size [\[A\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-stacksize-8) |     |     |     |     | Weight [\[B\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-weight-9) |     |     |     |     | Chance [\[C\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-chance-10) | Avg.  <br>per chest [\[D\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-items-11) | hide Avg. # chests  <br>to search [\[E\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-chests-12) |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1×  | 1–2× | 2–4× | 1×  | 1×  | 1×  | 1–2× | 2–4× | 1×  | 1×  |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| <br>Lodestone | 1   | —   | —   | —   | —   | 1⁄1 | —   | —   | —   | —   | 100.0% | 1.000 | 1.0 |
+| Nothing[\[F\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-nothing-13) | —   | —   | —   | 1   | 1   | —   | —   | —   | 11⁄12 | 9⁄10 | 99.2% | 1.817 | 1.0 |
+| <br>Arrow | —   | 10–28 | 5–17 | —   | —   | —   | 1⁄13 | 1⁄5 | —   | —   | 53.8% | 8.792 | 1.9 |
+| <br>Iron Nugget | —   | —   | 2–6 | —   | —   | —   | —   | 1⁄5 | —   | —   | 47.9% | 2.400 | 2.1 |
+| <br>Gold Nugget | —   | —   | 2–6 | —   | —   | —   | —   | 1⁄5 | —   | —   | 47.9% | 2.400 | 2.1 |
+| <br>String | —   | —   | 1–6 | —   | —   | —   | —   | 1⁄5 | —   | —   | 47.9% | 2.100 | 2.1 |
+| <br>Leather | —   | —   | 1–3 | —   | —   | —   | —   | 1⁄5 | —   | —   | 47.9% | 1.200 | 2.1 |
+| <br>Gilded Blackstone | —   | 8–12 | —   | —   | —   | —   | 1⁄13 | —   | —   | —   | 11.2% | 1.154 | 8.9 |
+| <br>Iron Ingot | —   | 4–9 | —   | —   | —   | —   | 1⁄13 | —   | —   | —   | 11.2% | 0.750 | 8.9 |
+| <br>Gold Ingot | —   | 4–9 | —   | —   | —   | —   | 1⁄13 | —   | —   | —   | 11.2% | 0.750 | 8.9 |
+| <br>Crying Obsidian | —   | 3–8 | —   | —   | —   | —   | 1⁄13 | —   | —   | —   | 11.2% | 0.635 | 8.9 |
+| <br>Damaged Enchanted Crossbow<br>[\[G\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-enchant-randomly-14)<br>[\[H\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-damaged-0.1-0.5-15) | —   | 1   | —   | —   | —   | —   | 1⁄13 | —   | —   | —   | 11.2% | 0.115 | 8.9 |
+| <br>Block of Gold | —   | 1   | —   | —   | —   | —   | 1⁄13 | —   | —   | —   | 11.2% | 0.115 | 8.9 |
+| <br>Golden Sword | —   | 1   | —   | —   | —   | —   | 1⁄13 | —   | —   | —   | 11.2% | 0.115 | 8.9 |
+| <br>Enchanted Golden Axe<br>[\[G\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-enchant-randomly-14) | —   | 1   | —   | —   | —   | —   | 1⁄13 | —   | —   | —   | 11.2% | 0.115 | 8.9 |
+| <br>Enchanted Golden Helmet<br>[\[G\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-enchant-randomly-14) | —   | 1   | —   | —   | —   | —   | 1⁄13 | —   | —   | —   | 11.2% | 0.115 | 8.9 |
+| <br>Enchanted Golden Chestplate<br>[\[G\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-enchant-randomly-14) | —   | 1   | —   | —   | —   | —   | 1⁄13 | —   | —   | —   | 11.2% | 0.115 | 8.9 |
+| <br>Enchanted Golden Leggings<br>[\[G\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-enchant-randomly-14) | —   | 1   | —   | —   | —   | —   | 1⁄13 | —   | —   | —   | 11.2% | 0.115 | 8.9 |
+| <br>Enchanted Golden Boots<br>[\[G\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-enchant-randomly-14) | —   | 1   | —   | —   | —   | —   | 1⁄13 | —   | —   | —   | 11.2% | 0.115 | 8.9 |
+| <br>Netherite Upgrade Smithing Template | —   | —   | —   | —   | 1   | —   | —   | —   | —   | 1⁄10 | 10.0% | 0.100 | 10.0 |
+| <br>Snout Armor Trim Smithing Template | —   | —   | —   | 1   | —   | —   | —   | —   | 1⁄12 | —   | 8.3% | 0.083 | 12.0 |
+
+     The size of stacks (or for unstackable items, number) of this item on any given roll.
+     The weight of this item relative to other items in the pool.
+     The odds of finding any of this item in a single chest.
+     The number of items expected per chest, averaged over a large number of chests.
+     The average number of chests the player should expect to search to find any of this item.
+     'Nothing' does not refer to the chance of an empty chest. Instead, it refers to the chance that the random loot generator does not add any loot _on a single roll_.
+     c d
+     e f
+     g h
+     i j
+     k l
+     All enchantments are equally probable, _including_ treasure enchantments
+     (except Soul Speed
+    , Swift Sneak
+    , and Wind Burst
+    ), and any level of the enchantment is equally probable.
+     The item has between 10% and 50% of its total durability.
+
+  
+
+### Generic
+
+\[edit\
+ | edit source\
+\]
+
+This loot appears in chests throughout all types of bastion remnants.
+
+Each bastion generic chest contains items drawn from 5 pools, with the following distribution:
+
+| Item | Stack Size [\[A\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-stacksize-16) |     |     |     |     | Weight [\[B\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-weight-17) |     |     |     |     | Chance [\[C\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-chance-18) | Avg.  <br>per chest [\[D\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-items-19) | hide Avg. # chests  <br>to search [\[E\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-chests-20) |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1×  | 2×  | 3–4× | 1×  | 1×  | 1×  | 2×  | 3–4× | 1×  | 1×  |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Nothing[\[F\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-nothing-21) | —   | —   | —   | 1   | 1   | —   | —   | —   | 11⁄12 | 9⁄10 | 99.2% | 1.817 | 1.0 |
+| <br>Arrow | —   | —   | 5–17 | —   | —   | —   | —   | 2⁄13 | —   | —   | 44.1% | 5.923 | 2.3 |
+| <br>Magma Cream | —   | —   | 2–6 | —   | —   | —   | —   | 2⁄13 | —   | —   | 44.1% | 2.154 | 2.3 |
+| <br>Gilded Blackstone | —   | —   | 1–5 | —   | —   | —   | —   | 2⁄13 | —   | —   | 44.1% | 1.615 | 2.3 |
+| <br>Iron Chain | —   | —   | 2–10 | —   | —   | —   | —   | 1⁄13 | —   | —   | 24.4% | 1.615 | 4.1 |
+| <br>Obsidian | —   | —   | 4–6 | —   | —   | —   | —   | 1⁄13 | —   | —   | 24.4% | 1.346 | 4.1 |
+| <br>String | —   | —   | 4–6 | —   | —   | —   | —   | 1⁄13 | —   | —   | 24.4% | 1.346 | 4.1 |
+| <br>Iron Nugget | —   | —   | 2–8 | —   | —   | —   | —   | 1⁄13 | —   | —   | 24.4% | 1.346 | 4.1 |
+| <br>Gold Nugget | —   | —   | 2–8 | —   | —   | —   | —   | 1⁄13 | —   | —   | 24.4% | 1.346 | 4.1 |
+| <br>Bone Block | —   | —   | 3–6 | —   | —   | —   | —   | 1⁄13 | —   | —   | 24.4% | 1.212 | 4.1 |
+| <br>Cooked Porkchop | —   | —   | 1   | —   | —   | —   | —   | 1⁄13 | —   | —   | 24.4% | 0.269 | 4.1 |
+| <br>Iron Ingot | —   | 1–6 | —   | —   | —   | —   | 2⁄20 | —   | —   | —   | 19.0% | 0.700 | 5.3 |
+| <br>Gold Ingot | —   | 1–6 | —   | —   | —   | —   | 2⁄20 | —   | —   | —   | 19.0% | 0.700 | 5.3 |
+| <br>Crying Obsidian | —   | 1–5 | —   | —   | —   | —   | 2⁄20 | —   | —   | —   | 19.0% | 0.600 | 5.3 |
+| <br>Block of Iron | —   | 1   | —   | —   | —   | —   | 2⁄20 | —   | —   | —   | 19.0% | 0.200 | 5.3 |
+| <br>Damaged Enchanted Iron Sword<br>[\[G\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-enchant-randomly-22)<br>[\[H\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-damaged-0.1-0.9-23) | —   | 1   | —   | —   | —   | —   | 2⁄20 | —   | —   | —   | 19.0% | 0.200 | 5.3 |
+| <br>Block of Gold | —   | 1   | —   | —   | —   | —   | 2⁄20 | —   | —   | —   | 19.0% | 0.200 | 5.3 |
+| <br>Golden Carrot | 6–17 | —   | —   | —   | —   | 12⁄89 | —   | —   | —   | —   | 13.5% | 1.551 | 7.4 |
+| <br>Ancient Debris | 1   | —   | —   | —   | —   | 12⁄89 | —   | —   | —   | —   | 13.5% | 0.135 | 7.4 |
+| <br>Spectral Arrow | 10–22 | —   | —   | —   | —   | 10⁄89 | —   | —   | —   | —   | 11.2% | 1.798 | 8.9 |
+| <br>Enchanted Book<br>[\[I\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-enchant-randomly-soul-speed-24) | 1   | —   | —   | —   | —   | 10⁄89 | —   | —   | —   | —   | 11.2% | 0.112 | 8.9 |
+| <br>Snout Banner Pattern | 1   | —   | —   | —   | —   | 9⁄89 | —   | —   | —   | —   | 10.1% | 0.101 | 9.9 |
+| <br>Golden Apple | 1   | —   | —   | —   | —   | 9⁄89 | —   | —   | —   | —   | 10.1% | 0.101 | 9.9 |
+| <br>Netherite Upgrade Smithing Template | —   | —   | —   | —   | 1   | —   | —   | —   | —   | 1⁄10 | 10.0% | 0.100 | 10.0 |
+| <br>Crossbow | —   | 1   | —   | —   | —   | —   | 1⁄20 | —   | —   | —   | 9.8% | 0.100 | 10.3 |
+| <br>Golden Sword | —   | 1   | —   | —   | —   | —   | 1⁄20 | —   | —   | —   | 9.8% | 0.100 | 10.3 |
+| <br>Enchanted Golden Axe<br>[\[G\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-enchant-randomly-22) | —   | 1   | —   | —   | —   | —   | 1⁄20 | —   | —   | —   | 9.8% | 0.100 | 10.3 |
+| <br>Golden Helmet | —   | 1   | —   | —   | —   | —   | 1⁄20 | —   | —   | —   | 9.8% | 0.100 | 10.3 |
+| <br>Golden Chestplate | —   | 1   | —   | —   | —   | —   | 1⁄20 | —   | —   | —   | 9.8% | 0.100 | 10.3 |
+| <br>Golden Leggings | —   | 1   | —   | —   | —   | —   | 1⁄20 | —   | —   | —   | 9.8% | 0.100 | 10.3 |
+| <br>Golden Boots | —   | 1   | —   | —   | —   | —   | 1⁄20 | —   | —   | —   | 9.8% | 0.100 | 10.3 |
+| <br>Enchanted Golden Boots with Soul Speed<br>[\[I\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-enchant-randomly-soul-speed-24) | —   | 1   | —   | —   | —   | —   | 1⁄20 | —   | —   | —   | 9.8% | 0.100 | 10.3 |
+| <br>Snout Armor Trim Smithing Template | —   | —   | —   | 1   | —   | —   | —   | —   | 1⁄12 | —   | 8.3% | 0.083 | 12.0 |
+| <br>Damaged Enchanted Crossbow<br>[\[G\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-enchant-randomly-22)<br>[\[H\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-damaged-0.1-0.9-23) | 1   | —   | —   | —   | —   | 6⁄89 | —   | —   | —   | —   | 6.7% | 0.067 | 14.8 |
+| <br>Diamond Shovel | 1   | —   | —   | —   | —   | 6⁄89 | —   | —   | —   | —   | 6.7% | 0.067 | 14.8 |
+| <br>Enchanted Diamond Pickaxe<br>[\[G\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-enchant-randomly-22) | 1   | —   | —   | —   | —   | 6⁄89 | —   | —   | —   | —   | 6.7% | 0.067 | 14.8 |
+| <br>Music Disc (Pigstep) | 1   | —   | —   | —   | —   | 5⁄89 | —   | —   | —   | —   | 5.6% | 0.056 | 17.8 |
+| <br>Netherite Scrap | 1   | —   | —   | —   | —   | 4⁄89 | —   | —   | —   | —   | 4.5% | 0.045 | 22.2 |
+
+| Item | Stack Size [\[A\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-stacksize-16) |     |     |     |     | Weight [\[B\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-weight-17) |     |     |     |     | Chance [\[C\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-chance-18) | Avg.  <br>per chest [\[D\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-items-19) | hide Avg. # chests  <br>to search [\[E\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-chests-20) |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1×  | 2×  | 3–4× | 1×  | 1×  | 1×  | 2×  | 3–4× | 1×  | 1×  |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Nothing[\[F\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-nothing-21) | —   | —   | —   | 1   | 1   | —   | —   | —   | 11⁄12 | 9⁄10 | 99.2% | 1.817 | 1.0 |
+| <br>Arrow | 10–22 | —   | 5–17 | —   | —   | 10⁄89 | —   | 2⁄13 | —   | —   | 50.4% | 7.721 | 2.0 |
+| <br>Magma Cream | —   | —   | 2–6 | —   | —   | —   | —   | 2⁄13 | —   | —   | 44.1% | 2.154 | 2.3 |
+| <br>Gilded Blackstone | —   | —   | 1–5 | —   | —   | —   | —   | 2⁄13 | —   | —   | 44.1% | 1.615 | 2.3 |
+| <br>Iron Chain | —   | —   | 2–10 | —   | —   | —   | —   | 1⁄13 | —   | —   | 24.4% | 1.615 | 4.1 |
+| <br>Obsidian | —   | —   | 4–6 | —   | —   | —   | —   | 1⁄13 | —   | —   | 24.4% | 1.346 | 4.1 |
+| <br>String | —   | —   | 4–6 | —   | —   | —   | —   | 1⁄13 | —   | —   | 24.4% | 1.346 | 4.1 |
+| <br>Iron Nugget | —   | —   | 2–8 | —   | —   | —   | —   | 1⁄13 | —   | —   | 24.4% | 1.346 | 4.1 |
+| <br>Gold Nugget | —   | —   | 2–8 | —   | —   | —   | —   | 1⁄13 | —   | —   | 24.4% | 1.346 | 4.1 |
+| <br>Bone Block | —   | —   | 3–6 | —   | —   | —   | —   | 1⁄13 | —   | —   | 24.4% | 1.212 | 4.1 |
+| <br>Cooked Porkchop | —   | —   | 1   | —   | —   | —   | —   | 1⁄13 | —   | —   | 24.4% | 0.269 | 4.1 |
+| <br>Iron Ingot | —   | 1–6 | —   | —   | —   | —   | 2⁄20 | —   | —   | —   | 19.0% | 0.700 | 5.3 |
+| <br>Gold Ingot | —   | 1–6 | —   | —   | —   | —   | 2⁄20 | —   | —   | —   | 19.0% | 0.700 | 5.3 |
+| <br>Crying Obsidian | —   | 1–5 | —   | —   | —   | —   | 2⁄20 | —   | —   | —   | 19.0% | 0.600 | 5.3 |
+| <br>Block of Iron | —   | 1   | —   | —   | —   | —   | 2⁄20 | —   | —   | —   | 19.0% | 0.200 | 5.3 |
+| <br>Damaged Enchanted Iron Sword<br>[\[G\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-enchant-randomly-22)<br>[\[H\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-damaged-0.1-0.9-23) | —   | 1   | —   | —   | —   | —   | 2⁄20 | —   | —   | —   | 19.0% | 0.200 | 5.3 |
+| <br>Block of Gold | —   | 1   | —   | —   | —   | —   | 2⁄20 | —   | —   | —   | 19.0% | 0.200 | 5.3 |
+| <br>Golden Carrot | 6–17 | —   | —   | —   | —   | 12⁄89 | —   | —   | —   | —   | 13.5% | 1.551 | 7.4 |
+| <br>Ancient Debris | 1   | —   | —   | —   | —   | 12⁄89 | —   | —   | —   | —   | 13.5% | 0.135 | 7.4 |
+| <br>Enchanted Book<br>[\[I\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-enchant-randomly-soul-speed-24) | 1   | —   | —   | —   | —   | 10⁄89 | —   | —   | —   | —   | 11.2% | 0.112 | 8.9 |
+| <br>Snout Banner Pattern | 1   | —   | —   | —   | —   | 9⁄89 | —   | —   | —   | —   | 10.1% | 0.101 | 9.9 |
+| <br>Golden Apple | 1   | —   | —   | —   | —   | 9⁄89 | —   | —   | —   | —   | 10.1% | 0.101 | 9.9 |
+| <br>Netherite Upgrade Smithing Template | —   | —   | —   | —   | 1   | —   | —   | —   | —   | 1⁄10 | 10.0% | 0.100 | 10.0 |
+| <br>Crossbow | —   | 1   | —   | —   | —   | —   | 1⁄20 | —   | —   | —   | 9.8% | 0.100 | 10.3 |
+| <br>Golden Sword | —   | 1   | —   | —   | —   | —   | 1⁄20 | —   | —   | —   | 9.8% | 0.100 | 10.3 |
+| <br>Enchanted Golden Axe<br>[\[G\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-enchant-randomly-22) | —   | 1   | —   | —   | —   | —   | 1⁄20 | —   | —   | —   | 9.8% | 0.100 | 10.3 |
+| <br>Golden Helmet | —   | 1   | —   | —   | —   | —   | 1⁄20 | —   | —   | —   | 9.8% | 0.100 | 10.3 |
+| <br>Golden Chestplate | —   | 1   | —   | —   | —   | —   | 1⁄20 | —   | —   | —   | 9.8% | 0.100 | 10.3 |
+| <br>Golden Leggings | —   | 1   | —   | —   | —   | —   | 1⁄20 | —   | —   | —   | 9.8% | 0.100 | 10.3 |
+| <br>Golden Boots | —   | 1   | —   | —   | —   | —   | 1⁄20 | —   | —   | —   | 9.8% | 0.100 | 10.3 |
+| <br>Enchanted Golden Boots with Soul Speed<br>[\[I\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-enchant-randomly-soul-speed-24) | —   | 1   | —   | —   | —   | —   | 1⁄20 | —   | —   | —   | 9.8% | 0.100 | 10.3 |
+| <br>Snout Armor Trim Smithing Template | —   | —   | —   | 1   | —   | —   | —   | —   | 1⁄12 | —   | 8.3% | 0.083 | 12.0 |
+| <br>Damaged Enchanted Crossbow<br>[\[G\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-enchant-randomly-22)<br>[\[H\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-damaged-0.1-0.9-23) | 1   | —   | —   | —   | —   | 6⁄89 | —   | —   | —   | —   | 6.7% | 0.067 | 14.8 |
+| <br>Diamond Shovel | 1   | —   | —   | —   | —   | 6⁄89 | —   | —   | —   | —   | 6.7% | 0.067 | 14.8 |
+| <br>Enchanted Diamond Pickaxe<br>[\[G\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-enchant-randomly-22) | 1   | —   | —   | —   | —   | 6⁄89 | —   | —   | —   | —   | 6.7% | 0.067 | 14.8 |
+| <br>Music Disc (Pigstep) | 1   | —   | —   | —   | —   | 5⁄89 | —   | —   | —   | —   | 5.6% | 0.056 | 17.8 |
+| <br>Netherite Scrap | 1   | —   | —   | —   | —   | 4⁄89 | —   | —   | —   | —   | 4.5% | 0.045 | 22.2 |
+
+     The size of stacks (or for unstackable items, number) of this item on any given roll.
+     The weight of this item relative to other items in the pool.
+     The odds of finding any of this item in a single chest.
+     The number of items expected per chest, averaged over a large number of chests.
+     The average number of chests the player should expect to search to find any of this item.
+     'Nothing' does not refer to the chance of an empty chest. Instead, it refers to the chance that the random loot generator does not add any loot _on a single roll_.
+     c d
+     e f
+     g h
+     All enchantments are equally probable, _including_ treasure enchantments
+     (except Soul Speed
+    , Swift Sneak
+    , and Wind Burst
+    ), and any level of the enchantment is equally probable.
+     c d
+     The item has between 10% and 90% of its total durability.
+     c d
+     Enchanted with a random level of Soul Speed
+    .
+
+  
+
+### Hoglin Stable
+
+\[edit\
+ | edit source\
+\]
+
+This loot appears in some structures in hoglin stable bastion remnants.
+
+Each bastion hoglin stable chest contains items drawn from 4 pools, with the following distribution:
+
+| Item | Stack Size [\[A\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-stacksize-25) |     |     |     | Weight [\[B\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-weight-26) |     |     |     | Chance [\[C\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-chance-27) | Avg.  <br>per chest [\[D\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-items-28) | hide Avg. # chests  <br>to search [\[E\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-chests-29) |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1×  | 3–4× | 1×  | 1×  | 1×  | 3–4× | 1×  | 1×  |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Nothing[\[F\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-nothing-30) | —   | —   | 1   | 1   | —   | —   | 11⁄12 | 9⁄10 | 99.2% | 1.817 | 1.0 |
+| <br>Arrow | —   | 5–17 | —   | —   | —   | 1⁄14 | —   | —   | 22.8% | 2.750 | 4.4 |
+| <br>String | —   | 3–8 | —   | —   | —   | 1⁄14 | —   | —   | 22.8% | 1.375 | 4.4 |
+| <br>Gold Nugget | —   | 2–8 | —   | —   | —   | 1⁄14 | —   | —   | 22.8% | 1.250 | 4.4 |
+| <br>Crimson Fungus | —   | 2–7 | —   | —   | —   | 1⁄14 | —   | —   | 22.8% | 1.125 | 4.4 |
+| <br>Crimson Nylium | —   | 2–7 | —   | —   | —   | 1⁄14 | —   | —   | 22.8% | 1.125 | 4.4 |
+| <br>Crimson Roots | —   | 2–7 | —   | —   | —   | 1⁄14 | —   | —   | 22.8% | 1.125 | 4.4 |
+| <br>Glowstone | —   | 3–6 | —   | —   | —   | 1⁄14 | —   | —   | 22.8% | 1.125 | 4.4 |
+| <br>Soul Sand | —   | 2–7 | —   | —   | —   | 1⁄14 | —   | —   | 22.8% | 1.125 | 4.4 |
+| <br>Cooked Porkchop | —   | 2–5 | —   | —   | —   | 1⁄14 | —   | —   | 22.8% | 0.875 | 4.4 |
+| <br>Gilded Blackstone | —   | 2–5 | —   | —   | —   | 1⁄14 | —   | —   | 22.8% | 0.875 | 4.4 |
+| <br>Raw Porkchop | —   | 2–5 | —   | —   | —   | 1⁄14 | —   | —   | 22.8% | 0.875 | 4.4 |
+| <br>Crying Obsidian | —   | 1–5 | —   | —   | —   | 1⁄14 | —   | —   | 22.8% | 0.750 | 4.4 |
+| <br>Leather | —   | 1–3 | —   | —   | —   | 1⁄14 | —   | —   | 22.8% | 0.500 | 4.4 |
+| <br>Enchanted Golden Axe<br>[\[G\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-enchant-randomly-31) | —   | 1   | —   | —   | —   | 1⁄14 | —   | —   | 22.8% | 0.250 | 4.4 |
+| <br>Block of Gold | 2–4 | —   | —   | —   | 16⁄100 | —   | —   | —   | 16.0% | 0.480 | 6.2 |
+| <br>Damaged Enchanted Diamond Shovel<br>[\[G\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-enchant-randomly-31)<br>[\[H\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-damaged-0.15-0.8-32) | 1   | —   | —   | —   | 15⁄100 | —   | —   | —   | 15.0% | 0.150 | 6.7 |
+| <br>Ancient Debris | 1   | —   | —   | —   | 12⁄100 | —   | —   | —   | 12.0% | 0.120 | 8.3 |
+| <br>Saddle | 1   | —   | —   | —   | 12⁄100 | —   | —   | —   | 12.0% | 0.120 | 8.3 |
+| <br>Enchanted Diamond Pickaxe<br>[\[G\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-enchant-randomly-31)<br>[\[I\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-damaged-0.15-0.95-33) | 1   | —   | —   | —   | 12⁄100 | —   | —   | —   | 12.0% | 0.120 | 8.3 |
+| <br>Golden Carrot | 8–17 | —   | —   | —   | 10⁄100 | —   | —   | —   | 10.0% | 1.250 | 10.0 |
+| <br>Golden Apple | 1   | —   | —   | —   | 10⁄100 | —   | —   | —   | 10.0% | 0.100 | 10.0 |
+| <br>Netherite Upgrade Smithing Template | —   | —   | —   | 1   | —   | —   | —   | 1⁄10 | 10.0% | 0.100 | 10.0 |
+| <br>Snout Armor Trim Smithing Template | —   | —   | 1   | —   | —   | —   | 1⁄12 | —   | 8.3% | 0.083 | 12.0 |
+| <br>Netherite Scrap | 1   | —   | —   | —   | 8⁄100 | —   | —   | —   | 8.0% | 0.080 | 12.5 |
+| <br>Ancient Debris | 2   | —   | —   | —   | 5⁄100 | —   | —   | —   | 5.0% | 0.100 | 20.0 |
+
+| Item | Stack Size [\[A\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-stacksize-25) |     |     |     | Weight [\[B\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-weight-26) |     |     |     | Chance [\[C\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-chance-27) | Avg.  <br>per chest [\[D\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-items-28) | hide Avg. # chests  <br>to search [\[E\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-chests-29) |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1×  | 3–4× | 1×  | 1×  | 1×  | 3–4× | 1×  | 1×  |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Nothing[\[F\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-nothing-30) | —   | —   | 1   | 1   | —   | —   | 11⁄12 | 9⁄10 | 99.2% | 1.817 | 1.0 |
+| <br>Arrow | —   | 5–17 | —   | —   | —   | 1⁄14 | —   | —   | 22.8% | 2.750 | 4.4 |
+| <br>String | —   | 3–8 | —   | —   | —   | 1⁄14 | —   | —   | 22.8% | 1.375 | 4.4 |
+| <br>Gold Nugget | —   | 2–8 | —   | —   | —   | 1⁄14 | —   | —   | 22.8% | 1.250 | 4.4 |
+| <br>Crimson Fungus | —   | 2–7 | —   | —   | —   | 1⁄14 | —   | —   | 22.8% | 1.125 | 4.4 |
+| <br>Crimson Nylium | —   | 2–7 | —   | —   | —   | 1⁄14 | —   | —   | 22.8% | 1.125 | 4.4 |
+| <br>Crimson Roots | —   | 2–7 | —   | —   | —   | 1⁄14 | —   | —   | 22.8% | 1.125 | 4.4 |
+| <br>Glowstone | —   | 3–6 | —   | —   | —   | 1⁄14 | —   | —   | 22.8% | 1.125 | 4.4 |
+| <br>Soul Sand | —   | 2–7 | —   | —   | —   | 1⁄14 | —   | —   | 22.8% | 1.125 | 4.4 |
+| <br>Cooked Porkchop | —   | 2–5 | —   | —   | —   | 1⁄14 | —   | —   | 22.8% | 0.875 | 4.4 |
+| <br>Gilded Blackstone | —   | 2–5 | —   | —   | —   | 1⁄14 | —   | —   | 22.8% | 0.875 | 4.4 |
+| <br>Raw Porkchop | —   | 2–5 | —   | —   | —   | 1⁄14 | —   | —   | 22.8% | 0.875 | 4.4 |
+| <br>Crying Obsidian | —   | 1–5 | —   | —   | —   | 1⁄14 | —   | —   | 22.8% | 0.750 | 4.4 |
+| <br>Leather | —   | 1–3 | —   | —   | —   | 1⁄14 | —   | —   | 22.8% | 0.500 | 4.4 |
+| <br>Enchanted Golden Axe<br>[\[G\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-enchant-randomly-31) | —   | 1   | —   | —   | —   | 1⁄14 | —   | —   | 22.8% | 0.250 | 4.4 |
+| <br>Block of Gold | 2–4 | —   | —   | —   | 16⁄88 | —   | —   | —   | 18.2% | 0.545 | 5.5 |
+| <br>Damaged Enchanted Diamond Shovel<br>[\[G\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-enchant-randomly-31)<br>[\[H\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-damaged-0.15-0.8-32) | 1   | —   | —   | —   | 15⁄88 | —   | —   | —   | 17.0% | 0.170 | 5.9 |
+| <br>Saddle | 1   | —   | —   | —   | 12⁄88 | —   | —   | —   | 13.6% | 0.136 | 7.3 |
+| <br>Enchanted Diamond Pickaxe<br>[\[G\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-enchant-randomly-31)<br>[\[I\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-damaged-0.15-0.95-33) | 1   | —   | —   | —   | 12⁄88 | —   | —   | —   | 13.6% | 0.136 | 7.3 |
+| <br>Golden Carrot | 8–17 | —   | —   | —   | 10⁄88 | —   | —   | —   | 11.4% | 1.420 | 8.8 |
+| <br>Golden Apple | 1   | —   | —   | —   | 10⁄88 | —   | —   | —   | 11.4% | 0.114 | 8.8 |
+| <br>Netherite Upgrade Smithing Template | —   | —   | —   | 1   | —   | —   | —   | 1⁄10 | 10.0% | 0.100 | 10.0 |
+| <br>Netherite Scrap | 1   | —   | —   | —   | 8⁄88 | —   | —   | —   | 9.1% | 0.091 | 11.0 |
+| <br>Snout Armor Trim Smithing Template | —   | —   | 1   | —   | —   | —   | 1⁄12 | —   | 8.3% | 0.083 | 12.0 |
+| <br>Ancient Debris | 1   | —   | —   | —   | 5⁄88 | —   | —   | —   | 5.7% | 0.057 | 17.6 |
+
+     The size of stacks (or for unstackable items, number) of this item on any given roll.
+     The weight of this item relative to other items in the pool.
+     The odds of finding any of this item in a single chest.
+     The number of items expected per chest, averaged over a large number of chests.
+     The average number of chests the player should expect to search to find any of this item.
+     'Nothing' does not refer to the chance of an empty chest. Instead, it refers to the chance that the random loot generator does not add any loot _on a single roll_.
+     c d
+     e f
+     All enchantments are equally probable, _including_ treasure enchantments
+     (except Soul Speed
+    , Swift Sneak
+    , and Wind Burst
+    ), and any level of the enchantment is equally probable.
+     The item has between 15% and 80% of its total durability.
+     The item has between 15% and 95% of its total durability.
+
+  
+
+### Treasure
+
+\[edit\
+ | edit source\
+\]
+
+This loot appears in the chests generated within the treasure stash at the very bottom of Treasure bastion remnants.
+
+Each bastion treasure chest contains items drawn from 4 pools, with the following distribution:
+
+| Item | Stack Size [\[A\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-stacksize-34) |     |     |     | Weight [\[B\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-weight-35) |     |     |     | Chance [\[C\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-chance-36) | Avg.  <br>per chest [\[D\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-items-37) | hide Avg. # chests  <br>to search [\[E\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-chests-38) |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 3×  | 3–4× | 1×  | 1×  | 3×  | 3–4× | 1×  | 1×  |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| <br>Netherite Upgrade Smithing Template | —   | —   | —   | 1   | —   | —   | —   | 1⁄1 | 100.0% | 1.000 | 1.0 |
+| Nothing[\[F\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-nothing-39) | —   | —   | 1   | —   | —   | —   | 11⁄12 | —   | 91.7% | 0.917 | 1.1 |
+| <br>Netherite Ingot | 1   | —   | —   | —   | 15⁄112 | —   | —   | —   | 35.0% | 0.402 | 2.9 |
+| <br>Spectral Arrow | —   | 12–25 | —   | —   | —   | 1⁄9 | —   | —   | 33.7% | 7.194 | 3.0 |
+| <br>Nether Quartz | —   | 8–23 | —   | —   | —   | 1⁄9 | —   | —   | 33.7% | 6.028 | 3.0 |
+| <br>Gilded Blackstone | —   | 5–15 | —   | —   | —   | 1⁄9 | —   | —   | 33.7% | 3.889 | 3.0 |
+| <br>Iron Ingot | —   | 3–9 | —   | —   | —   | 1⁄9 | —   | —   | 33.7% | 2.333 | 3.0 |
+| <br>Gold Ingot | —   | 3–9 | —   | —   | —   | 1⁄9 | —   | —   | 33.7% | 2.333 | 3.0 |
+| <br>Magma Cream | —   | 3–8 | —   | —   | —   | 1⁄9 | —   | —   | 33.7% | 2.139 | 3.0 |
+| <br>Crying Obsidian | —   | 3–5 | —   | —   | —   | 1⁄9 | —   | —   | 33.7% | 1.556 | 3.0 |
+| <br>Block of Iron | —   | 2–5 | —   | —   | —   | 1⁄9 | —   | —   | 33.7% | 1.361 | 3.0 |
+| <br>Block of Gold | —   | 2–5 | —   | —   | —   | 1⁄9 | —   | —   | 33.7% | 1.361 | 3.0 |
+| <br>Ancient Debris | 1   | —   | —   | —   | 10⁄112 | —   | —   | —   | 24.5% | 0.268 | 4.1 |
+| <br>Netherite Scrap | 1   | —   | —   | —   | 8⁄112 | —   | —   | —   | 19.9% | 0.214 | 5.0 |
+| <br>Damaged Enchanted Diamond Spear<br>[\[G\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-enchant-randomly-40)<br>[\[H\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-damaged-0.8-1.0-41) | 1   | —   | —   | —   | 6⁄112 | —   | —   | —   | 15.2% | 0.161 | 6.6 |
+| <br>Damaged Enchanted Diamond Sword<br>[\[G\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-enchant-randomly-40)<br>[\[H\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-damaged-0.8-1.0-41) | 1   | —   | —   | —   | 6⁄112 | —   | —   | —   | 15.2% | 0.161 | 6.6 |
+| <br>Diamond Spear | 1   | —   | —   | —   | 6⁄112 | —   | —   | —   | 15.2% | 0.161 | 6.6 |
+| <br>Diamond Sword | 1   | —   | —   | —   | 6⁄112 | —   | —   | —   | 15.2% | 0.161 | 6.6 |
+| <br>Damaged Enchanted Diamond Helmet<br>[\[G\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-enchant-randomly-40)<br>[\[H\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-damaged-0.8-1.0-41) | 1   | —   | —   | —   | 6⁄112 | —   | —   | —   | 15.2% | 0.161 | 6.6 |
+| <br>Damaged Enchanted Diamond Chestplate<br>[\[G\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-enchant-randomly-40)<br>[\[H\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-damaged-0.8-1.0-41) | 1   | —   | —   | —   | 6⁄112 | —   | —   | —   | 15.2% | 0.161 | 6.6 |
+| <br>Damaged Enchanted Diamond Leggings<br>[\[G\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-enchant-randomly-40)<br>[\[H\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-damaged-0.8-1.0-41) | 1   | —   | —   | —   | 6⁄112 | —   | —   | —   | 15.2% | 0.161 | 6.6 |
+| <br>Damaged Enchanted Diamond Boots<br>[\[G\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-enchant-randomly-40)<br>[\[H\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-damaged-0.8-1.0-41) | 1   | —   | —   | —   | 6⁄112 | —   | —   | —   | 15.2% | 0.161 | 6.6 |
+| <br>Diamond | 2–6 | —   | —   | —   | 5⁄112 | —   | —   | —   | 12.8% | 0.536 | 7.8 |
+| <br>Diamond Helmet | 1   | —   | —   | —   | 5⁄112 | —   | —   | —   | 12.8% | 0.134 | 7.8 |
+| <br>Diamond Chestplate | 1   | —   | —   | —   | 5⁄112 | —   | —   | —   | 12.8% | 0.134 | 7.8 |
+| <br>Diamond Leggings | 1   | —   | —   | —   | 5⁄112 | —   | —   | —   | 12.8% | 0.134 | 7.8 |
+| <br>Diamond Boots | 1   | —   | —   | —   | 5⁄112 | —   | —   | —   | 12.8% | 0.134 | 7.8 |
+| <br>Ancient Debris | 2   | —   | —   | —   | 4⁄112 | —   | —   | —   | 10.3% | 0.214 | 9.7 |
+| <br>Snout Armor Trim Smithing Template | —   | —   | 1   | —   | —   | —   | 1⁄12 | —   | 8.3% | 0.083 | 12.0 |
+| <br>Enchanted Golden Apple | 1   | —   | —   | —   | 2⁄112 | —   | —   | —   | 5.3% | 0.054 | 19.0 |
+
+| Item | Stack Size [\[A\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-stacksize-34) |     |     |     | Weight [\[B\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-weight-35) |     |     |     | Chance [\[C\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-chance-36) | Avg.  <br>per chest [\[D\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-items-37) | hide Avg. # chests  <br>to search [\[E\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-chests-38) |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 3×  | 3–4× | 1×  | 1×  | 3×  | 3–4× | 1×  | 1×  |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| <br>Netherite Upgrade Smithing Template | —   | —   | —   | 1   | —   | —   | —   | 1⁄1 | 100.0% | 1.000 | 1.0 |
+| Nothing[\[F\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-nothing-39) | —   | —   | 1   | —   | —   | —   | 11⁄12 | —   | 91.7% | 0.917 | 1.1 |
+| <br>Netherite Ingot | 1   | —   | —   | —   | 15⁄102 | —   | —   | —   | 37.9% | 0.441 | 2.6 |
+| <br>Arrow | —   | 12–25 | —   | —   | —   | 1⁄9 | —   | —   | 33.7% | 7.194 | 3.0 |
+| <br>Nether Quartz | —   | 8–23 | —   | —   | —   | 1⁄9 | —   | —   | 33.7% | 6.028 | 3.0 |
+| <br>Gilded Blackstone | —   | 5–15 | —   | —   | —   | 1⁄9 | —   | —   | 33.7% | 3.889 | 3.0 |
+| <br>Iron Ingot | —   | 3–9 | —   | —   | —   | 1⁄9 | —   | —   | 33.7% | 2.333 | 3.0 |
+| <br>Gold Ingot | —   | 3–9 | —   | —   | —   | 1⁄9 | —   | —   | 33.7% | 2.333 | 3.0 |
+| <br>Magma Cream | —   | 3–8 | —   | —   | —   | 1⁄9 | —   | —   | 33.7% | 2.139 | 3.0 |
+| <br>Crying Obsidian | —   | 3–5 | —   | —   | —   | 1⁄9 | —   | —   | 33.7% | 1.556 | 3.0 |
+| <br>Block of Iron | —   | 2–5 | —   | —   | —   | 1⁄9 | —   | —   | 33.7% | 1.361 | 3.0 |
+| <br>Block of Gold | —   | 2–5 | —   | —   | —   | 1⁄9 | —   | —   | 33.7% | 1.361 | 3.0 |
+| <br>Netherite Scrap | 1   | —   | —   | —   | 8⁄102 | —   | —   | —   | 21.7% | 0.235 | 4.6 |
+| <br>Damaged Enchanted Diamond Spear<br>[\[G\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-enchant-randomly-40)<br>[\[H\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-damaged-0.8-1.0-41) | 1   | —   | —   | —   | 6⁄102 | —   | —   | —   | 16.6% | 0.176 | 6.0 |
+| <br>Damaged Enchanted Diamond Sword<br>[\[G\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-enchant-randomly-40)<br>[\[H\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-damaged-0.8-1.0-41) | 1   | —   | —   | —   | 6⁄102 | —   | —   | —   | 16.6% | 0.176 | 6.0 |
+| <br>Diamond Spear | 1   | —   | —   | —   | 6⁄102 | —   | —   | —   | 16.6% | 0.176 | 6.0 |
+| <br>Diamond Sword | 1   | —   | —   | —   | 6⁄102 | —   | —   | —   | 16.6% | 0.176 | 6.0 |
+| <br>Damaged Enchanted Diamond Helmet<br>[\[G\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-enchant-randomly-40)<br>[\[H\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-damaged-0.8-1.0-41) | 1   | —   | —   | —   | 6⁄102 | —   | —   | —   | 16.6% | 0.176 | 6.0 |
+| <br>Damaged Enchanted Diamond Chestplate<br>[\[G\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-enchant-randomly-40)<br>[\[H\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-damaged-0.8-1.0-41) | 1   | —   | —   | —   | 6⁄102 | —   | —   | —   | 16.6% | 0.176 | 6.0 |
+| <br>Damaged Enchanted Diamond Leggings<br>[\[G\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-enchant-randomly-40)<br>[\[H\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-damaged-0.8-1.0-41) | 1   | —   | —   | —   | 6⁄102 | —   | —   | —   | 16.6% | 0.176 | 6.0 |
+| <br>Damaged Enchanted Diamond Boots<br>[\[G\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-enchant-randomly-40)<br>[\[H\]](https://minecraft.wiki/w/Bastion_Remnant#cite_note-damaged-0.8-1.0-41) | 1   | —   | —   | —   | 6⁄102 | —   | —   | —   | 16.6% | 0.176 | 6.0 |
+| <br>Diamond | 2–6 | —   | —   | —   | 5⁄102 | —   | —   | —   | 14.0% | 0.588 | 7.1 |
+| <br>Diamond Helmet | 1   | —   | —   | —   | 5⁄102 | —   | —   | —   | 14.0% | 0.147 | 7.1 |
+| <br>Diamond Chestplate | 1   | —   | —   | —   | 5⁄102 | —   | —   | —   | 14.0% | 0.147 | 7.1 |
+| <br>Diamond Leggings | 1   | —   | —   | —   | 5⁄102 | —   | —   | —   | 14.0% | 0.147 | 7.1 |
+| <br>Diamond Boots | 1   | —   | —   | —   | 5⁄102 | —   | —   | —   | 14.0% | 0.147 | 7.1 |
+| <br>Ancient Debris | 2   | —   | —   | —   | 4⁄102 | —   | —   | —   | 11.3% | 0.235 | 8.8 |
+| <br>Snout Armor Trim Smithing Template | —   | —   | 1   | —   | —   | —   | 1⁄12 | —   | 8.3% | 0.083 | 12.0 |
+| <br>Enchanted Golden Apple | 1   | —   | —   | —   | 2⁄102 | —   | —   | —   | 5.8% | 0.059 | 17.3 |
+
+     The size of stacks (or for unstackable items, number) of this item on any given roll.
+     The weight of this item relative to other items in the pool.
+     The odds of finding any of this item in a single chest.
+     The number of items expected per chest, averaged over a large number of chests.
+     The average number of chests the player should expect to search to find any of this item.
+     'Nothing' does not refer to the chance of an empty chest. Instead, it refers to the chance that the random loot generator does not add any loot _on a single roll_.
+     c d
+     e f
+     g h
+     i j
+     k l
+     All enchantments are equally probable, _including_ treasure enchantments
+     (except Soul Speed
+    , Swift Sneak
+    , and Wind Burst
+    ), and any level of the enchantment is equally probable.
+     c d
+     e f
+     g h
+     i j
+     k l
+     The item has between 80% and 100% of its total durability.
