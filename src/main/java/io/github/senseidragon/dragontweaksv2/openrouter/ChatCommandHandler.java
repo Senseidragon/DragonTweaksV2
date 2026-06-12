@@ -29,13 +29,25 @@ public class ChatCommandHandler {
         }
 
         player.sendSystemMessage(Component.literal("[DragonTweaks] Thinking..."));
-        Thread.ofVirtual().start(() -> {
-            try {
-                String response = service.query(role, prompt);
-                player.sendSystemMessage(Component.literal("[DragonTweaks] " + response));
-            } catch (Exception e) {
-                player.sendSystemMessage(Component.literal("[DragonTweaks] Error: " + e.getMessage()));
-            }
+        var server = player.getServer();
+        var uuid = player.getUUID();
+        long startMs = System.currentTimeMillis();
+        service.query(role, prompt).thenAccept(response -> {
+            long elapsedMs = System.currentTimeMillis() - startMs;
+            server.execute(() -> {
+                var p = server.getPlayerList().getPlayer(uuid);
+                if (p != null) {
+                    p.sendSystemMessage(Component.literal("[DragonTweaks] " + response));
+                    p.sendSystemMessage(Component.literal("[DragonTweaks] RTT: " + elapsedMs + "ms"));
+                }
+            });
+        }).exceptionally(ex -> {
+            long elapsedMs = System.currentTimeMillis() - startMs;
+            server.execute(() -> {
+                var p = server.getPlayerList().getPlayer(uuid);
+                if (p != null) p.sendSystemMessage(Component.literal("[DragonTweaks] Error: " + ex.getMessage() + " (" + elapsedMs + "ms)"));
+            });
+            return null;
         });
     }
 }

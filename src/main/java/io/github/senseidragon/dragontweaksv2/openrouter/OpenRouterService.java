@@ -124,7 +124,7 @@ public class OpenRouterService {
             return CompletableFuture.failedFuture(new IllegalStateException("OpenRouter service is not enabled."));
         String modelId = role.equals("advisory") ? advisoryModelId : flavorModelId;
         String body = String.format(
-            "{\"model\":\"%s\",\"messages\":[{\"role\":\"user\",\"content\":\"%s\"}]}",
+            "{\"model\":\"%s\",\"messages\":[{\"role\":\"user\",\"content\":\"%s\"}],\"temperature\":1.2,\"reasoning\":{\"max_tokens\":400}}",
             modelId, prompt.replace("\"", "\\\"")
         );
         HttpRequest request = HttpRequest.newBuilder()

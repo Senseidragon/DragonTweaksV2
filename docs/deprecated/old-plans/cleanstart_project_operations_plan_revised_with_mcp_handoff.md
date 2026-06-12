@@ -486,7 +486,6 @@ expected report format
 
 ---
 
-
 ## 13. Claude.ai Sandbox Artifact Handoff — Proof of Concept
 
 A limited MCP sandbox bridge may be tested as a future transport mechanism between Claude.ai and Claude Code.

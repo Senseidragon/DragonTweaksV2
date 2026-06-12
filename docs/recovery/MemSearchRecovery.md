@@ -62,13 +62,26 @@ All reindex and search commands must target this collection explicitly using `-c
 
 ## Reindex Project Memory
 
-Run:
+Run the guarded refresh script. It starts Milvus, indexes only approved memory
+paths, flushes the collection, and runs a smoke-test search:
 
-```bash
-memsearch index "C:/Users/sense/Desktop/DragonTweaksV2/.memsearch/memory/" --force -c ms_dragontweaksv2_4403422f
+```powershell
+.\scripts\memsearch-refresh.ps1
 ```
 
-After indexing, flush immediately — memsearch does not flush automatically, so rows stay invisible to stats and search until flushed:
+WARNING: Do NOT run memsearch index against .memsearch/memory/ directly.
+That path covers the entire memory tree including candidates/, deprecated/,
+rejected/, and raw/ subtrees and will pollute the collection with unvalidated
+memory.
+
+Prohibited paths -- never pass to memsearch index:
+  - .memsearch/memory/           (entire tree -- indexes everything)
+  - any path containing candidates/
+  - any path containing deprecated/
+  - any path containing rejected/
+  - any path containing raw/
+
+If you need to verify row count after the refresh script runs, flush manually:
 
 ```bash
 python -c "from pymilvus import MilvusClient; c=MilvusClient(uri='http://localhost:19530'); c.flush('ms_dragontweaksv2_4403422f'); print(c.get_collection_stats('ms_dragontweaksv2_4403422f'))"

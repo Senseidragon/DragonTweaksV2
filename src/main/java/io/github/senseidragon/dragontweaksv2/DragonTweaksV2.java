@@ -12,7 +12,6 @@ import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
-import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 import org.slf4j.Logger;
 
@@ -23,6 +22,8 @@ public class DragonTweaksV2 {
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public DragonTweaksV2(IEventBus modEventBus, ModContainer modContainer) {
+        OpenRouterService.getInstance();
+
         modEventBus.addListener(this::commonSetup);
 
         NeoForge.EVENT_BUS.register(this);
@@ -36,27 +37,26 @@ public class DragonTweaksV2 {
     }
 
     @SubscribeEvent
-    public void onServerStarting(ServerStartingEvent event) {
-        LOGGER.info("DragonTweaks V2 loaded on server.");
-        var server = event.getServer();
-        OpenRouterService.getInstance().initAsync(reason -> {
-            String msg = "[DragonTweaks] AI advisor unavailable — " + reason;
-            server.execute(() ->
-                server.getPlayerList().getPlayers().forEach(player ->
-                    player.sendSystemMessage(Component.literal(msg))
-                )
-            );
-        });
-    }
-
-    @SubscribeEvent
     public void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
         OpenRouterService service = OpenRouterService.getInstance();
-        String reason = service.getFailureReason();
-        if (reason != null) {
-            event.getEntity().sendSystemMessage(
-                Component.literal("[DragonTweaks] AI advisor unavailable — " + reason)
-            );
+        var server = event.getEntity().getServer();
+        var uuid = event.getEntity().getUUID();
+
+        if (service.tryBeginInit()) {
+            service.initAsync(reason -> {
+                String msg = "[DragonTweaks] AI advisor unavailable — " + reason;
+                server.execute(() -> {
+                    var p = server.getPlayerList().getPlayer(uuid);
+                    if (p != null) p.sendSystemMessage(Component.literal(msg));
+                });
+            });
+        } else {
+            String reason = service.getFailureReason();
+            if (reason != null) {
+                event.getEntity().sendSystemMessage(
+                    Component.literal("[DragonTweaks] AI advisor unavailable — " + reason)
+                );
+            }
         }
     }
 

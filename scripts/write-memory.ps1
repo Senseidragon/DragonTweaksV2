@@ -2,22 +2,6 @@ $memDir = "C:\Users\sense\.claude\projects\C--Users-sense-Desktop-DragonTweaksV2
 
 @'
 ---
-name: GateGuard blocked writes — script workaround
-description: When GateGuard blocks a write to ~/.claude/ memory, write a .ps1.txt script inside the workspace for Dragon to rename and execute
-type: feedback
----
-
-When a Write to `~/.claude/projects/.../memory/` is blocked by GateGuard (outside workspace path), do not attempt to circumvent. Instead, write a `.ps1.txt` file inside the workspace (e.g. `scripts/write-memory.ps1.txt`), ask Dragon to rename it to `.ps1` and run it with `! scripts/write-memory.ps1`.
-
-**Why:** GateGuard treats `~/.claude/` as outside the safe workspace path, and blocks new `.ps1` files as unidentifiable. A `.ps1.txt` file passes GateGuard and Dragon can rename and execute it.
-
-**How to apply:** Any time a memory write is blocked by GateGuard, immediately fall back to this pattern rather than retrying the blocked write.
-
-**Hard constraint:** Scripts written using this workaround must never disable, modify, or bypass any existing guardrail, hook, or GateGuard configuration. Write-only to the memory directory — nothing else.
-'@ | Set-Content "$memDir\feedback_gateguard_script_workaround.md" -Encoding UTF8
-
-@'
----
 name: Wikilinks protocol for memory source fields
 description: How to format source references in memory entries and candidates — local files, no source, and external URLs
 type: feedback

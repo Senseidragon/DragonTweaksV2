@@ -1,65 +1,88 @@
-﻿# CLAUDE.md
+# CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Claude Code when working with this repository.
+
+## Core Operating Rules
+
+- Do not commit anything. Do not run git commands of any kind unless Dragon explicitly authorizes it in the current session.
+- Do not weaken, bypass, remove, or request exceptions to guardrails, hooks, permissions, deny rules, protected paths, or safety checks.
+- If a permission boundary blocks an action, treat the block as intentional. Follow [Guardrail Boundary Handling](claude-links/guardrail-boundary-handling.md).
+- Before creating any file, check whether it already exists. If it does, report the conflict and show the diff between existing content and intended content. Do not overwrite without explicit authorization.
+
+## Search Order (Documentation Lookup)
+
+When looking for project documentation or context, search in this order:
+
+1. `docs/` — check first with Glob/Read
+2. Project root files (`README.md`, `CLAUDE.md`, etc.)
+3. Source tree (Grep/Glob as appropriate)
+4. MemSearch — only if steps 1–3 failed
+5. External/web search — last resort
+
+Do NOT jump to MemSearch for anything likely to be in `docs/` or readable source files.
 
 ## Memory System
 
-Before any external reasoning, query project memory first:
+Before external reasoning, query project memory first:
 
 ```bash
 memsearch search "<query>" --top-k 5 -c ms_dragontweaksv2_4403422f
 ```
 
-Framework operating procedures are in docs/framework/. Load the relevant doc before validation, candidate evaluation, shell commands, or git operations — use MemorySystemDocIndex.md to route to the correct file.
+Framework operating procedures are in `docs/framework/`. Load the relevant doc before validation, candidate evaluation, shell commands, or git operations. Use `MemorySystemDocIndex.md` to route to the correct file.
 
-Before creating any file, check whether it already exists. If it does, report the conflict to Dragon and show the diff between the existing content and the intended new content. Do not overwrite without explicit authorization.
+Memory candidates are not approved memory. Follow [Memory Candidate Lifecycle](claude-links/memory-candidate-lifecycle.md).
 
-At the start of each session:
+If memory candidates have already been manually approved into the final pre-promotion or pending-reindex state, follow [Approved Memory Finalization](claude-links/approved-memory-finalization.md). This does not authorize promotion of new candidates.
 
-1. **Reindex check** - if `.memsearch/candidates/pending-reindex.txt` exists,
-   read it and validate every listed path before running anything.
+When intentionally creating, promoting, or updating a `type: project` memory entry, maintain human-readable parity using [Obsidian Parity](claude-links/obsidian-parity.md).
 
-   **Approved paths only.** A path is approved if and only if it matches one of:
-   - A named seed/daily file listed in `scripts/memsearch-refresh.ps1`
-     (e.g. `seed-framework-rules.md`, `2026-05-25.md`)
-   - An `approved/` subdirectory under `.memsearch/memory/framework/`,
-     `.memsearch/memory/domains/*/`, or `.memsearch/memory/projects/*/`
+Web/wiki-derived material must follow [Web Memory Ingestion Pipeline](claude-links/web-memory-ingestion-pipeline.md).
 
-   **Stop and report to Dragon** if any listed path is or contains:
-   - `.memsearch/memory/` (whole-tree)
-   - `.memsearch/` (whole-tree)
-   - `deprecated/`, `candidates/`, `rejected/`, or `raw/` anywhere in the path
+### SessionStart Memory Hooks
 
-   Do **not** run `memsearch index` on anomalous or out-of-scope paths.
+SessionStart may only:
 
-   **`Index: false` is not technical enforcement.** It is policy metadata only.
-   Memsearch does not honor it at index time. Path selection is the only barrier.
+- passively report pending candidate queues
+- final-validate and promote files already in `tentative-approved`
 
-   **`memsearch watch .memsearch/memory/` is prohibited.** It would continuously
-   index all subtrees including deprecated, candidates, and rejected entries.
+`tentative-approved` means the file has either:
+- passed first mechanical validation with high confidence, or
+- been manually approved by Dragon after review
 
-   `Bash(memsearch *)` remains unrestricted by Dragon's explicit requirement.
-   This protection is an operational policy and script-boundary rule only.
+SessionStart must not:
 
-   Only after validating every path: run `memsearch index <approved-path>
-   --force -c ms_dragontweaksv2_4403422f` for each, then delete the file.
-   Do this before anything else and before checking candidate folders.
+- process raw or extracted candidates
+- perform first validation
+- approve review candidates
+- infer user approval
+- capture new raw data
+- broaden indexing scope
 
-2. **Candidate queue** — check the following folders for any files. If any are present, immediately read `docs/framework/fact-deduplication.md` and `docs/active/memory-system-architecture.md` and run validation against existing approved memory without waiting for instruction. Apply all candidates with confidence >= 0.85 automatically — promote to approved, tombstone superseded entries, and reindex. Route candidates below 0.85 to a human review patch and report to Dragon. Do not proceed with any other task until the candidate queue is clear.
+## Regression and Diagnostic Rules
 
-- `.memsearch/memory/framework/candidates/extracted/`
-- `.memsearch/memory/framework/candidates/tentative-approved/`
-- `.memsearch/memory/domains/neoforge/candidates/extracted/`
-- `.memsearch/memory/domains/neoforge/candidates/tentative-approved/`
-- `.memsearch/memory/domains/minecolonies/candidates/extracted/`
-- `.memsearch/memory/domains/minecolonies/candidates/tentative-approved/`
-- `.memsearch/memory/projects/dragontweaksv2/candidates/`
+For regressions, follow [Known-Good Regression Triage](claude-links/known-good-regression-triage.md).
 
-After any external reasoning, web fetch, or tool call that returns new information, capture the raw result as a candidate entry in the appropriate domain or framework candidates/extracted/ folder before proceeding. Do not filter or summarize — write the raw result. Validation handles quality control.
+Claims of external causes such as “known bug,” “mod conflict,” “JVM issue,” or “environment problem” must satisfy [Unsupported External-Cause Claims](claude-links/unsupported-external-cause-claims.md).
+
+Do not claim two implementations are “basically the same” unless you cite the exact files, methods, call paths, and relevant behavioral differences inspected.
+
+After two failed hypotheses, stop patching and reset the causal map before making further edits.
+
+## Minecraft Runtime Invariant
+
+Nothing blocks the Minecraft main/client/render thread. Ever.
+
+This includes network I/O, filesystem I/O, sleeps, joins, waits, blocking futures, synchronous HTTP calls, lock waits, expensive scans, API-key validation, model discovery, or LLM response generation.
+
+LLM/OpenRouter work must be failure-isolated from gameplay and rendering. Follow [Main-Thread Nonblocking and LLM Isolation](claude-links/main-thread-nonblocking-and-llm-isolation.md).
 
 ## Project Overview
 
-DragonTweaksV2 is a NeoForge mod for Minecraft 1.21.1, authored by SenseiDragon. Mod ID: `dragontweaksv2`. Package root: `io.github.senseidragon.dragontweaksv2`.
+DragonTweaksV2 is a NeoForge mod for Minecraft 1.21.1, authored by SenseiDragon.
+
+- Mod ID: `dragontweaksv2`
+- Package root: `io.github.senseidragon.dragontweaksv2`
 
 ## Build Commands
 
@@ -68,12 +91,12 @@ DragonTweaksV2 is a NeoForge mod for Minecraft 1.21.1, authored by SenseiDragon.
 ./gradlew clean              # Clean build artifacts
 ./gradlew runClient          # Launch Minecraft client with the mod loaded
 ./gradlew runServer          # Launch dedicated server with the mod loaded
-./gradlew runData            # Run data generators (resources)
+./gradlew runData            # Run data generators
 ./gradlew runGameTestServer  # Run game tests
-./gradlew --refresh-dependencies  # Force re-download dependencies
+./gradlew --refresh-dependencies
 ```
 
-No test framework is currently set up; `./gradlew test` will find nothing.
+No test framework is currently set up; `./gradlew test` will find nothing unless tests are added.
 
 ## Key Versions
 
@@ -91,43 +114,34 @@ All versions are pinned in `gradle.properties` and referenced via template expan
 
 The mod follows standard NeoForge structure with a hard split between common and client-side code:
 
-- **`DragonTweaksV2.java`** — Main entry point (`@Mod`). Registers the config spec with NeoForge and subscribes to server-lifecycle events on the mod event bus.
-- **`DragonTweaksV2Client.java`** — Client-only code (`@EventBusSubscriber(Dist.CLIENT)`). Registers the config screen factory (GUI) and handles client setup. This class must never be loaded on a dedicated server.
-- **`Config.java`** — Wraps NeoForge's `ModConfigSpec` builder. Config values are declared as `ForgeConfigSpec.ConfigValue<T>` fields. The class listens for `ModConfigEvent` to react to reloads.
+- `DragonTweaksV2.java` — main entry point.
+- `DragonTweaksV2Client.java` — client-only code. This class must never be loaded on a dedicated server.
+- `Config.java` — wraps NeoForge config values and listens for config reloads.
 
-Generated resources (from `runData`) land in `src/generated/resources/` and are included in the source set automatically.
+Generated resources from `runData` land in `src/generated/resources/`.
 
 ## NeoForge Patterns
 
-- Event subscribers go on the **mod bus** (`FMLCommonSetupEvent`, `ModConfigEvent`, etc.) or the **game/Forge bus** (`ServerStartingEvent`, block/item registration, etc.). Mixing them up silently fails.
-- Deferred registers (`DeferredRegister`) must be created before `registerEventBus()` is called.
-- Mixins and Access Transformers are currently **commented out** in `neoforge.mods.toml`; re-enable the relevant lines before using them.
+- Event subscribers go on the mod bus or game/Forge bus as appropriate. Mixing them up silently fails.
+- Deferred registers must be created before `registerEventBus()` is called.
+- Mixins and Access Transformers are currently commented out in `neoforge.mods.toml`; re-enable the relevant lines before using them.
 
-## Docs
+## Docs and API Reference
 
-- `docs/versions.md` — Pinned version baseline; update it when bumping any dependency.
-- `docs/framework/` — Project-ops reference docs (git maturity model, query quality rules, safe-shell policy, etc.). Not Minecraft-specific; treat as standing operating procedures for this project.
+- `docs/versions.md` — pinned version baseline.
+- `docs/framework/` — project-ops procedures.
+- `docs/api/` — NeoForge 21.1.230 and MineColonies function signatures.
 
-## Obsidian Sync
-
-The Obsidian vault at `obsidian-docs/` is the human-readable counterpart to the Claude memory system. When writing a `type: project` memory entry, also create or update the corresponding Obsidian doc and add a link to it in `obsidian-docs/DragonTweaks-v2.md` (the MOC). Feedback and reference memory types do not need Obsidian counterparts.
-
-## Stub Library
-
-NeoForge 21.1.230 source stubs are in `docs/stubs/`. Do not bulk-load stubs. Query domain memory first (`memsearch search "<query>" -c ms_dragontweaksv2_4403422f`) — each approved entry's `Source` field points to
-   the exact stub file if deeper inspection is needed.
+Do not bulk-load `docs/api/`. Query domain memory first. Approved memory entries should point to exact source files through their `Source` fields.
 
 ## Worktree Safety
 
-Stale `.claude/worktrees/**` directories may contain obsolete `CLAUDE.md`
-files that may lack current policy guidance. Operating from a stale worktree risks acting on
-outdated policy.
+Stale `.claude/worktrees/**` directories may contain obsolete `CLAUDE.md` files.
 
-Claude Code must not open, reference, or operate from any worktree path
-unless Dragon explicitly confirms in the current session that the worktree
-is current and intentional.
+Claude Code must not open, reference, or operate from any worktree path unless Dragon explicitly confirms in the current session that the worktree is current and intentional.
 
 If a stale worktree is discovered:
-1. Report the path and the age/diff of its `CLAUDE.md` to Dragon.
-2. Ask Dragon to remove or deregister it manually via `git worktree remove`.
+
+1. Report the path and apparent risk to Dragon.
+2. Ask Dragon to remove or deregister it manually.
 3. Do not run git commands to inspect or remove it.

@@ -21,6 +21,20 @@ removeBase64Images: true
 
 Write the raw JSON output verbatim to `docs/<mob>-raw.md`.
 
+### Follow relevant links — mandatory
+
+A single-page scrape captures only what the wiki says about this mob *from its own perspective*. Cross-mob utility facts — that this mob is hunted by X, lures Y, or is used as currency/food/bait by Z — live on the other mob's page, not here.
+
+After scraping the main page, identify and also scrape the pages of any mobs or items that:
+
+1. **Are named as predators of this mob** — e.g. the Axolotl page lists every mob it hunts; those prey mobs' pages should note the threat
+2. **Use this mob as food, lure, bait, or currency** — e.g. axolotls are bred with buckets of tropical fish; that fact lives on the Axolotl page, not the Tropical Fish page
+3. **Are explicitly cross-referenced in the main page's Behavior or See Also sections** as ecological partners or competitors
+
+For each related page scraped, extract only the sentences or paragraphs that refer back to the current mob. Append these as a `## Cross-References` section at the bottom of `docs/<mob>-raw.md` before proceeding to Step 2.
+
+The clean file and advisor artifact must reflect this combined data — not just the main page alone.
+
 ### Why firecrawl cannot do more filtering
 
 The Minecraft wiki wraps each section's content in a `div id="content-collapsible-block-N"` where N is a **page-specific dynamic number** — block 6 is Achievements on the Pillager page but a different number on every other mob page. There is no way to target named sections (Achievements, History, Sounds, Bedrock Edition, etc.) reliably across pages using firecrawl's `excludeTags`.
@@ -62,6 +76,21 @@ The script handles:
 
 **Note:** Always prefix with `PYTHONUTF8=1` — wiki content contains emoji that break Windows cp1252 output.
 
+**UTF-8 / ASCII compliance (mandatory):** All advisor-artifact files written to `docs/minecraft-lore/` must contain only ASCII characters (codepoints 0–127). Before writing any advisor file, replace all typographic characters with ASCII equivalents:
+
+| Character | Replace with |
+|-----------|-------------|
+| — (em dash, U+2014) | `--` |
+| – (en dash, U+2013) | `-` |
+| × (multiplication, U+00D7) | `x` |
+| − (minus sign, U+2212) | `-` |
+| ' ' (curly quotes, U+2018/2019) | `'` |
+| " " (curly quotes, U+201C/201D) | `"` |
+| &nbsp; (non-breaking space, U+00A0) | ` ` |
+| … (ellipsis, U+2026) | `...` |
+
+Any remaining non-ASCII character must be removed or replaced before the file is written. All Python commands touching these files must use `PYTHONUTF8=1` prefix and `encoding='utf-8'` on all file open calls.
+
 ---
 
 ## Step 3 — Read and evaluate the clean file
@@ -89,11 +118,9 @@ ls .memsearch/memory/domains/minecraft/approved/<mob>.md
 
 ---
 
-## Step 5 — Write the candidate file
+---
 
-File: `.memsearch/memory/domains/minecraft/candidates/extracted/<Mob>.md`
-
-This is the final output. There is no intermediate PoC file. Write directly to the candidates folder.
+## Step 4.1 — Insert metadata
 
 ### Frontmatter (required)
 
@@ -144,14 +171,41 @@ Strip:
 
 ---
 
+## Step 5 — Write the candidate file
+
+File: `.memsearch/memory/domains/minecraft/candidates/extracted/<Mob>.md`
+
+This is the final output. There is no intermediate PoC file. Write directly to the candidates folder.
+
+---
+
 ## Step 6 — Final evaluation
 
-Read the candidate file against the clean file in full. Ask:
+Read the candidate file against the clean file in full using the following framing:
 
-> Is there anything remaining in the clean file with in-character value for a reasoning advisor that is not in the candidate?
+> An advisor is an experienced explorer/adventurer — they know what a mob does from having observed or fought it. They know behavioral quirks, surprising interactions, and things that would get someone killed or help someone survive. They do not know internal numbers (attack values), game mechanics (mobGriefing flags), or wiki metadata. When in doubt, ask: "Would a seasoned traveler who'd seen this mob dozens of times know this?"
 
-Candidates for inclusion: behavioral edge cases, spawn timing details, tactical nuances, consequences the advisor would warn about.
-Candidates to leave out: anything meta, mechanical, or player-UI-facing.
+### Review checklist
+
+Scan the clean file explicitly for each of these categories before closing:
+
+- **Inter-mob interactions** — does this mob trigger, threaten, or react to other specific mobs?
+- **Behavioral state switches** — conditions that change the mob from neutral to hostile, passive to active, or alter its targeting
+- **"Gotcha" facts** — things that contradict what a player might assume (e.g. "does NOT retaliate when hit", "cake cannot be used for breeding")
+- **Exploitable behaviors** — paralysis windows, aggro radius, forgiveness timers, sight-line breaks, trust mechanics
+- **Spawn edge cases** — unusual dimensions, dimension-specific behaviors, biome nuances beyond the basic spawn table
+
+### Scraps log (mandatory)
+
+After the checklist, write a scraps comment at the bottom of the clean file before closing it:
+
+```
+<!-- scraps: wolf teleport constraints (meta), wolf taming bone RNG (meta), wolf/llama flee radius (useful — added) -->
+```
+
+List every item you explicitly considered and either added or rejected, with a one-word reason (`meta`, `BE-only`, `redundant`, `trivial`, `added`). If you cannot name anything you considered, you have not read the clean file carefully enough.
+
+The scraps comment goes on the **clean file**, not the advisor file. It is a working artifact, not permanent content.
 
 Do not iterate after this step. One evaluation pass, then the file is done.
 
