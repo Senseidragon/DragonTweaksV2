@@ -79,7 +79,8 @@ public class AdvisorChatHandler {
         session.addMessage("user", playerText);
         LOG.info("[Advisor] [{}] player: {}", playerName, playerText);
 
-        String systemPrompt = SYSTEM_PROMPT + context;
+        String lore = LoreIndex.inject(playerText);
+        String systemPrompt = SYSTEM_PROMPT + lore + context;
 
         ScheduledFuture<?> task5s = scheduler.schedule(
             () -> player.getServer().execute(() -> {

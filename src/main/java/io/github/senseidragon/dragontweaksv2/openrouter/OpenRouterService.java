@@ -68,7 +68,7 @@ public class OpenRouterService {
             try {
                 loadConfig();
                 enabled = true;
-                LOGGER.debug("OpenRouter ready. flavor={}, advisory={}", flavorModelId, advisoryModelId);
+                LOGGER.info("OpenRouter ready. flavor={}, advisory={}", flavorModelId, advisoryModelId);
                 primeModel(flavorModelId);
                 primeModel(advisoryModelId);
             } catch (Exception ex) {
@@ -173,16 +173,20 @@ public class OpenRouterService {
             .header("Content-Type", "application/json")
             .POST(HttpRequest.BodyPublishers.ofString(GSON.toJson(body)))
             .build();
+        final long start = System.currentTimeMillis();
         return httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString())
             .thenApply(response -> {
+                long elapsed = System.currentTimeMillis() - start;
                 if (response.statusCode() < 200 || response.statusCode() >= 300)
                     throw new RuntimeException("HTTP " + response.statusCode());
                 JsonObject json = GSON.fromJson(response.body(), JsonObject.class);
-                return json.getAsJsonArray("choices")
+                String content = json.getAsJsonArray("choices")
                     .get(0).getAsJsonObject()
                     .getAsJsonObject("message")
                     .get("content").getAsString()
                     .replaceAll("[^\\x00-\\x7F]", "");
+                LOGGER.info("[Advisor] response {}ms model={}", elapsed, advisoryModelId);
+                return content;
             });
     }
 
