@@ -1,6 +1,7 @@
 package io.github.senseidragon.dragontweaksv2;
 
 import com.mojang.logging.LogUtils;
+import io.github.senseidragon.dragontweaksv2.advisor.AdvisorChatHandler;
 import io.github.senseidragon.dragontweaksv2.openrouter.ChatCommandHandler;
 import io.github.senseidragon.dragontweaksv2.openrouter.OpenRouterService;
 import net.minecraft.network.chat.Component;
@@ -28,6 +29,7 @@ public class DragonTweaksV2 {
 
         NeoForge.EVENT_BUS.register(this);
         NeoForge.EVENT_BUS.register(new ChatCommandHandler());
+        NeoForge.EVENT_BUS.register(new AdvisorChatHandler());
 
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }

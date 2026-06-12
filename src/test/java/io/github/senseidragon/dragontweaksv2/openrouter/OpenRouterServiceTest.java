@@ -1,5 +1,6 @@
 package io.github.senseidragon.dragontweaksv2.openrouter;
 
+import io.github.senseidragon.dragontweaksv2.advisor.ChatMessage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -75,5 +76,26 @@ class OpenRouterServiceTest {
         OpenRouterService service = new OpenRouterService(tempDir);
         var future = service.query("advisory", "hello");
         assertTrue(future.isCompletedExceptionally());
+    }
+
+    @Test
+    void queryAsyncFailsWhenNotEnabled() {
+        OpenRouterService service = new OpenRouterService(tempDir);
+        var future = service.queryAsync("prompt", List.of());
+        assertTrue(future.isCompletedExceptionally());
+    }
+
+    @Test
+    void queryAsyncFailsWhenNotEnabledWithHistory() {
+        OpenRouterService service = new OpenRouterService(tempDir);
+        var history = List.of(new ChatMessage("user", "hello"), new ChatMessage("advisor", "hi"));
+        assertTrue(service.queryAsync("prompt", history).isCompletedExceptionally());
+    }
+
+    @Test
+    void disableSetIsEnabledFalse() {
+        OpenRouterService service = new OpenRouterService(tempDir);
+        service.disable();
+        assertFalse(service.isEnabled());
     }
 }

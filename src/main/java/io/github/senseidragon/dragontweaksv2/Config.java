@@ -10,10 +10,9 @@ public class Config {
 
     private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
-    // Add your config options here, e.g.:
-    // public static final ModConfigSpec.BooleanValue SOME_TOGGLE = BUILDER
-    //         .comment("Description of this toggle")
-    //         .define("someToggle", true);
+    public static final ModConfigSpec.IntValue ADVISOR_HISTORY_CAP = BUILDER
+            .comment("Maximum conversation turns stored per player advisor session")
+            .defineInRange("advisorHistoryCap", 20, 1, 100);
 
     static final ModConfigSpec SPEC = BUILDER.build();
 

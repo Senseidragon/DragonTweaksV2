@@ -1,7 +1,9 @@
 package io.github.senseidragon.dragontweaksv2.openrouter;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import io.github.senseidragon.dragontweaksv2.advisor.ChatMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,6 +14,7 @@ import java.net.http.HttpResponse;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
@@ -144,6 +147,47 @@ public class OpenRouterService {
                     .get("content").getAsString();
                 return content.replaceAll("[^\\x00-\\x7F]", "");
             });
+    }
+
+    public CompletableFuture<String> queryAsync(String systemPrompt, List<ChatMessage> history) {
+        if (!enabled)
+            return CompletableFuture.failedFuture(new IllegalStateException("OpenRouter service is not enabled."));
+        JsonObject body = new JsonObject();
+        body.addProperty("model", advisoryModelId);
+        JsonArray messages = new JsonArray();
+        JsonObject sysMsg = new JsonObject();
+        sysMsg.addProperty("role", "system");
+        sysMsg.addProperty("content", systemPrompt);
+        messages.add(sysMsg);
+        for (ChatMessage msg : history) {
+            JsonObject m = new JsonObject();
+            m.addProperty("role", "advisor".equals(msg.role()) ? "assistant" : msg.role());
+            m.addProperty("content", msg.content());
+            messages.add(m);
+        }
+        body.add("messages", messages);
+        body.addProperty("max_tokens", 500);
+        HttpRequest request = HttpRequest.newBuilder()
+            .uri(URI.create(BASE_URL + "/chat/completions"))
+            .header("Authorization", "Bearer " + apiKey)
+            .header("Content-Type", "application/json")
+            .POST(HttpRequest.BodyPublishers.ofString(GSON.toJson(body)))
+            .build();
+        return httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+            .thenApply(response -> {
+                if (response.statusCode() < 200 || response.statusCode() >= 300)
+                    throw new RuntimeException("HTTP " + response.statusCode());
+                JsonObject json = GSON.fromJson(response.body(), JsonObject.class);
+                return json.getAsJsonArray("choices")
+                    .get(0).getAsJsonObject()
+                    .getAsJsonObject("message")
+                    .get("content").getAsString()
+                    .replaceAll("[^\\x00-\\x7F]", "");
+            });
+    }
+
+    public void disable() {
+        enabled = false;
     }
 
     public boolean isEnabled() { return enabled; }
