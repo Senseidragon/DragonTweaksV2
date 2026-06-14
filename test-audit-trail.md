@@ -116,6 +116,15 @@ Format: date | file(s) changed | what changed | test(s) covering it | result
 
 ---
 
+## 2026-06-14 — AdvisorSession.notifiedEffects
+
+- **Changed:** Added `notifiedEffects Set<ResourceLocation>` with `hasBeenNotified()`, `markNotified()`, `clearNotified()` to `AdvisorSession.java`
+- **Tests:** No unit test possible without Minecraft runtime (`ResourceLocation` requires game registry). Covered by AdvisorStatusMonitor tests later. — DEFERRED
+- **Compile check:** `./gradlew test` — BUILD SUCCESSFUL
+- **Result:** PASS (compile-verified; runtime coverage deferred)
+
+---
+
 ## 2026-06-14 — LoreIndex + effects lore
 
 **Note:** `LoreIndex.java` and the lore structure already existed (more advanced than the spec). The spec's `query()` instance-method design was superseded by a `inject()` static-method design using word-boundary matching on filenames. Tests were written against the actual `inject()` API.

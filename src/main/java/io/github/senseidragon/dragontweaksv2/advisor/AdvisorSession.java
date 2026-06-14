@@ -2,14 +2,18 @@ package io.github.senseidragon.dragontweaksv2.advisor;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.resources.ResourceLocation;
 import java.util.ArrayDeque;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class AdvisorSession {
 
     private final int cap;
     private final ArrayDeque<ChatMessage> history;
+    private final Set<ResourceLocation> notifiedEffects = new HashSet<>();
 
     public AdvisorSession(int cap) {
         this.cap = cap;
@@ -24,6 +28,10 @@ public class AdvisorSession {
     public List<ChatMessage> getMessages() {
         return Collections.unmodifiableList(List.copyOf(history));
     }
+
+    public boolean hasBeenNotified(ResourceLocation effectId) { return notifiedEffects.contains(effectId); }
+    public void markNotified(ResourceLocation effectId) { notifiedEffects.add(effectId); }
+    public void clearNotified(ResourceLocation effectId) { notifiedEffects.remove(effectId); }
 
     public CompoundTag toNbt() {
         CompoundTag tag = new CompoundTag();
