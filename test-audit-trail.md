@@ -145,3 +145,18 @@ Format: date | file(s) changed | what changed | test(s) covering it | result
   - Created `LoreIndexTest` (4 unit tests) targeting `LoreIndex.inject()`
 - **Tests:** `LoreIndexTest` — 4 tests, 0 failures — `./gradlew test` BUILD SUCCESSFUL
 - **Result:** PASS
+
+---
+
+## 2026-06-14 — OpenRouterService tool-calling
+
+- **Changed:** Added `sendWithTools()`, `sendWithToolResults()`, `parseOpenRouterResponse()` to `OpenRouterService.java`
+- **Also added:** Package-private `OpenRouterService(Path, HttpClient)` constructor and `setModelIdsForTest()` setter to support HTTP-stubbed unit tests without network access
+- **Tests:** `OpenRouterServiceTest` — `sendWithToolsParsesPureTextResponse`, `sendWithToolsParsesToolCallResponse` — PASS via `./gradlew cleanTest test --rerun-tasks` (17 tests, 0 failures)
+
+---
+
+## 2026-06-14 — Capability probe
+
+- **Changed:** Added `probeContextRetention()`, `modelRetainsContext` field, `isModelRetainsContext()` getter to `OpenRouterService.java`
+- **Tests:** `CapabilityProbeTest` — `probeReturnsTrueWhenModelReferencesApple`, `probeReturnsFalseWhenModelDoesNotReferenceApple` — PASS via `./gradlew cleanTest test --rerun-tasks` (2 tests, 0 failures)
