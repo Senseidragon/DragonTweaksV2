@@ -39,7 +39,9 @@ public final class EnvironmentContextBuilder {
         sb.append(threats.isEmpty() ? "No threats nearby. " : "Nearby threats: " + threats + ". ");
 
         String biome = biomeName(level, pos);
-        if (!biome.isEmpty()) sb.append("Biome: ").append(biome).append(".");
+        if (!biome.isEmpty()) sb.append("Biome: ").append(biome).append(". ");
+
+        sb.append("Hunger: ").append(hungerState(player.getFoodData().getFoodLevel())).append(".");
 
         return sb.toString().trim();
     }
@@ -111,5 +113,13 @@ public final class EnvironmentContextBuilder {
         return level.getBiome(pos).unwrapKey()
             .map(k -> k.location().getPath().replace("_", " "))
             .orElse("");
+    }
+
+    private static String hungerState(int foodLevel) {
+        if (foodLevel >= 18) return "Sated";
+        if (foodLevel >= 13) return "Peckish";
+        if (foodLevel >= 8)  return "Hungry";
+        if (foodLevel >= 3)  return "Very Hungry";
+        return "Starving";
     }
 }

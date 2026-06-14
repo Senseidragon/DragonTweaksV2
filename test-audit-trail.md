@@ -125,6 +125,16 @@ Format: date | file(s) changed | what changed | test(s) covering it | result
 
 ---
 
+## 2026-06-14 — EnvironmentContextBuilder hunger state
+
+- **Changed:** Added `hungerState(int foodLevel)` private static method and `Hunger: [state]` line injected into advisor baseline context in `EnvironmentContextBuilder.java`
+- **Thresholds:** Sated (≥18), Peckish (≥13), Hungry (≥8), Very Hungry (≥3), Starving (<3)
+- **Tests:** No isolated unit test — Tier 3 live verification required (method uses `player.getFoodData()` which requires game runtime)
+- **Compile check:** `./gradlew test` — BUILD SUCCESSFUL, 8/8 AdvisorChatHandlerTest pass
+- **Result:** PASS (compile-verified; runtime coverage requires live game)
+
+---
+
 ## 2026-06-14 — LoreIndex + effects lore
 
 **Note:** `LoreIndex.java` and the lore structure already existed (more advanced than the spec). The spec's `query()` instance-method design was superseded by a `inject()` static-method design using word-boundary matching on filenames. Tests were written against the actual `inject()` API.
