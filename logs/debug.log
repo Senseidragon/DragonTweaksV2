@@ -1,6 +1,53 @@
-[07Jun2026 05:38:05.087] [Test worker/DEBUG] [io.github.senseidragon.dragontweaksv2.openrouter.OpenRouterService/]: OpenRouter init started
-[07Jun2026 05:38:05.099] [openrouter-worker/DEBUG] [io.github.senseidragon.dragontweaksv2.openrouter.OpenRouterService/]: OpenRouter init failed: OPENROUTER_API_KEY not set.
-[07Jun2026 05:38:05.115] [Test worker/DEBUG] [io.github.senseidragon.dragontweaksv2.openrouter.OpenRouterService/]: OpenRouter init started
-[07Jun2026 05:38:05.116] [openrouter-worker/DEBUG] [io.github.senseidragon.dragontweaksv2.openrouter.OpenRouterService/]: OpenRouter init failed: .env file not found.
-[07Jun2026 05:38:05.122] [Test worker/DEBUG] [io.github.senseidragon.dragontweaksv2.openrouter.OpenRouterService/]: OpenRouter init started
-[07Jun2026 05:38:05.123] [openrouter-worker/DEBUG] [io.github.senseidragon.dragontweaksv2.openrouter.OpenRouterService/]: OpenRouter init failed: model_config.json unreadable.
+[13Jun2026 15:44:08.180] [Test worker/INFO] [io.github.senseidragon.dragontweaksv2.advisor.AdvisorChatHandler/]: [Advisor] [Dragon] player: hello
+[13Jun2026 15:44:08.221] [Test worker/INFO] [io.github.senseidragon.dragontweaksv2.advisor.LoreIndex/]: [Advisor] lore index loaded — 84 entries
+[13Jun2026 15:44:08.224] [Test worker/INFO] [io.github.senseidragon.dragontweaksv2.advisor.AdvisorChatHandler/]: [Advisor] prompt: You are a friendly mentor and guide: helpful, warm, and concise. Always speak in natural, conversational sentences — never use lists or sentence fragments. Greetings and farewells: one brief reply, 4 words or fewer. Questions and requests: answer in one or two natural sentences, then stop. Speak only from the context below; if something is missing, say so briefly.
+
+test context
+[13Jun2026 15:44:08.233] [Test worker/INFO] [io.github.senseidragon.dragontweaksv2.advisor.AdvisorChatHandler/]: [Advisor] [Dragon] advisor: Danger waits around every corner.
+[13Jun2026 15:44:08.255] [Test worker/INFO] [io.github.senseidragon.dragontweaksv2.advisor.AdvisorChatHandler/]: [Advisor] [Dragon] player: hello
+[13Jun2026 15:44:08.257] [Test worker/INFO] [io.github.senseidragon.dragontweaksv2.advisor.AdvisorChatHandler/]: [Advisor] prompt: You are a friendly mentor and guide: helpful, warm, and concise. Always speak in natural, conversational sentences — never use lists or sentence fragments. Greetings and farewells: one brief reply, 4 words or fewer. Questions and requests: answer in one or two natural sentences, then stop. Speak only from the context below; if something is missing, say so briefly.
+
+test context
+[13Jun2026 15:44:08.258] [Test worker/ERROR] [io.github.senseidragon.dragontweaksv2.advisor.AdvisorChatHandler/]: [Advisor] [Dragon] query failed: java.lang.RuntimeException: timeout
+[13Jun2026 15:44:08.261] [Test worker/INFO] [io.github.senseidragon.dragontweaksv2.advisor.AdvisorChatHandler/]: [Advisor] [Dragon] player: hello
+[13Jun2026 15:44:08.263] [Test worker/INFO] [io.github.senseidragon.dragontweaksv2.advisor.AdvisorChatHandler/]: [Advisor] prompt: You are a friendly mentor and guide: helpful, warm, and concise. Always speak in natural, conversational sentences — never use lists or sentence fragments. Greetings and farewells: one brief reply, 4 words or fewer. Questions and requests: answer in one or two natural sentences, then stop. Speak only from the context below; if something is missing, say so briefly.
+
+test context
+[13Jun2026 15:44:08.270] [Test worker/INFO] [io.github.senseidragon.dragontweaksv2.advisor.AdvisorChatHandler/]: [Advisor] [Dragon] player: hello
+[13Jun2026 15:44:08.272] [Test worker/INFO] [io.github.senseidragon.dragontweaksv2.advisor.AdvisorChatHandler/]: [Advisor] prompt: You are a friendly mentor and guide: helpful, warm, and concise. Always speak in natural, conversational sentences — never use lists or sentence fragments. Greetings and farewells: one brief reply, 4 words or fewer. Questions and requests: answer in one or two natural sentences, then stop. Speak only from the context below; if something is missing, say so briefly.
+
+test context
+[13Jun2026 15:44:08.276] [Test worker/INFO] [io.github.senseidragon.dragontweaksv2.advisor.AdvisorChatHandler/]: [Advisor] [Dragon] player: What lurks ahead?
+[13Jun2026 15:44:08.278] [Test worker/INFO] [io.github.senseidragon.dragontweaksv2.advisor.AdvisorChatHandler/]: [Advisor] prompt: You are a friendly mentor and guide: helpful, warm, and concise. Always speak in natural, conversational sentences — never use lists or sentence fragments. Greetings and farewells: one brief reply, 4 words or fewer. Questions and requests: answer in one or two natural sentences, then stop. Speak only from the context below; if something is missing, say so briefly.
+
+test context
+[13Jun2026 15:44:08.282] [Test worker/INFO] [io.github.senseidragon.dragontweaksv2.advisor.AdvisorChatHandler/]: [Advisor] [Dragon] player: hello
+[13Jun2026 15:44:08.283] [Test worker/INFO] [io.github.senseidragon.dragontweaksv2.advisor.AdvisorChatHandler/]: [Advisor] prompt: You are a friendly mentor and guide: helpful, warm, and concise. Always speak in natural, conversational sentences — never use lists or sentence fragments. Greetings and farewells: one brief reply, 4 words or fewer. Questions and requests: answer in one or two natural sentences, then stop. Speak only from the context below; if something is missing, say so briefly.
+
+test context
+[13Jun2026 15:44:08.285] [Test worker/INFO] [io.github.senseidragon.dragontweaksv2.advisor.AdvisorChatHandler/]: [Advisor] [Dragon] advisor: Stay sharp.
+[13Jun2026 15:44:08.288] [Test worker/INFO] [io.github.senseidragon.dragontweaksv2.advisor.AdvisorChatHandler/]: [Advisor] [Dragon] player: hello
+[13Jun2026 15:44:08.289] [Test worker/INFO] [io.github.senseidragon.dragontweaksv2.advisor.AdvisorChatHandler/]: [Advisor] prompt: You are a friendly mentor and guide: helpful, warm, and concise. Always speak in natural, conversational sentences — never use lists or sentence fragments. Greetings and farewells: one brief reply, 4 words or fewer. Questions and requests: answer in one or two natural sentences, then stop. Speak only from the context below; if something is missing, say so briefly.
+
+test context
+[13Jun2026 15:44:08.307] [Test worker/INFO] [io.github.senseidragon.dragontweaksv2.advisor.AdvisorChatHandler/]: [Advisor] [Dragon] player: hello
+[13Jun2026 15:44:08.308] [Test worker/INFO] [io.github.senseidragon.dragontweaksv2.advisor.AdvisorChatHandler/]: [Advisor] prompt: You are a friendly mentor and guide: helpful, warm, and concise. Always speak in natural, conversational sentences — never use lists or sentence fragments. Greetings and farewells: one brief reply, 4 words or fewer. Questions and requests: answer in one or two natural sentences, then stop. Speak only from the context below; if something is missing, say so briefly.
+
+test context
+[13Jun2026 15:44:08.310] [Test worker/ERROR] [io.github.senseidragon.dragontweaksv2.advisor.AdvisorChatHandler/]: [Advisor] [Dragon] query failed: java.lang.RuntimeException: timeout
+[13Jun2026 15:44:08.474] [openrouter-worker/INFO] [io.github.senseidragon.dragontweaksv2.openrouter.OpenRouterService/]: OpenRouter ready. flavor=liquid/lfm-2-24b-a2b, advisory=qwen/qwen3-30b-a3b-instruct-2507
+[13Jun2026 15:44:10.817] [ForkJoinPool.commonPool-worker-1/INFO] [io.github.senseidragon.dragontweaksv2.openrouter.OpenRouterService/]: [Advisor] response 2326ms model=qwen/qwen3-30b-a3b-instruct-2507
+[13Jun2026 15:44:11.461] [ForkJoinPool.commonPool-worker-1/INFO] [io.github.senseidragon.dragontweaksv2.openrouter.OpenRouterService/]: [Advisor] response 625ms model=qwen/qwen3-30b-a3b-instruct-2507
+[13Jun2026 15:44:11.941] [ForkJoinPool.commonPool-worker-1/INFO] [io.github.senseidragon.dragontweaksv2.openrouter.OpenRouterService/]: [Advisor] response 474ms model=qwen/qwen3-30b-a3b-instruct-2507
+[13Jun2026 15:44:14.127] [ForkJoinPool.commonPool-worker-1/INFO] [io.github.senseidragon.dragontweaksv2.openrouter.OpenRouterService/]: [Advisor] response 2184ms model=qwen/qwen3-30b-a3b-instruct-2507
+[13Jun2026 15:44:15.271] [ForkJoinPool.commonPool-worker-1/INFO] [io.github.senseidragon.dragontweaksv2.openrouter.OpenRouterService/]: [Advisor] response 1142ms model=qwen/qwen3-30b-a3b-instruct-2507
+[13Jun2026 15:44:18.404] [ForkJoinPool.commonPool-worker-1/INFO] [io.github.senseidragon.dragontweaksv2.openrouter.OpenRouterService/]: [Advisor] response 3130ms model=qwen/qwen3-30b-a3b-instruct-2507
+[13Jun2026 15:44:19.224] [ForkJoinPool.commonPool-worker-1/INFO] [io.github.senseidragon.dragontweaksv2.openrouter.OpenRouterService/]: [Advisor] response 817ms model=qwen/qwen3-30b-a3b-instruct-2507
+[13Jun2026 15:44:20.011] [ForkJoinPool.commonPool-worker-1/INFO] [io.github.senseidragon.dragontweaksv2.openrouter.OpenRouterService/]: [Advisor] response 779ms model=qwen/qwen3-30b-a3b-instruct-2507
+[13Jun2026 15:44:20.443] [ForkJoinPool.commonPool-worker-1/INFO] [io.github.senseidragon.dragontweaksv2.openrouter.OpenRouterService/]: [Advisor] response 428ms model=qwen/qwen3-30b-a3b-instruct-2507
+[13Jun2026 15:44:20.812] [ForkJoinPool.commonPool-worker-1/INFO] [io.github.senseidragon.dragontweaksv2.openrouter.OpenRouterService/]: [Advisor] response 365ms model=qwen/qwen3-30b-a3b-instruct-2507
+[13Jun2026 15:44:21.216] [ForkJoinPool.commonPool-worker-1/INFO] [io.github.senseidragon.dragontweaksv2.openrouter.OpenRouterService/]: [Advisor] response 401ms model=qwen/qwen3-30b-a3b-instruct-2507
+[13Jun2026 15:44:21.817] [ForkJoinPool.commonPool-worker-1/INFO] [io.github.senseidragon.dragontweaksv2.openrouter.OpenRouterService/]: [Advisor] response 596ms model=qwen/qwen3-30b-a3b-instruct-2507
+[13Jun2026 15:44:21.873] [openrouter-worker/WARN] [io.github.senseidragon.dragontweaksv2.openrouter.OpenRouterService/]: OpenRouter init failed: OPENROUTER_API_KEY not set.
+[13Jun2026 15:44:21.906] [openrouter-worker/WARN] [io.github.senseidragon.dragontweaksv2.openrouter.OpenRouterService/]: OpenRouter init failed: .env file not found.
+[13Jun2026 15:44:21.920] [openrouter-worker/WARN] [io.github.senseidragon.dragontweaksv2.openrouter.OpenRouterService/]: OpenRouter init failed: model_config.json unreadable.

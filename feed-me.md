@@ -1,58 +1,133 @@
-# Session Resume — Minecraft Lore Pipeline
+# Session Resume — Tool-Calling Design Brainstorm
+
+## Current system prompt (AdvisorChatHandler.java line 25)
+
+```java
+"You are a friendly mentor and guide: helpful, warm, and concise. " +
+"Always speak in natural, conversational sentences — never use lists or sentence fragments. " +
+"Greetings and farewells: one brief reply, 4 words or fewer. " +
+"Questions and requests: answer in one or two natural sentences, then stop. " +
+"Speak only from the context below; if something is missing, say so briefly.\n\n"
+```
+
+Prompt has been revised 3 times this session. Current version not yet fully validated in-game. Hallucination discussion revealed that session history ("Chad") is a feature, not a bug. Actual hallucination was sensory bread details (texture, temperature) which context cannot support.
 
 ## What we are doing
 
-Building a library of advisor-artifact files for the DragonTweaksV2 NPC advisor system. Each file is a distilled, in-world-knowledge-appropriate summary of one Minecraft mob, used as frontloaded prompt data sent to an LLM that answers player questions in 4–5 sentences.
+Mid-brainstorm: designing tool-calling for the advisor system. Brainstorming skill is active.
 
-Files live in `docs/minecraft-lore/` organized by mob category:
-- `passive/` — 26 files, complete
-- `neutral/` — 13 files, complete and reviewed
-- `hostile/` — not started
-- `utility/` — not started (Iron Golem, Snow Golem)
-- `npcs/` — not started (Villager, Wandering Trader)
+**Full in-progress design doc:** `docs/superpowers/specs/2026-06-13-tool-calling-design.md`
 
-## Current status
+Resume at: **User reviews spec** — then invoke writing-plans.
 
-Neutral mobs are done. All 13 files have been written, reviewed against their clean source files, corrected, and scraps logs added to the clean files.
+Brainstorming skill checklist state:
+- [x] Explore project context
+- [x] Ask clarifying questions
+- [x] Propose approaches (Option B: ToolCallOrchestrator selected)
+- [x] Present all design sections (ToolCallOrchestrator internals, edge cases, entity lifecycle)
+- [x] Present Testing section
+- [x] Get design approval (section by section)
+- [x] Write design doc (complete — all sections including Testing, entity clarifications, hunger state)
+- [x] Spec self-review
+- [ ] User reviews spec — **NEXT**
+- [ ] Invoke writing-plans
 
-**Passive mobs need review.** 26 files were written in an earlier session before the scraps log process existed and before the review checklist was added to `docs/convert-raw-to-poc.md`. Those files have never been reviewed against their source. Several clean files may also be truncated (same root cause as polar_bear and spider: drop table toggle links cause the cleaning script to terminate early). Raw files exist at `docs/<mob>-raw.md` for most of them.
+## Document update state (as of last save)
 
-## Next task
+| Document | Status |
+|---|---|
+| `docs/superpowers/specs/2026-06-13-tool-calling-design.md` | Complete — all sections including Testing, entity design, hunger state |
+| `feed-me.md` | Updated — this file |
+| `MEMORY.md` | Updated — tool-calling design link added |
 
-Review the passive mob advisor files against their clean sources. Start by checking which clean files are truncated:
+## Design decisions locked
 
-```bash
-wc -l docs/*-clean.md | sort -n
-```
+### Architecture
 
-Short files (under ~80 lines) are suspect. For any truncated clean file, pull the behavior section from the raw file directly (search for `'Behavior\n'` in the raw). Then compare each advisor file against the clean/raw source using the Step 6 checklist in `docs/convert-raw-to-poc.md`.
+**New classes:**
+| Class | Responsibility |
+|---|---|
+| `ToolCallOrchestrator` | 2-round-trip protocol, tool definitions, history inclusion decision, `modelRetainsContext` flag, lore lookup |
+| `AdvisorTool` | Interface: `name()`, `definition()` (JSON schema), `execute(args, player)` → `String` |
+| `InventoryTool` | Implements `get_inventory()` |
+| `ScanAreaTool` | Implements `scan_area(radius, depth, detectOres)` |
+| `LoreIndex` | Classpath lore loader, keyword index, `query(String)` → `List<String>` |
+| `AdvisorStatusMonitor` | Effect-applied event handler, circuit breaker, self-disable |
 
-Passive mob list: allay, armadillo, axolotl, bat, camel, cat, chicken, cod, cow, donkey, frog, glow_squid, horse, mooshroom, mule, ocelot, parrot, pig, rabbit, salmon, sheep, sniffer, squid, tadpole, tropical_fish, turtle.
+**Modified classes:**
+- `OpenRouterService` — adds capability probe to init sequence
+- `AdvisorChatHandler` — calls `ToolCallOrchestrator` instead of `OpenRouterService` directly
 
-After passives: start hostile mobs from scratch (scrape → clean → write → review in one pass).
+**Unchanged:** `AdvisorSession`, `AdvisorSavedData`, `EnvironmentContextBuilder`, `AdvisorSessionManager`, `ChatMessage`
 
-## Key pipeline files
+### Baseline context additions
+- Food level (0–20) added alongside existing status effects
 
-- `docs/convert-raw-to-poc.md` — full scrape/clean/write/review procedure including the advisor framing, review checklist, and scraps log requirement
-- `docs/minecraft-lore/neutral/` — reference these for format and tone
-- `scripts/clean-wiki-scrape.py` — cleaning script; always prefix with `PYTHONUTF8=1`
+### Lore / Knowledge Base
+- Files at `src/main/resources/data/dragontweaksv2/lore/`
+- YAML frontmatter with `keywords` list per file
+- `LoreIndex` loaded at mod startup from classpath — no loose files at runtime
+- Lookup runs before every round trip 1 (player query AND status monitor push)
+- Lore files must include: behavior, cure/treatment items, food quality notes where applicable
 
-## Known cleaning script bug
+### System prompt — proactive tool guidance
+- Model instructed to call `get_inventory()` proactively when:
+  - Detrimental status effect present
+  - Food level is low (language calibrated: peckish/hungry/very hungry/starving)
+  - Player query involves a threat, mob, or dangerous situation
 
-The Decimal/Fraction/Distribution/Expectation toggle links in wiki drop tables cause the cleaning script to terminate early, producing truncated clean files. When this happens, pull the behavior and drops content directly from the raw file. The raw files are large JSON-wrapped markdown — search for the section by text, not by line number.
+### AdvisorStatusMonitor
+- Event-driven: fires on `MobEffectEvent.Added` (not a timer)
+- One notification per effect acquisition per session
+- `notifiedEffects: Set<ResourceLocation>` lives in `AdvisorSession`
+- Effect removed/expired → clears notified flag → re-triggers if reapplied
+- One consolidated message per check (model handles multi-effect prioritization)
+- Circuit breaker: self-disables on spam, logs effect+player+rate, notifies player in-game
+- Resets on session restart — no disk state
 
-## Format reminder
+### Entity lifecycle requirement
+- On disconnect: session state flushed, in-flight requests discarded, advisor entity despawned cleanly
+- On login: `AdvisorSavedData` restored, entity spawned fresh, monitor re-enabled
+- No orphaned entities — must be explicitly handled in implementation plan
 
-All advisor files use this frontmatter:
-```yaml
----
-topic: <MobName>
-type: advisor-artifact
-source: "[[https://minecraft.wiki/w/<MobName>]]"
-scraped: <date>
-version: 1.21.1
-pipeline_stage: advisor-artifact
----
-```
+### Tool-call protocol
+- Max 2 HTTP round-trips per query
+- 60s timeout covers full flow
+- Parallel tool calls in one model response; all results sent back in one batch
 
-Source field must be Obsidian wikilink format `"[[url]]"` — plain URLs break Obsidian import.
+### Session history / context management
+- Session record always written regardless of API history decision
+- History decision: follow-up signals → include; pure state queries → suppress; default → include
+
+### Model context retention capability probe
+- Runs at OpenRouterService init every session
+- 2-call probe (apple test); result stored on ToolCallOrchestrator; not cached to disk
+
+### Edge cases (locked)
+- Disconnect between round trips: discard result, write history, no response
+- Tool failure: return structured error string per tool, don't abort full flow
+- Unrecognized tool: return `[Unknown tool: {name}]`, log warning, continue
+- Malformed response: catch per tool call, log DEBUG, treat as failure
+- Round trip 2 timeout: fallback message to player, log
+- LLM unavailable: existing OpenRouterService isolation handles it
+
+## Key files
+
+| File | Purpose |
+|---|---|
+| `docs/superpowers/specs/2026-06-13-tool-calling-design.md` | Full in-progress design spec |
+| `src/main/java/.../advisor/AdvisorChatHandler.java` | Contains `SYSTEM_PROMPT`; calls orchestrator after this design |
+| `src/main/java/.../advisor/EnvironmentContextBuilder.java` | Builds baseline context string |
+| `src/main/java/.../openrouter/OpenRouterService.java` | HTTP layer; gets capability probe added |
+| `src/main/resources/data/dragontweaksv2/lore/` | Lore files (to be created) |
+| `test-audit-trail.md` | Append-only; must be updated after every code change |
+
+## Constraints
+
+- Do not commit without explicit authorization from Dragon
+- Do not run `runClient` until all tests pass
+- Pre-flight checklist required before any Java source edit
+- `test-audit-trail.md` is append-only
+- Nothing blocks the Minecraft main/server/render thread
+- No source scanning (Java/JSON/config) without explicit authorization
+- `./gradlew test` required before any change is reported complete

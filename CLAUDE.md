@@ -9,6 +9,31 @@ This file provides guidance to Claude Code when working with this repository.
 - If a permission boundary blocks an action, treat the block as intentional. Follow [Guardrail Boundary Handling](claude-links/guardrail-boundary-handling.md).
 - Before creating any file, check whether it already exists. If it does, report the conflict and show the diff between existing content and intended content. Do not overwrite without explicit authorization.
 
+  ## Pre-Flight Checklist — Mandatory
+
+  Before touching any Java source file, explicitly state:
+
+    1. Which files will be edited (and which will not)
+    2. Whether the task touches risky areas: tick handlers, event handlers, networking, file I/O, pathfinding, async/threading
+    3. How main/server-thread blocking is avoided in the planned approach
+    4. Stop and report if the task conflicts with the no-blocking-main-thread invariant — do not infer exceptions
+
+  Skipping the checklist is not an option. Silently proceeding without it is a rule violation. Trivial one-line fixes that touch no event
+  handlers and no threading may abbreviate to a one-sentence scope statement, but the scope must still be stated before any edit.
+
+  ## Code Change Gate — Mandatory
+
+  No code change to the mod may be reported as complete until:
+
+    1. `./gradlew test` has been run and all tests pass
+    2. An entry has been appended to `test-audit-trail.md` in the project root recording: date, what changed, which test(s) covered it, and
+       pass/fail result
+
+  `test-audit-trail.md` is append-only. It must never be overwritten or truncated. If a change cannot be covered by an existing or new unit
+  test (e.g., requires live Minecraft environment), that limitation must be explicitly stated in the audit entry.
+
+  Never state that verification was skipped, deferred, or unnecessary. If `./gradlew test` is not run, the change is not done.
+
 ## Search Order (Documentation Lookup)
 
 When looking for project documentation or context, search in this order:
@@ -96,7 +121,8 @@ DragonTweaksV2 is a NeoForge mod for Minecraft 1.21.1, authored by SenseiDragon.
 ./gradlew --refresh-dependencies
 ```
 
-No test framework is currently set up; `./gradlew test` will find nothing unless tests are added.
+Tests live in `src/test/`. Run `./gradlew test` to execute all unit tests. This is required after every code change before reporting
+completion.
 
 ## Key Versions
 

@@ -41,7 +41,7 @@ public class OpenRouterService {
     private volatile String flavorModelId;
     private volatile String advisoryModelId;
 
-    OpenRouterService(Path workingDir) {
+    public OpenRouterService(Path workingDir) {
         this.workingDir = workingDir;
         this.executor = Executors.newSingleThreadExecutor(r -> {
             Thread t = new Thread(r, "openrouter-worker");
@@ -63,7 +63,6 @@ public class OpenRouterService {
     }
 
     public CompletableFuture<Void> initAsync(Consumer<String> onFailure) {
-        LOGGER.debug("OpenRouter init started");
         return CompletableFuture.runAsync(() -> {
             try {
                 loadConfig();
@@ -73,7 +72,7 @@ public class OpenRouterService {
                 primeModel(advisoryModelId);
             } catch (Exception ex) {
                 String reason = ex.getMessage() != null ? ex.getMessage() : "unexpected error";
-                LOGGER.debug("OpenRouter init failed: {}", reason);
+                LOGGER.warn("OpenRouter init failed: {}", reason);
                 failureReason = reason;
                 onFailure.accept(reason);
             }
@@ -100,7 +99,6 @@ public class OpenRouterService {
         JsonObject config = GSON.fromJson(configJson, JsonObject.class);
         flavorModelId = ModelSelector.selectCheapest(config, "flavor");
         advisoryModelId = ModelSelector.selectCheapest(config, "advisory");
-        LOGGER.debug("Selected models — flavor: {}, advisory: {}", flavorModelId, advisoryModelId);
     }
 
     private void primeModel(String modelId) {
@@ -115,9 +113,8 @@ public class OpenRouterService {
             .POST(HttpRequest.BodyPublishers.ofString(body))
             .build();
         httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString())
-            .thenAccept(r -> LOGGER.debug("Model primed: {} (status {})", modelId, r.statusCode()))
             .exceptionally(ex -> {
-                LOGGER.warn("Prime failed for {}: {}", modelId, ex.getMessage());
+                LOGGER.warn("Model prime failed for {}: {}", modelId, ex.getMessage());
                 return null;
             });
     }
@@ -166,7 +163,7 @@ public class OpenRouterService {
             messages.add(m);
         }
         body.add("messages", messages);
-        body.addProperty("max_tokens", 500);
+        body.addProperty("max_tokens", 175);
         HttpRequest request = HttpRequest.newBuilder()
             .uri(URI.create(BASE_URL + "/chat/completions"))
             .header("Authorization", "Bearer " + apiKey)
@@ -178,16 +175,43 @@ public class OpenRouterService {
             .thenApply(response -> {
                 long elapsed = System.currentTimeMillis() - start;
                 if (response.statusCode() < 200 || response.statusCode() >= 300)
-                    throw new RuntimeException("HTTP " + response.statusCode());
+                    throw new RuntimeException("HTTP " + response.statusCode() + ": " + response.body());
                 JsonObject json = GSON.fromJson(response.body(), JsonObject.class);
-                String content = json.getAsJsonArray("choices")
+                var contentEl = json.getAsJsonArray("choices")
                     .get(0).getAsJsonObject()
                     .getAsJsonObject("message")
-                    .get("content").getAsString()
+                    .get("content");
+                if (contentEl == null || contentEl.isJsonNull()) {
+                    LOGGER.warn("[Advisor] null content from {} (finish_reason={}). body: {}",
+                        advisoryModelId,
+                        json.getAsJsonArray("choices").get(0).getAsJsonObject().get("finish_reason"),
+                        response.body());
+                    throw new RuntimeException("null content");
+                }
+                String content = contentEl.getAsString()
+                    .replace('’', '\'').replace('‘', '\'')
+                    .replace('“', '"').replace('”', '"')
+                    .replace('—', '-').replace('–', '-')
+                    .replace('…', '.')
                     .replaceAll("[^\\x00-\\x7F]", "");
                 LOGGER.info("[Advisor] response {}ms model={}", elapsed, advisoryModelId);
                 return content;
             });
+    }
+
+    static String truncateToSentences(String text, int max) {
+        if (text == null || text.isBlank()) return text == null ? "" : text.trim();
+        text = text.trim();
+        int count = 0;
+        for (int i = 0; i < text.length(); i++) {
+            char c = text.charAt(i);
+            if (c == '.' || c == '!' || c == '?') {
+                while (i + 1 < text.length() && "!?.".indexOf(text.charAt(i + 1)) >= 0) i++;
+                count++;
+                if (count == max) return text.substring(0, i + 1).trim();
+            }
+        }
+        return text;
     }
 
     public void disable() {
