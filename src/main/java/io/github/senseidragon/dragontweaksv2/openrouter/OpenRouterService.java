@@ -2,8 +2,14 @@ package io.github.senseidragon.dragontweaksv2.openrouter;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import io.github.senseidragon.dragontweaksv2.advisor.ChatMessage;
+import io.github.senseidragon.dragontweaksv2.advisor.model.OpenRouterResponse;
+import io.github.senseidragon.dragontweaksv2.advisor.model.ToolCall;
+import io.github.senseidragon.dragontweaksv2.advisor.model.ToolResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +20,7 @@ import java.net.http.HttpResponse;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -40,6 +47,7 @@ public class OpenRouterService {
     private volatile String apiKey;
     private volatile String flavorModelId;
     private volatile String advisoryModelId;
+    private volatile boolean modelRetainsContext = false;
 
     public OpenRouterService(Path workingDir) {
         this.workingDir = workingDir;
@@ -49,6 +57,24 @@ public class OpenRouterService {
             return t;
         });
         this.httpClient = HttpClient.newBuilder().executor(executor).build();
+    }
+
+    /** Package-private constructor for tests that need to inject a custom {@link HttpClient}. */
+    OpenRouterService(Path workingDir, HttpClient httpClient) {
+        this.workingDir = workingDir;
+        this.executor = Executors.newSingleThreadExecutor(r -> {
+            Thread t = new Thread(r, "openrouter-worker");
+            t.setDaemon(true);
+            return t;
+        });
+        this.httpClient = httpClient;
+    }
+
+    /** Package-private setter for tests — sets model IDs and API key without loading config files. */
+    void setModelIdsForTest(String flavorModelId, String advisoryModelId, String apiKey) {
+        this.flavorModelId = flavorModelId;
+        this.advisoryModelId = advisoryModelId;
+        this.apiKey = apiKey;
     }
 
     public static OpenRouterService getInstance() {
@@ -199,6 +225,212 @@ public class OpenRouterService {
             });
     }
 
+    // -----------------------------------------------------------------------
+    // Internal helpers
+    // -----------------------------------------------------------------------
+
+    /** Builds a base request body with system prompt + history + a final user turn. */
+    JsonObject buildRequestBody(String systemPrompt, List<ChatMessage> history, String userMessage) {
+        JsonObject body = new JsonObject();
+        body.addProperty("model", advisoryModelId);
+        JsonArray messages = new JsonArray();
+        JsonObject sysMsg = new JsonObject();
+        sysMsg.addProperty("role", "system");
+        sysMsg.addProperty("content", systemPrompt);
+        messages.add(sysMsg);
+        for (ChatMessage msg : history) {
+            JsonObject m = new JsonObject();
+            m.addProperty("role", "advisor".equals(msg.role()) ? "assistant" : msg.role());
+            m.addProperty("content", msg.content());
+            messages.add(m);
+        }
+        JsonObject userMsg = new JsonObject();
+        userMsg.addProperty("role", "user");
+        userMsg.addProperty("content", userMessage);
+        messages.add(userMsg);
+        body.add("messages", messages);
+        body.addProperty("max_tokens", 175);
+        return body;
+    }
+
+    /** Sends a synchronous HTTP POST to the completions endpoint and returns the raw response body. */
+    String sendHttpRequest(JsonObject body) {
+        HttpRequest request = HttpRequest.newBuilder()
+            .uri(URI.create(BASE_URL + "/chat/completions"))
+            .header("Authorization", "Bearer " + apiKey)
+            .header("Content-Type", "application/json")
+            .POST(HttpRequest.BodyPublishers.ofString(GSON.toJson(body)))
+            .build();
+        try {
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() < 200 || response.statusCode() >= 300)
+                throw new RuntimeException("HTTP " + response.statusCode() + ": " + response.body());
+            return response.body();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new RuntimeException("HTTP request interrupted", e);
+        } catch (java.io.IOException e) {
+            throw new RuntimeException("HTTP request failed", e);
+        }
+    }
+
+    /** Parses a raw OpenRouter completion response into an {@link OpenRouterResponse}. */
+    private OpenRouterResponse parseOpenRouterResponse(String rawJson) {
+        JsonObject root = JsonParser.parseString(rawJson).getAsJsonObject();
+        JsonObject message = root.getAsJsonArray("choices")
+            .get(0).getAsJsonObject()
+            .getAsJsonObject("message");
+
+        JsonElement toolCallsEl = message.get("tool_calls");
+        if (toolCallsEl != null && !toolCallsEl.isJsonNull()) {
+            List<ToolCall> calls = new ArrayList<>();
+            for (JsonElement el : toolCallsEl.getAsJsonArray()) {
+                JsonObject tc = el.getAsJsonObject();
+                String id = tc.get("id").getAsString();
+                JsonObject fn = tc.getAsJsonObject("function");
+                String name = fn.get("name").getAsString();
+                JsonObject args = JsonParser.parseString(fn.get("arguments").getAsString()).getAsJsonObject();
+                calls.add(new ToolCall(id, name, args));
+            }
+            return new OpenRouterResponse(null, calls);
+        }
+
+        JsonElement contentEl = message.get("content");
+        String text = (contentEl != null && !contentEl.isJsonNull()) ? contentEl.getAsString() : "";
+        return new OpenRouterResponse(text, List.of());
+    }
+
+    // -----------------------------------------------------------------------
+    // Tool-calling API
+    // -----------------------------------------------------------------------
+
+    /**
+     * Sends a request with optional tool definitions. If the model responds with a
+     * tool-call, the returned {@link OpenRouterResponse} will have {@code hasToolCalls() == true}.
+     * Must not be called on the Minecraft main/server/render thread.
+     */
+    public CompletableFuture<OpenRouterResponse> sendWithTools(
+            String systemPrompt,
+            List<ChatMessage> history,
+            String userMessage,
+            List<JsonObject> toolDefinitions) {
+
+        return CompletableFuture.supplyAsync(() -> {
+            JsonObject body = buildRequestBody(systemPrompt, history, userMessage);
+            if (!toolDefinitions.isEmpty()) {
+                JsonArray toolsArray = new JsonArray();
+                toolDefinitions.forEach(toolsArray::add);
+                body.add("tools", toolsArray);
+                body.addProperty("tool_choice", "auto");
+            }
+            String rawResponse = sendHttpRequest(body);
+            return parseOpenRouterResponse(rawResponse);
+        }, executor);
+    }
+
+    /**
+     * Sends round-trip 2: appends the assistant's tool-call message and the tool
+     * result messages to the conversation, then returns the model's final text response.
+     * Must not be called on the Minecraft main/server/render thread.
+     */
+    public CompletableFuture<String> sendWithToolResults(
+            String systemPrompt,
+            List<ChatMessage> history,
+            String userMessage,
+            List<ToolCall> priorToolCalls,
+            List<ToolResult> results,
+            List<JsonObject> toolDefinitions) {
+
+        return CompletableFuture.supplyAsync(() -> {
+            JsonObject body = buildRequestBody(systemPrompt, history, userMessage);
+            JsonArray messages = body.getAsJsonArray("messages");
+
+            // Append assistant's tool-call message
+            JsonArray callsArray = new JsonArray();
+            for (ToolCall tc : priorToolCalls) {
+                JsonObject fn = new JsonObject();
+                fn.addProperty("name", tc.name());
+                fn.addProperty("arguments", tc.args().toString());
+                JsonObject call = new JsonObject();
+                call.addProperty("id", tc.id());
+                call.addProperty("type", "function");
+                call.add("function", fn);
+                callsArray.add(call);
+            }
+            JsonObject assistantMsg = new JsonObject();
+            assistantMsg.addProperty("role", "assistant");
+            assistantMsg.add("content", JsonNull.INSTANCE);
+            assistantMsg.add("tool_calls", callsArray);
+            messages.add(assistantMsg);
+
+            // Append tool result messages
+            for (ToolResult result : results) {
+                JsonObject toolMsg = new JsonObject();
+                toolMsg.addProperty("role", "tool");
+                toolMsg.addProperty("tool_call_id", result.toolCallId());
+                toolMsg.addProperty("content", result.content());
+                messages.add(toolMsg);
+            }
+
+            if (!toolDefinitions.isEmpty()) {
+                JsonArray toolsArray = new JsonArray();
+                toolDefinitions.forEach(toolsArray::add);
+                body.add("tools", toolsArray);
+            }
+
+            String rawResponse = sendHttpRequest(body);
+            return parseOpenRouterResponse(rawResponse).textContent();
+        }, executor);
+    }
+
+    // -----------------------------------------------------------------------
+    // Capability probe
+    // -----------------------------------------------------------------------
+
+    /**
+     * Probes whether the model retains context across two independent turns with no
+     * shared history. Two sequential synchronous HTTP calls are made (no system prompt,
+     * no history, no tools). Must only be called off the Minecraft main/server/render thread.
+     *
+     * @return {@code true} if the model's reply to call 2 contains "apple" (case-insensitive)
+     */
+    public boolean probeContextRetention() {
+        try {
+            // Call 1 — tell the model we have an apple
+            JsonObject body1 = new JsonObject();
+            body1.addProperty("model", advisoryModelId);
+            JsonArray msgs1 = new JsonArray();
+            JsonObject u1 = new JsonObject();
+            u1.addProperty("role", "user");
+            u1.addProperty("content", "I have an apple in my left hand.");
+            msgs1.add(u1);
+            body1.add("messages", msgs1);
+            sendHttpRequest(body1); // response ignored
+
+            // Call 2 — ask what we are holding (no history passed)
+            JsonObject body2 = new JsonObject();
+            body2.addProperty("model", advisoryModelId);
+            JsonArray msgs2 = new JsonArray();
+            JsonObject u2 = new JsonObject();
+            u2.addProperty("role", "user");
+            u2.addProperty("content", "What am I holding?");
+            msgs2.add(u2);
+            body2.add("messages", msgs2);
+            String response = sendHttpRequest(body2);
+
+            JsonObject root = JsonParser.parseString(response).getAsJsonObject();
+            String content = root.getAsJsonArray("choices")
+                .get(0).getAsJsonObject()
+                .getAsJsonObject("message")
+                .get("content").getAsString().toLowerCase();
+
+            return content.contains("apple");
+        } catch (Exception e) {
+            LOGGER.warn("[OpenRouterService] Capability probe failed, defaulting to false", e);
+            return false;
+        }
+    }
+
     static String truncateToSentences(String text, int max) {
         if (text == null || text.isBlank()) return text == null ? "" : text.trim();
         text = text.trim();
@@ -222,6 +454,7 @@ public class OpenRouterService {
     public String getFailureReason() { return failureReason; }
     public String getFlavorModelId() { return flavorModelId; }
     public String getAdvisoryModelId() { return advisoryModelId; }
+    public boolean isModelRetainsContext() { return modelRetainsContext; }
 
     public void shutdown() {
         executor.shutdown();

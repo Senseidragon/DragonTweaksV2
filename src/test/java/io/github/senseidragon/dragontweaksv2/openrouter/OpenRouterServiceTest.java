@@ -1,10 +1,15 @@
 package io.github.senseidragon.dragontweaksv2.openrouter;
 
 import io.github.senseidragon.dragontweaksv2.advisor.ChatMessage;
+import io.github.senseidragon.dragontweaksv2.advisor.model.OpenRouterResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.mockito.Mockito;
 
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -12,6 +17,9 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class OpenRouterServiceTest {
     @TempDir Path tempDir;
@@ -143,5 +151,76 @@ class OpenRouterServiceTest {
     void truncate_shortFragments_countAsSentences() {
         String input = "Night. Cold. Dark. Something else entirely said here.";
         assertEquals("Night. Cold. Dark.", OpenRouterService.truncateToSentences(input, 3));
+    }
+
+    // -----------------------------------------------------------------------
+    // sendWithTools — HTTP stubbing tests
+    // -----------------------------------------------------------------------
+
+    @SuppressWarnings("unchecked")
+    private OpenRouterService buildServiceWithStubbedHttp(String stubbedResponseBody) throws Exception {
+        HttpResponse<String> fakeResponse = mock(HttpResponse.class);
+        when(fakeResponse.statusCode()).thenReturn(200);
+        when(fakeResponse.body()).thenReturn(stubbedResponseBody);
+
+        HttpClient fakeClient = mock(HttpClient.class);
+        when(fakeClient.send(any(HttpRequest.class), any(HttpResponse.BodyHandler.class)))
+            .thenReturn(fakeResponse);
+
+        OpenRouterService service = new OpenRouterService(tempDir, fakeClient);
+        service.setModelIdsForTest("flavor-model", "advisory-model", "test-key");
+        return service;
+    }
+
+    @Test
+    void sendWithToolsParsesPureTextResponse() throws Exception {
+        String responseJson = """
+            {
+              "choices": [{
+                "message": {
+                  "role": "assistant",
+                  "content": "Here is my answer."
+                },
+                "finish_reason": "stop"
+              }]
+            }
+            """;
+        OpenRouterService service = buildServiceWithStubbedHttp(responseJson);
+
+        OpenRouterResponse result = service.sendWithTools("system", List.of(), "hello", List.of())
+            .get(5, TimeUnit.SECONDS);
+
+        assertFalse(result.hasToolCalls(), "Expected no tool calls in a pure-text response");
+        assertEquals("Here is my answer.", result.textContent());
+    }
+
+    @Test
+    void sendWithToolsParsesToolCallResponse() throws Exception {
+        String responseJson = """
+            {
+              "choices": [{
+                "message": {
+                  "role": "assistant",
+                  "content": null,
+                  "tool_calls": [{
+                    "id": "call_abc123",
+                    "type": "function",
+                    "function": {
+                      "name": "get_inventory",
+                      "arguments": "{\\"slot\\": 0}"
+                    }
+                  }]
+                },
+                "finish_reason": "tool_calls"
+              }]
+            }
+            """;
+        OpenRouterService service = buildServiceWithStubbedHttp(responseJson);
+
+        OpenRouterResponse result = service.sendWithTools("system", List.of(), "hello", List.of())
+            .get(5, TimeUnit.SECONDS);
+
+        assertTrue(result.hasToolCalls(), "Expected tool calls in the response");
+        assertEquals("get_inventory", result.toolCalls().get(0).name());
     }
 }
