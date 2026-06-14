@@ -113,3 +113,16 @@ Format: date | file(s) changed | what changed | test(s) covering it | result
 - **Change:** Revised `SYSTEM_PROMPT` in `AdvisorChatHandler.java` — changed persona from "trail-hardened scout" to "friendly mentor and guide"; added explicit ban on lists/fragments; kept greeting brevity rule and 1-2 sentence cap for questions.
 - **Tests:** `./gradlew test` — BUILD SUCCESSFUL, 27 tasks
 - **Result:** PASS
+
+---
+
+## 2026-06-14 — LoreIndex + effects lore
+
+**Note:** `LoreIndex.java` and the lore structure already existed (more advanced than the spec). The spec's `query()` instance-method design was superseded by a `inject()` static-method design using word-boundary matching on filenames. Tests were written against the actual `inject()` API.
+
+- **Changed:**
+  - Added `effects/hunger.md`, `effects/poison.md`, `effects/wither.md`, `effects/fire.md` to `src/main/resources/data/dragontweaksv2/lore/effects/`
+  - Registered all 4 in `lore-manifest.txt`
+  - Created `LoreIndexTest` (4 unit tests) targeting `LoreIndex.inject()`
+- **Tests:** `LoreIndexTest` — 4 tests, 0 failures — `./gradlew test` BUILD SUCCESSFUL
+- **Result:** PASS

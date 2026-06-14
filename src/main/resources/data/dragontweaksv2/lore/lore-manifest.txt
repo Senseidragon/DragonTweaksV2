@@ -82,3 +82,7 @@ structures/village
 structures/woodland_mansion
 utility/iron_golem
 utility/snow_golem
+effects/fire
+effects/hunger
+effects/poison
+effects/wither
