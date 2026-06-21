@@ -11,6 +11,7 @@ import net.neoforged.neoforge.event.ServerChatEvent;
 import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.*;
 import java.util.function.BooleanSupplier;
@@ -22,12 +23,9 @@ public class AdvisorChatHandler {
 
     private static final Logger LOG = LoggerFactory.getLogger(AdvisorChatHandler.class);
     private static final ResourceLocation BUILD_TOOL = ResourceLocation.fromNamespaceAndPath("structurize", "sceptergold");
-    public static final String SYSTEM_PROMPT =
-        "You are a friendly mentor and guide: helpful, warm, and concise. " +
-        "Always speak in natural, conversational sentences — never use lists or sentence fragments. " +
-        "Greetings and farewells: one brief reply, 4 words or fewer. " +
-        "Questions and requests: answer in one or two natural sentences, then stop. " +
-        "Speak only from the context below; if something is missing, say so briefly.\n\n";
+    // Single source of truth for the advisor's persona is ToolCallOrchestrator.PERSONA_BIO.
+    // Kept public for tests and external callers that build prompts directly.
+    public static final String SYSTEM_PROMPT = ToolCallOrchestrator.PERSONA_BIO;
 
     @FunctionalInterface
     public interface SessionDataPort {
@@ -40,6 +38,7 @@ public class AdvisorChatHandler {
     }
 
     private final OpenRouterService openRouter;
+    private final ToolCallOrchestrator orchestrator;
     private final SessionDataPort sessionData;
     private final ContextBuilderPort contextBuilder;
     private final ScheduledExecutorService scheduler;
@@ -48,6 +47,7 @@ public class AdvisorChatHandler {
     public AdvisorChatHandler() {
         this(
             OpenRouterService.getInstance(),
+            null, // orchestrator wired in DragonTweaksV2 after init
             AdvisorSessionManager::get,
             EnvironmentContextBuilder::build,
             Executors.newScheduledThreadPool(2),
@@ -55,10 +55,22 @@ public class AdvisorChatHandler {
         );
     }
 
-    AdvisorChatHandler(OpenRouterService openRouter, SessionDataPort sessionData,
-                       ContextBuilderPort contextBuilder, ScheduledExecutorService scheduler,
-                       Predicate<ServerPlayer> buildToolCheck) {
+    public AdvisorChatHandler(OpenRouterService openRouter, ToolCallOrchestrator orchestrator) {
+        this(
+            openRouter,
+            orchestrator,
+            AdvisorSessionManager::get,
+            EnvironmentContextBuilder::build,
+            Executors.newScheduledThreadPool(2),
+            AdvisorChatHandler::hasBuildTool
+        );
+    }
+
+    AdvisorChatHandler(OpenRouterService openRouter, ToolCallOrchestrator orchestrator,
+                       SessionDataPort sessionData, ContextBuilderPort contextBuilder,
+                       ScheduledExecutorService scheduler, Predicate<ServerPlayer> buildToolCheck) {
         this.openRouter = openRouter;
+        this.orchestrator = orchestrator;
         this.sessionData = sessionData;
         this.contextBuilder = contextBuilder;
         this.scheduler = scheduler;
@@ -100,7 +112,8 @@ public class AdvisorChatHandler {
             () -> event.setCanceled(true),
             msg -> player.sendSystemMessage(Component.literal(msg)),
             r -> player.getServer().execute(r),
-            () -> isOnline(player)
+            () -> isOnline(player),
+            player
         );
     }
 
@@ -110,7 +123,8 @@ public class AdvisorChatHandler {
                     Runnable cancelEvent,
                     Consumer<String> deliver,
                     Consumer<Runnable> dispatch,
-                    BooleanSupplier isOnline) {
+                    BooleanSupplier isOnline,
+                    ServerPlayer player) {
         cancelEvent.run();
 
         AdvisorSavedData savedData = getSavedData.get();
@@ -118,12 +132,7 @@ public class AdvisorChatHandler {
         String context = getContext.get();
         deliver.accept("<" + playerName + "> " + chatText);
 
-        session.addMessage("user", chatText);
         LOG.info("[Advisor] [{}] player: {}", playerName, chatText);
-
-        String lore = LoreIndex.inject(chatText);
-        String systemPrompt = SYSTEM_PROMPT + lore + context;
-        LOG.info("[Advisor] prompt: {}", systemPrompt);
 
         ScheduledFuture<?> task5s = scheduler.schedule(
             () -> dispatch.accept(() -> { if (isOnline.getAsBoolean()) deliver.accept("Hmm..."); }),
@@ -133,32 +142,56 @@ public class AdvisorChatHandler {
             () -> dispatch.accept(() -> { if (isOnline.getAsBoolean()) deliver.accept("How should I put this..."); }),
             10, TimeUnit.SECONDS);
 
-        ScheduledFuture<?> timeout = scheduler.schedule(() -> {
+        // Orchestrator owns its own 60s timeout — skip scheduling it here to avoid double timeout messages.
+        ScheduledFuture<?> timeout = (orchestrator != null) ? null : scheduler.schedule(() -> {
             dispatch.accept(() -> { if (isOnline.getAsBoolean()) deliver.accept("Brain fart, sorry."); });
-            LOG.warn("[Advisor] [{}] timeout — disabling", playerName);
-            openRouter.disable();
+            LOG.warn("[Advisor] [{}] timeout", playerName);
         }, 60, TimeUnit.SECONDS);
 
-        openRouter.queryAsync(systemPrompt, session.getMessages())
-            .thenAccept(response -> {
+        if (orchestrator != null) {
+            orchestrator.handleQuery(chatText, player, session,
+                response -> {
+                    task5s.cancel(false);
+                    task10s.cancel(false);
+                    savedData.setDirty();
+                    LOG.info("[Advisor] [{}] advisor: {}", playerName, response);
+                    dispatch.accept(() -> { if (isOnline.getAsBoolean()) deliver.accept(response); });
+                }
+            ).exceptionally(err -> {
                 task5s.cancel(false);
                 task10s.cancel(false);
-                timeout.cancel(false);
-                session.addMessage("advisor", response);
-                savedData.setDirty();
-                LOG.info("[Advisor] [{}] advisor: {}", playerName, response);
-                dispatch.accept(() -> { if (isOnline.getAsBoolean()) deliver.accept(response); });
-            })
-            .exceptionally(err -> {
-                task5s.cancel(false);
-                task10s.cancel(false);
-                timeout.cancel(false);
                 LOG.error("[Advisor] [{}] query failed: {}", playerName, err.getMessage());
                 dispatch.accept(() -> {
                     if (isOnline.getAsBoolean()) deliver.accept("[DragonTweaks] No response. Try again.");
                 });
                 return null;
             });
+        } else {
+            // Fallback: direct queryAsync path (pre-orchestrator or during init)
+            String lore = LoreIndex.inject(chatText);
+            String systemPrompt = SYSTEM_PROMPT + lore + context;
+            session.addMessage("user", chatText);
+            openRouter.queryAsync(systemPrompt, session.getMessages())
+                .thenAccept(response -> {
+                    task5s.cancel(false);
+                    task10s.cancel(false);
+                    timeout.cancel(false);
+                    session.addMessage("advisor", response);
+                    savedData.setDirty();
+                    LOG.info("[Advisor] [{}] advisor: {}", playerName, response);
+                    dispatch.accept(() -> { if (isOnline.getAsBoolean()) deliver.accept(response); });
+                })
+                .exceptionally(err -> {
+                    task5s.cancel(false);
+                    task10s.cancel(false);
+                    timeout.cancel(false);
+                    LOG.error("[Advisor] [{}] query failed: {}", playerName, err.getMessage());
+                    dispatch.accept(() -> {
+                        if (isOnline.getAsBoolean()) deliver.accept("[DragonTweaks] No response. Try again.");
+                    });
+                    return null;
+                });
+        }
     }
 
     @SubscribeEvent
