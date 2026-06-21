@@ -6,6 +6,8 @@ NeoForge mod for Minecraft 1.21.1 by SenseiDragon. Adds an immersive in-game AI 
 
 ## Session Status — 2026-06-10
 
+> **Superseded.** This entire session log describes an abandoned design (Indiana Jones persona, `#a`/`#f` command-prefix routing, static woodland-mansion lore with no dynamic injection). The advisor was rebuilt around dynamic `LoreIndex` lookup and a persona-driven system prompt — see `docs/superpowers/specs/2026-06-20-advisor-persona-grounding-design.md`. Kept below for historical reference.
+
 ### What We're Building
 
 An in-game NPC advisor that responds to player chat commands (`#a`, `#f`) with immersive, in-world responses backed by lore data and an LLM. The advisor role adopts an Indiana Jones persona — knowledgeable scholar/adventurer, dry wit, visceral spider fear. Lore is injected per-query from `docs/minecraft-lore/`.
@@ -14,12 +16,12 @@ An in-game NPC advisor that responds to player chat commands (`#a`, `#f`) with i
 
 - `OpenRouterService.java` handles async HTTP to OpenRouter. No system prompt is wired yet — raw player input is sent as the only message.
 - `ChatCommandHandler.java` routes `#a` → advisory model, `#f` → flavor model. Model IDs come from `model_config.json`.
-- `docs/assistant_roles.md` — role definitions including persona and prompt rules (just written this session).
+- `docs/deprecated/assistant_roles.md` — role definitions including persona and prompt rules (just written this session). Superseded as of 2026-06-20; see `docs/superpowers/specs/2026-06-20-advisor-persona-grounding-design.md`.
 - `tmp/advisor_test.py` — standalone test script for firing queries at OpenRouter outside of Minecraft.
 
 ### What We Defined This Session
 
-#### `docs/assistant_roles.md` — Role 1: Advisor (`#a`)
+#### `docs/deprecated/assistant_roles.md` — Role 1: Advisor (`#a`)
 
 - Model: cheapest advisory (reasoning) model — currently `openai/gpt-oss-120b`
 - Persona: Indiana Jones — archaeologist, scholar/adventurer, direct, dry, occasionally self-deprecating

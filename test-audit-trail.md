@@ -443,3 +443,14 @@ Format: date | file(s) changed | what changed | test(s) covering it | result
 - **Tests:** `correctToolCallPassRate`, `noBannedPhrasePassRate`, `noHallucinationPassRate`, `personaConsistencyPassRate`. Ran live against the real OpenRouter API (`run/client/.env` present this run) — `./gradlew test --tests "io.github.senseidragon.dragontweaksv2.advisor.AdvisorPersonaGenerativeTest"` — 4/4 PASS, 0 skipped. Full `--tests "io.github.senseidragon.dragontweaksv2.advisor.*"` regression after deleting the two superseded files — BUILD SUCCESSFUL, no leftover references.
 - **Result:** PASS — live confirmation, not just compile-verified.
 - **Finding (pre-existing, out of scope for this plan):** one of the 10 live trials (`scan_area`, "what's around me") hit `JsonSyntaxException: MalformedJsonException: Unterminated string ... path $.neutrals` in `parseOpenRouterResponse` while parsing the model's tool-call arguments — likely `scan_area`'s 7-parameter schema combined with `max_tokens: 175` truncating the function-call JSON mid-string. The exception propagates to `handleQuery`'s generic `catch (Exception e)`, which logs and returns **without calling `responseCallback` at all** — the player gets no message whatsoever, not even a fallback (unlike the existing blank-content case, which does have a fallback). The pass-rate threshold correctly absorbed this single noisy trial (9/10 trials still cleared 80%) rather than failing the suite, validating the harness design — but the underlying gap (malformed tool-call JSON → total silence to the player) is a real latent bug, not touched by this plan's 6 tasks. Flagged to Dragon as a follow-up candidate, not fixed here.
+
+---
+
+## 2026-06-21 — Persona/grounding redesign, Task 6: cleanup — dead routing test, README annotation
+
+- **Deleted:** `openrouter/ChatCommandHandlerTest.java`
+- **Modified:** `README.md`
+- **Change:** Deleted `ChatCommandHandlerTest.java` — tested only `ChatCommandHandler.parseCommand`'s `#a`/`#f` prefix parsing, confirmed to have no production caller (chat routing goes entirely through `AdvisorChatHandler.onServerChat`). `ChatCommandHandler.java` (the source class) is intentionally untouched — it's still registered on the event bus in `DragonTweaksV2.java`, and auditing/removing it is explicitly out of scope per the spec's Non-Goals. Annotated `README.md`'s stale `## Session Status — 2026-06-10` section with a superseded note pointing to `docs/superpowers/specs/2026-06-20-advisor-persona-grounding-design.md`, following the project's own precedent for handling superseded-but-true history rather than deleting it.
+- **Per:** `docs/superpowers/plans/2026-06-21-advisor-persona-grounding.md`, Task 6; spec Section 6.
+- **Tests:** `./gradlew test --tests "io.github.senseidragon.dragontweaksv2.openrouter.*"` — BUILD SUCCESSFUL, no remaining references to the deleted class. No new tests — this is a deletion + doc change.
+- **Result:** PASS.
