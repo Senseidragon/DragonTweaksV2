@@ -421,3 +421,13 @@ Format: date | file(s) changed | what changed | test(s) covering it | result
 - **Per:** `docs/superpowers/plans/2026-06-21-advisor-persona-grounding.md`, Task 3; spec Section 3 ("Removed, not reclassified" row).
 - **Tests:** `./gradlew test --tests "io.github.senseidragon.dragontweaksv2.openrouter.OpenRouterServiceTest"` — BUILD SUCCESSFUL, clean compile confirms no remaining references.
 - **Result:** PASS.
+
+---
+
+## 2026-06-21 — Persona/grounding redesign, Task 4: close the round-1 grounding shortcut
+
+- **File:** `advisor/ToolCallOrchestrator.java` (modified)
+- **Change:** Added `isWorldStateRelevant(String)` — a keyword heuristic (mirrors `shouldIncludeHistory`'s existing pattern) classifying a query as world-state-relevant or pure chitchat. Restructured `handleQuery()`: when round 1 returns no tool calls, pure chitchat keeps today's single-round-trip shortcut (text delivered directly); a world-state-relevant query instead forces a second `sendWithTools` attempt with an added grounding nudge before delivering anything — if the model self-corrects (calls a tool on the second attempt), the response is built from that; if it still doesn't, the second attempt's text is delivered (not the original, un-nudged guess), since that's the best available outcome without looping further. Extracted `deliverTextOnly` and `executeToolsAndDeliver` helpers so both the original tool-call path and the self-correction path share one code path (no duplicated tool-execution/round-2 logic).
+- **Per:** `docs/superpowers/plans/2026-06-21-advisor-persona-grounding.md`, Task 4; spec Section 4.
+- **Tests:** New `ToolCallOrchestratorTest` tests `worldStateSignalRequiresGrounding`, `chitchatSignalSkipsGrounding`, `ambiguousQueryDefaultsToGrounding`, `worldStateQueryWithNoToolCallForcesSecondAttempt`, `worldStateQuerySelfCorrectsOnSecondAttempt`, `chitchatWithNoToolCallStillUsesSingleRoundTripShortcut`. Confirmed the existing `textOnlyResponsePathDeliveredToPlayer` test (question `"hi"`) is unaffected — `"hi"` classifies as chitchat. `./gradlew test --tests "io.github.senseidragon.dragontweaksv2.advisor.ToolCallOrchestratorTest"` and full `--tests "io.github.senseidragon.dragontweaksv2.advisor.*"` regression run — both BUILD SUCCESSFUL.
+- **Result:** PASS. Heuristic keyword coverage is illustrative per spec; tightening based on observed misses is an accepted iterative follow-up, not a blocker.

@@ -84,41 +84,38 @@ public class ToolCallOrchestrator {
                     .sendWithTools(systemPrompt, history, playerMessage, defs)
                     .get(TOTAL_TIMEOUT_MS, TimeUnit.MILLISECONDS);
 
-                if (!rt1.hasToolCalls()) {
-                    String text = rt1.textContent() != null ? rt1.textContent() : "";
-                    if (text.isBlank()) {
-                        LOGGER.warn("[ToolCallOrchestrator] Model returned no tool calls and no content");
-                        if (isOnline.getAsBoolean()) responseCallback.accept("Ask me again — I didn't quite get that.");
-                        return;
-                    }
-                    session.addMessage("user", playerMessage);
-                    session.addMessage("advisor", text);
-                    responseCallback.accept(text);
+                if (rt1.hasToolCalls()) {
+                    executeToolsAndDeliver(rt1.toolCalls(), playerMessage, systemPrompt, history, defs,
+                        player, session, responseCallback, executor, isOnline);
                     return;
                 }
 
-                List<ToolResult> results = executeTools(rt1.toolCalls(), player, executor);
-
-                if (!isOnline.getAsBoolean()) {
-                    session.addMessage("user", playerMessage);
-                    session.addMessage("advisor", "[disconnected]");
+                if (!isWorldStateRelevant(playerMessage)) {
+                    deliverTextOnly(rt1.textContent(), playerMessage, session, responseCallback, isOnline);
                     return;
                 }
 
-                String finalText = openRouter
-                    .sendWithToolResults(systemPrompt, history, playerMessage,
-                                         rt1.toolCalls(), results, defs)
+                // World-state-relevant query, but round 1 made no tool calls — don't trust it
+                // un-vetted. Force a second attempt before delivering anything to the player.
+                String groundingPrompt = systemPrompt +
+                    "\n\nYour previous answer did not call a tool, but this question may require " +
+                    "checked information. Call the appropriate tool now if it's relevant, or state " +
+                    "plainly that you have no way to check this.";
+                OpenRouterResponse rt2 = openRouter
+                    .sendWithTools(groundingPrompt, history, playerMessage, defs)
                     .get(TOTAL_TIMEOUT_MS, TimeUnit.MILLISECONDS);
 
-                String text = finalText != null ? finalText : "";
-                if (text.isBlank()) {
-                    LOGGER.warn("[ToolCallOrchestrator] Model returned empty text after tool results");
-                    if (isOnline.getAsBoolean()) responseCallback.accept("Ask me again — I didn't quite get that.");
+                if (rt2.hasToolCalls()) {
+                    executeToolsAndDeliver(rt2.toolCalls(), playerMessage, systemPrompt, history, defs,
+                        player, session, responseCallback, executor, isOnline);
                     return;
                 }
-                session.addMessage("user", playerMessage);
-                session.addMessage("advisor", text);
-                responseCallback.accept(text);
+
+                // Model still didn't call a tool — deliver its retry text rather than rt1's
+                // original, un-nudged guess. This is the best available outcome; don't loop further.
+                String fallbackText = (rt2.textContent() != null && !rt2.textContent().isBlank())
+                    ? rt2.textContent() : rt1.textContent();
+                deliverTextOnly(fallbackText, playerMessage, session, responseCallback, isOnline);
 
             } catch (java.util.concurrent.TimeoutException e) {
                 String name = player != null ? player.getName().getString() : "unknown";
@@ -128,6 +125,62 @@ public class ToolCallOrchestrator {
                 LOGGER.error("[ToolCallOrchestrator] Unexpected error", e);
             }
         });
+    }
+
+    private void deliverTextOnly(String textContent, String playerMessage, AdvisorSession session,
+                                  Consumer<String> responseCallback, BooleanSupplier isOnline) {
+        String text = textContent != null ? textContent : "";
+        if (text.isBlank()) {
+            LOGGER.warn("[ToolCallOrchestrator] Model returned blank response for query: {}", playerMessage);
+            if (isOnline.getAsBoolean()) responseCallback.accept("Ask me again — I didn't quite get that.");
+            return;
+        }
+        session.addMessage("user", playerMessage);
+        session.addMessage("advisor", text);
+        responseCallback.accept(text);
+    }
+
+    private void executeToolsAndDeliver(List<ToolCall> calls, String playerMessage, String systemPrompt,
+                                         List<ChatMessage> history, List<JsonObject> defs,
+                                         ServerPlayer player, AdvisorSession session,
+                                         Consumer<String> responseCallback, Consumer<Runnable> executor,
+                                         BooleanSupplier isOnline) throws Exception {
+        List<ToolResult> results = executeTools(calls, player, executor);
+
+        if (!isOnline.getAsBoolean()) {
+            session.addMessage("user", playerMessage);
+            session.addMessage("advisor", "[disconnected]");
+            return;
+        }
+
+        String finalText = openRouter
+            .sendWithToolResults(systemPrompt, history, playerMessage, calls, results, defs)
+            .get(TOTAL_TIMEOUT_MS, TimeUnit.MILLISECONDS);
+
+        deliverTextOnly(finalText, playerMessage, session, responseCallback, isOnline);
+    }
+
+    private static final List<String> WORLD_STATE_SIGNALS = List.of(
+        "where", "what time", "weather", "biome", "inventory", "holding", "wearing",
+        "health", "effect", "nearby", "around me", "see", "creature", "threat"
+    );
+
+    private static final List<String> CHITCHAT_SIGNALS = List.of(
+        "hello", "hi", "hey", "thanks", "thank you", "bye", "goodbye", "lol"
+    );
+
+    // package-private for testing
+    boolean isWorldStateRelevant(String playerMessage) {
+        String lower = playerMessage.toLowerCase(Locale.ROOT);
+        if (WORLD_STATE_SIGNALS.stream().anyMatch(s -> containsWord(lower, s))) return true;
+        if (CHITCHAT_SIGNALS.stream().anyMatch(s -> containsWord(lower, s))) return false;
+        return true; // default: ground it when ambiguous
+    }
+
+    private static boolean containsWord(String lowerText, String phrase) {
+        if (phrase.contains(" ")) return lowerText.contains(phrase);
+        return java.util.regex.Pattern.compile("\\b" + java.util.regex.Pattern.quote(phrase) + "\\b")
+            .matcher(lowerText).find();
     }
 
     // package-private for testing

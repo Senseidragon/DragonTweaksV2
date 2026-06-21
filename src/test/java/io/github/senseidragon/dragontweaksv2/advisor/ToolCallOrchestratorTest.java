@@ -67,6 +67,80 @@ class ToolCallOrchestratorTest {
         assertEquals(ToolCallOrchestrator.PERSONA_BIO, AdvisorChatHandler.SYSTEM_PROMPT);
     }
 
+    // ── world-state relevance tests — no player needed ────────────────────────
+
+    @Test
+    void worldStateSignalRequiresGrounding() {
+        ToolCallOrchestrator orc = new ToolCallOrchestrator(null, List.of(), false);
+        assertTrue(orc.isWorldStateRelevant("where am i"));
+        assertTrue(orc.isWorldStateRelevant("what's the weather like"));
+        assertTrue(orc.isWorldStateRelevant("what creatures are nearby"));
+    }
+
+    @Test
+    void chitchatSignalSkipsGrounding() {
+        ToolCallOrchestrator orc = new ToolCallOrchestrator(null, List.of(), false);
+        assertFalse(orc.isWorldStateRelevant("hello there"));
+        assertFalse(orc.isWorldStateRelevant("hey, thanks for the help"));
+    }
+
+    @Test
+    void ambiguousQueryDefaultsToGrounding() {
+        ToolCallOrchestrator orc = new ToolCallOrchestrator(null, List.of(), false);
+        assertTrue(orc.isWorldStateRelevant("how do I make a sword?"));
+    }
+
+    // ── round-1 shortcut closure — handleQuery path tests ──────────────────────
+
+    @Test
+    void worldStateQueryWithNoToolCallForcesSecondAttempt() throws Exception {
+        ToolCallOrchestrator orc = new ToolCallOrchestrator(openRouter, List.of(), false);
+        when(openRouter.sendWithTools(any(), any(), any(), any()))
+            .thenReturn(CompletableFuture.completedFuture(new OpenRouterResponse("It's a cavern.", List.of())))
+            .thenReturn(CompletableFuture.completedFuture(new OpenRouterResponse("I have no way to check that.", List.of())));
+
+        AdvisorSession session = new AdvisorSession(20);
+        List<String> delivered = new ArrayList<>();
+        orc.handleQuery("where am i", null, session, delivered::add, Runnable::run, () -> true)
+            .get(5, TimeUnit.SECONDS);
+
+        verify(openRouter, times(2)).sendWithTools(any(), any(), any(), any());
+        assertEquals(List.of("I have no way to check that."), delivered);
+    }
+
+    @Test
+    void worldStateQuerySelfCorrectsOnSecondAttempt() throws Exception {
+        ToolCallOrchestrator orc = new ToolCallOrchestrator(openRouter, List.of(), false);
+        ToolCall call = new ToolCall("id1", "get_environment", new JsonObject());
+        when(openRouter.sendWithTools(any(), any(), any(), any()))
+            .thenReturn(CompletableFuture.completedFuture(new OpenRouterResponse("It's a cavern.", List.of())))
+            .thenReturn(CompletableFuture.completedFuture(new OpenRouterResponse(null, List.of(call))));
+        when(openRouter.sendWithToolResults(any(), any(), any(), any(), any(), any()))
+            .thenReturn(CompletableFuture.completedFuture("You're on the surface in a forest."));
+
+        AdvisorSession session = new AdvisorSession(20);
+        List<String> delivered = new ArrayList<>();
+        orc.handleQuery("where am i", null, session, delivered::add, Runnable::run, () -> true)
+            .get(5, TimeUnit.SECONDS);
+
+        assertEquals(List.of("You're on the surface in a forest."), delivered);
+    }
+
+    @Test
+    void chitchatWithNoToolCallStillUsesSingleRoundTripShortcut() throws Exception {
+        ToolCallOrchestrator orc = new ToolCallOrchestrator(openRouter, List.of(), false);
+        when(openRouter.sendWithTools(any(), any(), any(), any()))
+            .thenReturn(CompletableFuture.completedFuture(new OpenRouterResponse("Hey there.", List.of())));
+
+        AdvisorSession session = new AdvisorSession(20);
+        List<String> delivered = new ArrayList<>();
+        orc.handleQuery("hello there", null, session, delivered::add, Runnable::run, () -> true)
+            .get(5, TimeUnit.SECONDS);
+
+        verify(openRouter, times(1)).sendWithTools(any(), any(), any(), any());
+        assertEquals(List.of("Hey there."), delivered);
+    }
+
     // ── handleQuery path tests — use injected executor + isOnline ────────────
     // Pass null for ServerPlayer; fake tools never dereference it.
 
