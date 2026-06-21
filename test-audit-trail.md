@@ -410,3 +410,14 @@ Format: date | file(s) changed | what changed | test(s) covering it | result
 - **Per:** `docs/superpowers/plans/2026-06-21-advisor-persona-grounding.md`, Task 2; spec Section 3 ("Code-deterministic" row — banned literal phrases moved from prose to code).
 - **Tests:** New `OpenRouterServiceTest` tests `stripsBannedMechanicWordFromResponse`, `stripsBannedClosingPhrase`, `leavesCleanResponseUnchanged`, `stripIsCaseInsensitive`, `stripDoesNotMangleWordsContainingBannedSubstring`. `./gradlew test --tests "io.github.senseidragon.dragontweaksv2.openrouter.OpenRouterServiceTest"` — BUILD SUCCESSFUL.
 - **Result:** PASS.
+
+---
+
+## 2026-06-21 — Persona/grounding redesign, Task 3: remove dead truncateToSentences
+
+- **File:** `openrouter/OpenRouterService.java`, `openrouter/OpenRouterServiceTest.java` (modified)
+- **Change:** Deleted `truncateToSentences(String, int)` and its 7 unit tests.
+- **Note:** the spec described this as removing a cap "currently invoked in the response-delivery path" — that turned out not to match the actual code. `truncateToSentences` was never called from any production code path (confirmed by repo-wide search); `AdvisorPromptIntegrationTest`'s `assertSentences(r, 3)` checks were asserting on the model's prompt-instructed brevity, not on any code-level truncation. Disposition (drop it; brevity is persona-driven per Task 1) is unchanged — this was pure dead-code removal rather than removing a live call site.
+- **Per:** `docs/superpowers/plans/2026-06-21-advisor-persona-grounding.md`, Task 3; spec Section 3 ("Removed, not reclassified" row).
+- **Tests:** `./gradlew test --tests "io.github.senseidragon.dragontweaksv2.openrouter.OpenRouterServiceTest"` — BUILD SUCCESSFUL, clean compile confirms no remaining references.
+- **Result:** PASS.

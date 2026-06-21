@@ -464,21 +464,6 @@ public class OpenRouterService {
         return result.replaceAll("\\s{2,}", " ").trim();
     }
 
-    static String truncateToSentences(String text, int max) {
-        if (text == null || text.isBlank()) return text == null ? "" : text.trim();
-        text = text.trim();
-        int count = 0;
-        for (int i = 0; i < text.length(); i++) {
-            char c = text.charAt(i);
-            if (c == '.' || c == '!' || c == '?') {
-                while (i + 1 < text.length() && "!?.".indexOf(text.charAt(i + 1)) >= 0) i++;
-                count++;
-                if (count == max) return text.substring(0, i + 1).trim();
-            }
-        }
-        return text;
-    }
-
     public void disable() {
         enabled = false;
     }

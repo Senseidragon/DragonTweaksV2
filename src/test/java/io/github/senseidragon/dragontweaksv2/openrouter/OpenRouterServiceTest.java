@@ -137,52 +137,6 @@ class OpenRouterServiceTest {
         assertEquals("The scanner hums.", OpenRouterService.stripBannedPhrases("The scanner hums."));
     }
 
-    // truncateToSentences
-
-    @Test
-    void truncate_threeOrFewerSentences_returnedUnchanged() {
-        String s = "One. Two. Three.";
-        assertEquals(s, OpenRouterService.truncateToSentences(s, 3));
-    }
-
-    @Test
-    void truncate_moreThanThreeSentences_cutsAfterThird() {
-        String input = "One. Two. Three. Four. Five.";
-        assertEquals("One. Two. Three.", OpenRouterService.truncateToSentences(input, 3));
-    }
-
-    @Test
-    void truncate_longModelResponse_cutsAfterThird() {
-        String input = "The sun has slipped below the rim of the world. Shadows stretch long and black. " +
-                       "The air has cooled just enough. It's the crack between day and night. Late twilight.";
-        String result = OpenRouterService.truncateToSentences(input, 3);
-        assertEquals("The sun has slipped below the rim of the world. Shadows stretch long and black. " +
-                     "The air has cooled just enough.", result);
-    }
-
-    @Test
-    void truncate_exclamationAndQuestion_countAsSentences() {
-        String input = "Watch out! Why is it so dark? Something moves. And another thing.";
-        assertEquals("Watch out! Why is it so dark? Something moves.", OpenRouterService.truncateToSentences(input, 3));
-    }
-
-    @Test
-    void truncate_fewerThanMaxSentences_returnedAsIs() {
-        String input = "One sentence only.";
-        assertEquals(input, OpenRouterService.truncateToSentences(input, 3));
-    }
-
-    @Test
-    void truncate_emptyString_returnsEmpty() {
-        assertEquals("", OpenRouterService.truncateToSentences("", 3));
-    }
-
-    @Test
-    void truncate_shortFragments_countAsSentences() {
-        String input = "Night. Cold. Dark. Something else entirely said here.";
-        assertEquals("Night. Cold. Dark.", OpenRouterService.truncateToSentences(input, 3));
-    }
-
     // -----------------------------------------------------------------------
     // sendWithTools — HTTP stubbing tests
     // -----------------------------------------------------------------------
