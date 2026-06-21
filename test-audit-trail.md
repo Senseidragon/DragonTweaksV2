@@ -400,3 +400,13 @@ Format: date | file(s) changed | what changed | test(s) covering it | result
 - **Per:** `docs/superpowers/plans/2026-06-21-advisor-persona-grounding.md`, Task 1; spec `docs/superpowers/specs/2026-06-20-advisor-persona-grounding-design.md`, Section 2.
 - **Tests:** New `ToolCallOrchestratorTest` tests `buildSystemPromptUsesPersonaBioNotOldProseRules`, `systemPromptConstantMatchesOrchestratorPersonaBio`. `./gradlew test --tests "io.github.senseidragon.dragontweaksv2.advisor.ToolCallOrchestratorTest" --tests "io.github.senseidragon.dragontweaksv2.advisor.AdvisorChatHandlerTest"` — BUILD SUCCESSFUL.
 - **Result:** PASS (compile- and unit-verified; in-game persona-voice confirmation deferred to Task 5's generative harness).
+
+---
+
+## 2026-06-21 — Persona/grounding redesign, Task 2: banned-phrase denylist
+
+- **File:** `openrouter/OpenRouterService.java` (modified)
+- **Change:** Added `BANNED_PHRASES` ("scan", "data", "results", "that's all", "hope that helps") and `stripBannedPhrases(String)` — a case-insensitive, word-boundary post-generation strip, same pattern as the existing `<|...|>` reasoning-token strip. Wired into `parseOpenRouterResponse()` immediately after the token strip, so it applies to every text response delivered to the player (both round-1 direct text and round-2 final text after tool results, since both flow through this method).
+- **Per:** `docs/superpowers/plans/2026-06-21-advisor-persona-grounding.md`, Task 2; spec Section 3 ("Code-deterministic" row — banned literal phrases moved from prose to code).
+- **Tests:** New `OpenRouterServiceTest` tests `stripsBannedMechanicWordFromResponse`, `stripsBannedClosingPhrase`, `leavesCleanResponseUnchanged`, `stripIsCaseInsensitive`, `stripDoesNotMangleWordsContainingBannedSubstring`. `./gradlew test --tests "io.github.senseidragon.dragontweaksv2.openrouter.OpenRouterServiceTest"` — BUILD SUCCESSFUL.
+- **Result:** PASS.

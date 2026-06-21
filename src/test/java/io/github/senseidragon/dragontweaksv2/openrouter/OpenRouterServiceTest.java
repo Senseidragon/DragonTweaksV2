@@ -14,6 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -107,6 +108,35 @@ class OpenRouterServiceTest {
         assertFalse(service.isEnabled());
     }
 
+    // stripBannedPhrases
+
+    @Test
+    void stripsBannedMechanicWordFromResponse() {
+        assertEquals("I checked the area.", OpenRouterService.stripBannedPhrases("I checked the scan area."));
+    }
+
+    @Test
+    void stripsBannedClosingPhrase() {
+        String result = OpenRouterService.stripBannedPhrases("Stay alert. That's all.");
+        assertEquals("Stay alert.", result);
+    }
+
+    @Test
+    void leavesCleanResponseUnchanged() {
+        assertEquals("Stay alert out there.", OpenRouterService.stripBannedPhrases("Stay alert out there."));
+    }
+
+    @Test
+    void stripIsCaseInsensitive() {
+        assertEquals("I checked the area.", OpenRouterService.stripBannedPhrases("I checked the SCAN area."));
+    }
+
+    @Test
+    void stripDoesNotMangleWordsContainingBannedSubstring() {
+        // "scanner" contains "scan" but is a different word — word-boundary match must not touch it.
+        assertEquals("The scanner hums.", OpenRouterService.stripBannedPhrases("The scanner hums."));
+    }
+
     // truncateToSentences
 
     @Test
@@ -166,6 +196,8 @@ class OpenRouterServiceTest {
         HttpClient fakeClient = mock(HttpClient.class);
         when(fakeClient.send(any(HttpRequest.class), any(HttpResponse.BodyHandler.class)))
             .thenReturn(fakeResponse);
+        when(fakeClient.sendAsync(any(HttpRequest.class), any(HttpResponse.BodyHandler.class)))
+            .thenReturn(CompletableFuture.completedFuture(fakeResponse));
 
         OpenRouterService service = new OpenRouterService(tempDir, fakeClient);
         service.setModelIdsForTest("flavor-model", "advisory-model", "test-key");

@@ -28,6 +28,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
+import java.util.regex.Pattern;
 
 public class OpenRouterService {
 
@@ -38,7 +39,8 @@ public class OpenRouterService {
     private static volatile OpenRouterService instance;
 
     private final Path workingDir;
-    private final ExecutorService executor;
+    private final ExecutorService initExecutor;
+    private final ExecutorService queryExecutor;
     private final HttpClient httpClient;
 
     private final AtomicBoolean initStarted = new AtomicBoolean(false);
@@ -51,19 +53,29 @@ public class OpenRouterService {
 
     public OpenRouterService(Path workingDir) {
         this.workingDir = workingDir;
-        this.executor = Executors.newSingleThreadExecutor(r -> {
-            Thread t = new Thread(r, "openrouter-worker");
+        this.initExecutor = Executors.newSingleThreadExecutor(r -> {
+            Thread t = new Thread(r, "openrouter-init");
             t.setDaemon(true);
             return t;
         });
-        this.httpClient = HttpClient.newBuilder().executor(executor).build();
+        this.queryExecutor = Executors.newSingleThreadExecutor(r -> {
+            Thread t = new Thread(r, "openrouter-query");
+            t.setDaemon(true);
+            return t;
+        });
+        this.httpClient = HttpClient.newBuilder().executor(initExecutor).build();
     }
 
     /** Package-private constructor for tests that need to inject a custom {@link HttpClient}. */
     OpenRouterService(Path workingDir, HttpClient httpClient) {
         this.workingDir = workingDir;
-        this.executor = Executors.newSingleThreadExecutor(r -> {
-            Thread t = new Thread(r, "openrouter-worker");
+        this.initExecutor = Executors.newSingleThreadExecutor(r -> {
+            Thread t = new Thread(r, "openrouter-init");
+            t.setDaemon(true);
+            return t;
+        });
+        this.queryExecutor = Executors.newSingleThreadExecutor(r -> {
+            Thread t = new Thread(r, "openrouter-query");
             t.setDaemon(true);
             return t;
         });
@@ -102,7 +114,7 @@ public class OpenRouterService {
                 failureReason = reason;
                 onFailure.accept(reason);
             }
-        }, executor);
+        }, initExecutor);
     }
 
     private void loadConfig() throws Exception {
@@ -160,7 +172,7 @@ public class OpenRouterService {
             .POST(HttpRequest.BodyPublishers.ofString(body))
             .build();
         return httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString())
-            .thenApply(response -> {
+            .thenApplyAsync(response -> {
                 if (response.statusCode() < 200 || response.statusCode() >= 300)
                     throw new RuntimeException("HTTP " + response.statusCode());
                 JsonObject json = GSON.fromJson(response.body(), JsonObject.class);
@@ -169,7 +181,7 @@ public class OpenRouterService {
                     .getAsJsonObject("message")
                     .get("content").getAsString();
                 return content.replaceAll("[^\\x00-\\x7F]", "");
-            });
+            }, queryExecutor);
     }
 
     public CompletableFuture<String> queryAsync(String systemPrompt, List<ChatMessage> history) {
@@ -198,7 +210,7 @@ public class OpenRouterService {
             .build();
         final long start = System.currentTimeMillis();
         return httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString())
-            .thenApply(response -> {
+            .thenApplyAsync(response -> {
                 long elapsed = System.currentTimeMillis() - start;
                 if (response.statusCode() < 200 || response.statusCode() >= 300)
                     throw new RuntimeException("HTTP " + response.statusCode() + ": " + response.body());
@@ -215,14 +227,10 @@ public class OpenRouterService {
                     throw new RuntimeException("null content");
                 }
                 String content = contentEl.getAsString()
-                    .replace('’', '\'').replace('‘', '\'')
-                    .replace('“', '"').replace('”', '"')
-                    .replace('—', '-').replace('–', '-')
-                    .replace('…', '.')
                     .replaceAll("[^\\x00-\\x7F]", "");
                 LOGGER.info("[Advisor] response {}ms model={}", elapsed, advisoryModelId);
                 return content;
-            });
+            }, queryExecutor);
     }
 
     // -----------------------------------------------------------------------
@@ -274,6 +282,22 @@ public class OpenRouterService {
         }
     }
 
+    /** Async variant used by query methods — does not block any thread. */
+    private CompletableFuture<String> sendAsync(JsonObject body) {
+        HttpRequest request = HttpRequest.newBuilder()
+            .uri(URI.create(BASE_URL + "/chat/completions"))
+            .header("Authorization", "Bearer " + apiKey)
+            .header("Content-Type", "application/json")
+            .POST(HttpRequest.BodyPublishers.ofString(GSON.toJson(body)))
+            .build();
+        return httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+            .thenApply(response -> {
+                if (response.statusCode() < 200 || response.statusCode() >= 300)
+                    throw new RuntimeException("HTTP " + response.statusCode() + ": " + response.body());
+                return response.body();
+            });
+    }
+
     /** Parses a raw OpenRouter completion response into an {@link OpenRouterResponse}. */
     private OpenRouterResponse parseOpenRouterResponse(String rawJson) {
         JsonObject root = JsonParser.parseString(rawJson).getAsJsonObject();
@@ -296,7 +320,9 @@ public class OpenRouterService {
         }
 
         JsonElement contentEl = message.get("content");
-        String text = (contentEl != null && !contentEl.isJsonNull()) ? contentEl.getAsString() : "";
+        String text = (contentEl != null && !contentEl.isJsonNull())
+            ? stripBannedPhrases(contentEl.getAsString().replaceAll("<\\|[^|]*\\|>", "").trim())
+            : "";
         return new OpenRouterResponse(text, List.of());
     }
 
@@ -315,17 +341,14 @@ public class OpenRouterService {
             String userMessage,
             List<JsonObject> toolDefinitions) {
 
-        return CompletableFuture.supplyAsync(() -> {
-            JsonObject body = buildRequestBody(systemPrompt, history, userMessage);
-            if (!toolDefinitions.isEmpty()) {
-                JsonArray toolsArray = new JsonArray();
-                toolDefinitions.forEach(toolsArray::add);
-                body.add("tools", toolsArray);
-                body.addProperty("tool_choice", "auto");
-            }
-            String rawResponse = sendHttpRequest(body);
-            return parseOpenRouterResponse(rawResponse);
-        }, executor);
+        JsonObject body = buildRequestBody(systemPrompt, history, userMessage);
+        if (!toolDefinitions.isEmpty()) {
+            JsonArray toolsArray = new JsonArray();
+            toolDefinitions.forEach(toolsArray::add);
+            body.add("tools", toolsArray);
+            body.addProperty("tool_choice", "auto");
+        }
+        return sendAsync(body).thenApplyAsync(raw -> parseOpenRouterResponse(raw), queryExecutor);
     }
 
     /**
@@ -341,46 +364,44 @@ public class OpenRouterService {
             List<ToolResult> results,
             List<JsonObject> toolDefinitions) {
 
-        return CompletableFuture.supplyAsync(() -> {
-            JsonObject body = buildRequestBody(systemPrompt, history, userMessage);
-            JsonArray messages = body.getAsJsonArray("messages");
+        JsonObject body = buildRequestBody(systemPrompt, history, userMessage);
+        JsonArray messages = body.getAsJsonArray("messages");
 
-            // Append assistant's tool-call message
-            JsonArray callsArray = new JsonArray();
-            for (ToolCall tc : priorToolCalls) {
-                JsonObject fn = new JsonObject();
-                fn.addProperty("name", tc.name());
-                fn.addProperty("arguments", tc.args().toString());
-                JsonObject call = new JsonObject();
-                call.addProperty("id", tc.id());
-                call.addProperty("type", "function");
-                call.add("function", fn);
-                callsArray.add(call);
-            }
-            JsonObject assistantMsg = new JsonObject();
-            assistantMsg.addProperty("role", "assistant");
-            assistantMsg.add("content", JsonNull.INSTANCE);
-            assistantMsg.add("tool_calls", callsArray);
-            messages.add(assistantMsg);
+        // Append assistant's tool-call message
+        JsonArray callsArray = new JsonArray();
+        for (ToolCall tc : priorToolCalls) {
+            JsonObject fn = new JsonObject();
+            fn.addProperty("name", tc.name());
+            fn.addProperty("arguments", tc.args().toString());
+            JsonObject call = new JsonObject();
+            call.addProperty("id", tc.id());
+            call.addProperty("type", "function");
+            call.add("function", fn);
+            callsArray.add(call);
+        }
+        JsonObject assistantMsg = new JsonObject();
+        assistantMsg.addProperty("role", "assistant");
+        assistantMsg.add("content", JsonNull.INSTANCE);
+        assistantMsg.add("tool_calls", callsArray);
+        messages.add(assistantMsg);
 
-            // Append tool result messages
-            for (ToolResult result : results) {
-                JsonObject toolMsg = new JsonObject();
-                toolMsg.addProperty("role", "tool");
-                toolMsg.addProperty("tool_call_id", result.toolCallId());
-                toolMsg.addProperty("content", result.content());
-                messages.add(toolMsg);
-            }
+        // Append tool result messages
+        for (ToolResult result : results) {
+            JsonObject toolMsg = new JsonObject();
+            toolMsg.addProperty("role", "tool");
+            toolMsg.addProperty("tool_call_id", result.toolCallId());
+            toolMsg.addProperty("content", result.content());
+            messages.add(toolMsg);
+        }
 
-            if (!toolDefinitions.isEmpty()) {
-                JsonArray toolsArray = new JsonArray();
-                toolDefinitions.forEach(toolsArray::add);
-                body.add("tools", toolsArray);
-            }
+        if (!toolDefinitions.isEmpty()) {
+            JsonArray toolsArray = new JsonArray();
+            toolDefinitions.forEach(toolsArray::add);
+            body.add("tools", toolsArray);
+        }
 
-            String rawResponse = sendHttpRequest(body);
-            return parseOpenRouterResponse(rawResponse).textContent();
-        }, executor);
+        return sendAsync(body).thenApplyAsync(
+            raw -> parseOpenRouterResponse(raw).textContent(), queryExecutor);
     }
 
     // -----------------------------------------------------------------------
@@ -431,6 +452,18 @@ public class OpenRouterService {
         }
     }
 
+    private static final List<String> BANNED_PHRASES =
+        List.of("scan", "data", "results", "that's all", "hope that helps");
+
+    static String stripBannedPhrases(String text) {
+        if (text == null || text.isBlank()) return text == null ? "" : text.trim();
+        String result = text;
+        for (String phrase : BANNED_PHRASES) {
+            result = result.replaceAll("(?i)\\b" + Pattern.quote(phrase) + "\\b[.,!]?\\s*", " ");
+        }
+        return result.replaceAll("\\s{2,}", " ").trim();
+    }
+
     static String truncateToSentences(String text, int max) {
         if (text == null || text.isBlank()) return text == null ? "" : text.trim();
         text = text.trim();
@@ -457,7 +490,8 @@ public class OpenRouterService {
     public boolean isModelRetainsContext() { return modelRetainsContext; }
 
     public void shutdown() {
-        executor.shutdown();
+        initExecutor.shutdown();
+        queryExecutor.shutdown();
         instance = null;
     }
 }
