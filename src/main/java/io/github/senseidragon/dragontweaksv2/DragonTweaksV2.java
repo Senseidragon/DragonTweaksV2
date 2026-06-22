@@ -16,6 +16,7 @@ import io.github.senseidragon.dragontweaksv2.openrouter.OpenRouterService;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.neoforged.bus.api.IEventBus;
@@ -86,8 +87,19 @@ public class DragonTweaksV2 {
         LOGGER.info("DragonTweaks V2 common setup complete.");
     }
 
+    private static final String BUILD_TOOL_HINT =
+        "[DragonTweaks] This server has an AI advisor companion. To activate it, craft a " +
+        "Build Tool: 1 stone-type block (cobblestone, blackstone, etc.) + 2 sticks -- place " +
+        "the stone in the top-right slot of a crafting table, then a stick in the center slot " +
+        "and another in the bottom-left slot. Carry the Build Tool to start talking with your advisor.";
+
     @SubscribeEvent
     public void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
+        if (event.getEntity() instanceof ServerPlayer serverPlayer
+                && !AdvisorChatHandler.hasBuildTool(serverPlayer)) {
+            serverPlayer.sendSystemMessage(Component.literal(BUILD_TOOL_HINT));
+        }
+
         OpenRouterService service = OpenRouterService.getInstance();
         var server = event.getEntity().getServer();
         var uuid = event.getEntity().getUUID();

@@ -199,7 +199,7 @@ public class AdvisorChatHandler {
         scheduler.shutdown();
     }
 
-    private static boolean hasBuildTool(ServerPlayer player) {
+    public static boolean hasBuildTool(ServerPlayer player) {
         return player.getInventory().hasAnyMatching(stack ->
             !stack.isEmpty() && BUILD_TOOL.equals(BuiltInRegistries.ITEM.getKey(stack.getItem())));
     }
