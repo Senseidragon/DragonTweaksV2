@@ -74,7 +74,9 @@ passive/tadpole
 passive/tropical_fish
 passive/turtle
 structures/ancient_city
+structures/bastion_remnant
 structures/nether_fortress
+structures/nether_portal
 structures/pillager_outpost
 structures/ruined_portal
 structures/stronghold
@@ -86,3 +88,4 @@ effects/fire
 effects/hunger
 effects/poison
 effects/wither
+dimensions/nether

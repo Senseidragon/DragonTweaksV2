@@ -180,6 +180,43 @@ afterEvaluate {
     tasks.named('runServer') { dependsOn 'copyDevMods' }
 }
 
+// Promotes manifest-listed lore entries from the docs/minecraft-lore authoring tier into the
+// runtime-loaded resources tree (LoreIndex.java reads only the latter via classpath + manifest).
+// Run manually (./gradlew syncLoreFromDocs) after editing docs/minecraft-lore and updating
+// lore-manifest.txt -- not wired into build/test so CI and routine builds never silently rewrite
+// checked-in resource files. Manifest entries with no docs/minecraft-lore counterpart (e.g. the
+// effects/ category, authored directly in resources) are left untouched, not deleted or flagged as errors.
+tasks.register('syncLoreFromDocs') {
+    description = 'Copy manifest-listed lore entries from docs/minecraft-lore into src/main/resources/data/dragontweaksv2/lore'
+    group = 'documentation'
+
+    def manifestFile = file('src/main/resources/data/dragontweaksv2/lore/lore-manifest.txt')
+    def docsRoot = file('docs/minecraft-lore')
+    def resourcesRoot = file('src/main/resources/data/dragontweaksv2/lore')
+
+    inputs.file(manifestFile)
+    inputs.dir(docsRoot)
+    outputs.dir(resourcesRoot)
+
+    doLast {
+        def entries = manifestFile.readLines().collect { it.trim() }.findAll { it && !it.startsWith('#') }
+        int synced = 0
+        int skipped = 0
+        entries.each { entry ->
+            def src = new File(docsRoot, "${entry}.md")
+            if (src.exists()) {
+                def dest = new File(resourcesRoot, "${entry}.md")
+                dest.parentFile.mkdirs()
+                java.nio.file.Files.copy(src.toPath(), dest.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING)
+                synced++
+            } else {
+                skipped++
+            }
+        }
+        logger.lifecycle("syncLoreFromDocs: synced ${synced} entries from docs/minecraft-lore; ${skipped} manifest entries have no docs/ counterpart and were left untouched.")
+    }
+}
+
 tasks.withType(ProcessResources).configureEach {
     var replaceProperties = [
             minecraft_version      : minecraft_version,
