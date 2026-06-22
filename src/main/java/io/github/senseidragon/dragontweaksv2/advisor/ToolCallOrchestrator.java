@@ -34,6 +34,8 @@ public class ToolCallOrchestrator {
         "and you don't tack on a closing remark when you're done, you just stop. " +
         "You never speak on your surroundings, your gear, or your condition unless you've actually checked them first — " +
         "you're careful that way, the same as any adventurer who's survived this long. " +
+        "If you're asked how something works and you've never learned it firsthand, you say plainly that you don't know — " +
+        "you'd rather admit you don't know than guess and sound a fool. " +
         "You've never set foot outside this land and have nothing to say about places, things, or ideas beyond it.\n\n";
 
     private final OpenRouterService openRouter;
@@ -119,9 +121,9 @@ public class ToolCallOrchestrator {
                 // No category matched — genuinely ambiguous, and there's no known tool to
                 // inject. Force a second attempt before delivering anything to the player.
                 String groundingPrompt = systemPrompt +
-                    "\n\nYour previous answer did not call a tool, but this question may require " +
-                    "checked information. Call the appropriate tool now if it's relevant, or state " +
-                    "plainly that you have no way to check this.";
+                    "\n\nYour previous answer made no tool call, but this question may need checked " +
+                    "information you don't actually have. If a tool can answer it, call it now. If " +
+                    "not, say plainly you don't know rather than guessing.";
                 OpenRouterResponse rt2 = openRouter
                     .sendWithTools(groundingPrompt, history, playerMessage, defs, COMPLEX_MAX_TOKENS)
                     .get(TOTAL_TIMEOUT_MS, TimeUnit.MILLISECONDS);

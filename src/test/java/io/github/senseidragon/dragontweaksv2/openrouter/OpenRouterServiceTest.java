@@ -114,35 +114,6 @@ class OpenRouterServiceTest {
         assertFalse(service.isEnabled());
     }
 
-    // stripBannedPhrases
-
-    @Test
-    void stripsBannedMechanicWordFromResponse() {
-        assertEquals("I checked the area.", OpenRouterService.stripBannedPhrases("I checked the scan area."));
-    }
-
-    @Test
-    void stripsBannedClosingPhrase() {
-        String result = OpenRouterService.stripBannedPhrases("Stay alert. That's all.");
-        assertEquals("Stay alert.", result);
-    }
-
-    @Test
-    void leavesCleanResponseUnchanged() {
-        assertEquals("Stay alert out there.", OpenRouterService.stripBannedPhrases("Stay alert out there."));
-    }
-
-    @Test
-    void stripIsCaseInsensitive() {
-        assertEquals("I checked the area.", OpenRouterService.stripBannedPhrases("I checked the SCAN area."));
-    }
-
-    @Test
-    void stripDoesNotMangleWordsContainingBannedSubstring() {
-        // "scanner" contains "scan" but is a different word — word-boundary match must not touch it.
-        assertEquals("The scanner hums.", OpenRouterService.stripBannedPhrases("The scanner hums."));
-    }
-
     // -----------------------------------------------------------------------
     // Advisor token budget — default cap and per-call override
     // -----------------------------------------------------------------------
@@ -342,7 +313,7 @@ class OpenRouterServiceTest {
     }
 
     @Test
-    void repairBannedPhrasesIfNeededFallsBackToMechanicalStripWhenRephraseStillDirty() throws Exception {
+    void repairBannedPhrasesIfNeededDropsSentenceWhenRephraseStillDirty() throws Exception {
         String dirtySentence = "I did a scan of the area.";
         OpenRouterService service = buildServiceWithStubbedHttpSequence(
             textResponseJson("I performed another scan."));
@@ -350,13 +321,14 @@ class OpenRouterServiceTest {
         String result = service.repairBannedPhrasesIfNeeded(dirtySentence + " Nothing to report.")
             .get(5, TimeUnit.SECONDS);
 
-        String expectedFallback = OpenRouterService.stripBannedPhrases(dirtySentence);
-        assertEquals(expectedFallback + " Nothing to report.", result);
+        // The offending sentence is dropped outright rather than mechanically stripped --
+        // a missing sentence reads as brevity; a word-stripped one reads as broken grammar.
+        assertEquals("Nothing to report.", result);
         assertTrue(OpenRouterService.findBannedPhraseHits(result).isEmpty());
     }
 
     @Test
-    void repairBannedPhrasesIfNeededFallsBackToMechanicalStripOnRepairError() throws Exception {
+    void repairBannedPhrasesIfNeededDropsSentenceOnRepairError() throws Exception {
         String dirtySentence = "I did a scan of the area.";
         OpenRouterService service = buildServiceWithStubbedHttpSequence(
             new RuntimeException("network down"));
@@ -364,8 +336,20 @@ class OpenRouterServiceTest {
         String result = service.repairBannedPhrasesIfNeeded(dirtySentence + " Nothing to report.")
             .get(5, TimeUnit.SECONDS);
 
-        String expectedFallback = OpenRouterService.stripBannedPhrases(dirtySentence);
-        assertEquals(expectedFallback + " Nothing to report.", result);
+        assertEquals("Nothing to report.", result);
+    }
+
+    @Test
+    void repairBannedPhrasesIfNeededReturnsEmptyWhenWholeResponseIsUndrepairable() throws Exception {
+        // A single-sentence response that fails repair has nothing left to fall back to --
+        // the existing blank-response handling upstream (orchestrator/handler) takes it from here.
+        OpenRouterService service = buildServiceWithStubbedHttpSequence(
+            new RuntimeException("network down"));
+
+        String result = service.repairBannedPhrasesIfNeeded("I did a scan of the area.")
+            .get(5, TimeUnit.SECONDS);
+
+        assertEquals("", result);
     }
 
     @Test

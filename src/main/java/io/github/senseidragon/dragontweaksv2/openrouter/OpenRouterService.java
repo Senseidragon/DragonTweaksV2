@@ -511,19 +511,6 @@ public class OpenRouterService {
     private static final long REPAIR_TIMEOUT_MS = 5_000;
     private static final Pattern SENTENCE_SPLIT = Pattern.compile("(?<=[.!?])\\s+");
 
-    static String stripBannedPhrases(String text) {
-        if (text == null || text.isBlank()) return text == null ? "" : text.trim();
-        String result = text;
-        for (String phrase : BANNED_PHRASES) {
-            result = result.replaceAll("(?i)\\b" + Pattern.quote(phrase) + "\\b[.,!]?\\s*", " ");
-        }
-        String stripped = result.replaceAll("\\s{2,}", " ").trim();
-        if (!stripped.equals(text.trim())) {
-            LOGGER.info("[Advisor] stripBannedPhrases changed response text. before=\"{}\" after=\"{}\"", text, stripped);
-        }
-        return stripped;
-    }
-
     /** Returns the banned phrases (if any) literally present in {@code text}, word-boundary matched. */
     static List<String> findBannedPhraseHits(String text) {
         if (text == null || text.isBlank()) return List.of();
@@ -569,10 +556,11 @@ public class OpenRouterService {
     }
 
     /**
-     * Repairs banned phrases sentence-by-sentence via {@link #repairSentence}, falling back to a
-     * mechanical strip (limited to the offending sentence) on timeout, error, or a still-dirty
-     * rephrase. Clean text is returned unchanged with no extra calls. Must not be called on the
-     * Minecraft main/server/render thread.
+     * Repairs banned phrases sentence-by-sentence via {@link #repairSentence}. On timeout, error,
+     * or a still-dirty rephrase, the offending sentence is dropped entirely rather than mechanically
+     * stripped word-by-word -- a guaranteed-clean sentence fragment reads as broken grammar, while a
+     * missing sentence reads as brevity. Clean text is returned unchanged with no extra calls. Must
+     * not be called on the Minecraft main/server/render thread.
      */
     CompletableFuture<String> repairBannedPhrasesIfNeeded(String text) {
         if (text == null || text.isBlank() || findBannedPhraseHits(text).isEmpty()) {
@@ -589,12 +577,14 @@ public class OpenRouterService {
             }
             pieces.add(repairSentence(sentence, hits)
                 .orTimeout(REPAIR_TIMEOUT_MS, TimeUnit.MILLISECONDS)
-                .thenApply(rephrased -> findBannedPhraseHits(rephrased).isEmpty() ? rephrased : stripBannedPhrases(sentence))
-                .exceptionally(ex -> stripBannedPhrases(sentence)));
+                .thenApply(rephrased -> findBannedPhraseHits(rephrased).isEmpty() ? rephrased : "")
+                .exceptionally(ex -> ""));
         }
 
         return CompletableFuture.allOf(pieces.toArray(new CompletableFuture[0]))
-            .thenApply(v -> pieces.stream().map(CompletableFuture::join).collect(Collectors.joining(" ")));
+            .thenApply(v -> pieces.stream().map(CompletableFuture::join)
+                .filter(s -> !s.isBlank())
+                .collect(Collectors.joining(" ")));
     }
 
     public void disable() {
