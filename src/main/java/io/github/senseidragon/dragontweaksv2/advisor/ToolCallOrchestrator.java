@@ -22,6 +22,11 @@ public class ToolCallOrchestrator {
     static final long TOTAL_TIMEOUT_MS = 60_000;
     static final long TOOL_TIMEOUT_MS  = 10_000;
 
+    /** Raised completion budget for queries known upfront to need more headroom: no
+     *  deterministic category matched (free-form reasoning) or multiple tool results
+     *  are being synthesized in one turn. Sized once, proactively — no retry on failure. */
+    static final int COMPLEX_MAX_TOKENS = 1500;
+
     static final String PERSONA_BIO =
         "You are a seasoned adventurer who has spent years living in and surviving this land. " +
         "You speak plainly, from experience, the way someone talks while working — not the way someone lectures. " +
@@ -74,14 +79,18 @@ public class ToolCallOrchestrator {
             try {
                 String loreBlock = LoreIndex.inject(playerMessage);
                 String systemPrompt = buildSystemPrompt(loreBlock);
+                Optional<Category> category = classify(playerMessage);
 
                 List<ChatMessage> history = shouldIncludeHistory(playerMessage)
                     ? session.getMessages() : List.of();
 
                 List<JsonObject> defs = toolDefinitions();
 
-                OpenRouterResponse rt1 = openRouter
-                    .sendWithTools(systemPrompt, history, playerMessage, defs)
+                // No matched category means free-form reasoning with no deterministic
+                // grounding tool — give it more headroom upfront.
+                OpenRouterResponse rt1 = (category.isEmpty()
+                        ? openRouter.sendWithTools(systemPrompt, history, playerMessage, defs, COMPLEX_MAX_TOKENS)
+                        : openRouter.sendWithTools(systemPrompt, history, playerMessage, defs))
                     .get(TOTAL_TIMEOUT_MS, TimeUnit.MILLISECONDS);
 
                 if (rt1.hasToolCalls()) {
@@ -90,19 +99,31 @@ public class ToolCallOrchestrator {
                     return;
                 }
 
-                if (!isWorldStateRelevant(playerMessage)) {
+                if (category.isPresent() && !category.get().tools().isEmpty()) {
+                    // Known category with tool(s), but round 1 made no tool calls — don't ask
+                    // again and trust a freeform retry. Ground deterministically instead.
+                    List<ToolCall> forcedCalls = category.get().tools().stream()
+                        .map(toolName -> new ToolCall("forced-" + toolName, toolName, new JsonObject()))
+                        .collect(Collectors.toList());
+                    executeToolsAndDeliver(forcedCalls, playerMessage, systemPrompt, history, defs,
+                        player, session, responseCallback, executor, isOnline);
+                    return;
+                }
+
+                if (category.isPresent()) {
+                    // Chitchat: no tool to ground with — round 1's text is the answer.
                     deliverTextOnly(rt1.textContent(), playerMessage, session, responseCallback, isOnline);
                     return;
                 }
 
-                // World-state-relevant query, but round 1 made no tool calls — don't trust it
-                // un-vetted. Force a second attempt before delivering anything to the player.
+                // No category matched — genuinely ambiguous, and there's no known tool to
+                // inject. Force a second attempt before delivering anything to the player.
                 String groundingPrompt = systemPrompt +
                     "\n\nYour previous answer did not call a tool, but this question may require " +
                     "checked information. Call the appropriate tool now if it's relevant, or state " +
                     "plainly that you have no way to check this.";
                 OpenRouterResponse rt2 = openRouter
-                    .sendWithTools(groundingPrompt, history, playerMessage, defs)
+                    .sendWithTools(groundingPrompt, history, playerMessage, defs, COMPLEX_MAX_TOKENS)
                     .get(TOTAL_TIMEOUT_MS, TimeUnit.MILLISECONDS);
 
                 if (rt2.hasToolCalls()) {
@@ -153,28 +174,55 @@ public class ToolCallOrchestrator {
             return;
         }
 
-        String finalText = openRouter
-            .sendWithToolResults(systemPrompt, history, playerMessage, calls, results, defs)
+        // Synthesizing multiple tool results in one turn needs more headroom up front.
+        boolean complex = results.size() > 1;
+
+        String finalText = sendToolResults(systemPrompt, history, playerMessage, calls, results, defs, complex)
             .get(TOTAL_TIMEOUT_MS, TimeUnit.MILLISECONDS);
+
+        if (finalText == null || finalText.isBlank()) {
+            // The model occasionally returns an empty completion when synthesizing
+            // tool results into text. One retry before falling back to the "ask again" message.
+            finalText = sendToolResults(systemPrompt, history, playerMessage, calls, results, defs, complex)
+                .get(TOTAL_TIMEOUT_MS, TimeUnit.MILLISECONDS);
+        }
 
         deliverTextOnly(finalText, playerMessage, session, responseCallback, isOnline);
     }
 
-    private static final List<String> WORLD_STATE_SIGNALS = List.of(
-        "where", "what time", "weather", "biome", "inventory", "holding", "wearing",
-        "health", "effect", "nearby", "around me", "see", "creature", "threat"
-    );
-
-    private static final List<String> CHITCHAT_SIGNALS = List.of(
-        "hello", "hi", "hey", "thanks", "thank you", "bye", "goodbye", "lol"
-    );
+    private CompletableFuture<String> sendToolResults(String systemPrompt, List<ChatMessage> history,
+            String playerMessage, List<ToolCall> calls, List<ToolResult> results, List<JsonObject> defs,
+            boolean complex) {
+        return complex
+            ? openRouter.sendWithToolResults(systemPrompt, history, playerMessage, calls, results, defs,
+                COMPLEX_MAX_TOKENS)
+            : openRouter.sendWithToolResults(systemPrompt, history, playerMessage, calls, results, defs);
+    }
 
     // package-private for testing
-    boolean isWorldStateRelevant(String playerMessage) {
+    record Category(String name, List<String> signals, List<String> tools, boolean includeHistory) {}
+
+    private static final List<Category> CATEGORIES = List.of(
+        new Category("environment", List.of("what time", "weather", "biome"),
+            List.of("get_environment"), true),
+        new Category("inventory", List.of("inventory", "holding", "wearing", "what do i have"),
+            List.of("get_inventory"), false),
+        new Category("status", List.of("health", "effect", "how am i feeling"),
+            List.of("get_status"), true),
+        new Category("scan", List.of("creature", "threat", "scan"),
+            List.of("scan_area"), false),
+        new Category("location", List.of("where", "nearby", "around me", "see"),
+            List.of("get_environment", "scan_area"), false),
+        new Category("chitchat", List.of("hello", "hi", "hey", "thanks", "thank you", "bye", "goodbye", "lol"),
+            List.of(), true)
+    );
+
+    // package-private for testing — first matching category wins, in table order above
+    Optional<Category> classify(String playerMessage) {
         String lower = playerMessage.toLowerCase(Locale.ROOT);
-        if (WORLD_STATE_SIGNALS.stream().anyMatch(s -> containsWord(lower, s))) return true;
-        if (CHITCHAT_SIGNALS.stream().anyMatch(s -> containsWord(lower, s))) return false;
-        return true; // default: ground it when ambiguous
+        return CATEGORIES.stream()
+            .filter(c -> c.signals().stream().anyMatch(s -> containsWord(lower, s)))
+            .findFirst();
     }
 
     private static boolean containsWord(String lowerText, String phrase) {
@@ -190,11 +238,7 @@ public class ToolCallOrchestrator {
             lower.contains("what about") || lower.contains("tell me more")) {
             return true;
         }
-        if (lower.contains("what do i have") || lower.contains("scan") ||
-            lower.contains("what's around") || lower.contains("what is around")) {
-            return false;
-        }
-        return true;
+        return classify(playerMessage).map(Category::includeHistory).orElse(true);
     }
 
     List<JsonObject> toolDefinitions() {

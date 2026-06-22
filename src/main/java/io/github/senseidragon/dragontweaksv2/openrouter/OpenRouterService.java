@@ -26,15 +26,21 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class OpenRouterService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OpenRouterService.class);
     private static final String BASE_URL = "https://openrouter.ai/api/v1";
     private static final Gson GSON = new Gson();
+
+    /** Advisor dialogue completion budget. Must comfortably cover this reasoning model's
+     *  hidden chain-of-thought (observed 140-200 tokens) plus a full visible answer. */
+    static final int ADVISOR_MAX_TOKENS = 1000;
 
     private static volatile OpenRouterService instance;
 
@@ -201,7 +207,7 @@ public class OpenRouterService {
             messages.add(m);
         }
         body.add("messages", messages);
-        body.addProperty("max_tokens", 175);
+        body.addProperty("max_tokens", ADVISOR_MAX_TOKENS);
         HttpRequest request = HttpRequest.newBuilder()
             .uri(URI.create(BASE_URL + "/chat/completions"))
             .header("Authorization", "Bearer " + apiKey)
@@ -237,8 +243,13 @@ public class OpenRouterService {
     // Internal helpers
     // -----------------------------------------------------------------------
 
-    /** Builds a base request body with system prompt + history + a final user turn. */
+    /** Builds a base request body with system prompt + history + a final user turn, using the default advisor budget. */
     JsonObject buildRequestBody(String systemPrompt, List<ChatMessage> history, String userMessage) {
+        return buildRequestBody(systemPrompt, history, userMessage, ADVISOR_MAX_TOKENS);
+    }
+
+    /** Builds a base request body with an explicit completion token budget. */
+    JsonObject buildRequestBody(String systemPrompt, List<ChatMessage> history, String userMessage, int maxTokens) {
         JsonObject body = new JsonObject();
         body.addProperty("model", advisoryModelId);
         JsonArray messages = new JsonArray();
@@ -257,7 +268,7 @@ public class OpenRouterService {
         userMsg.addProperty("content", userMessage);
         messages.add(userMsg);
         body.add("messages", messages);
-        body.addProperty("max_tokens", 175);
+        body.addProperty("max_tokens", maxTokens);
         return body;
     }
 
@@ -321,7 +332,7 @@ public class OpenRouterService {
 
         JsonElement contentEl = message.get("content");
         String text = (contentEl != null && !contentEl.isJsonNull())
-            ? stripBannedPhrases(contentEl.getAsString().replaceAll("<\\|[^|]*\\|>", "").trim())
+            ? contentEl.getAsString().replaceAll("<\\|[^|]*\\|>", "").trim()
             : "";
         return new OpenRouterResponse(text, List.of());
     }
@@ -340,15 +351,34 @@ public class OpenRouterService {
             List<ChatMessage> history,
             String userMessage,
             List<JsonObject> toolDefinitions) {
+        return sendWithTools(systemPrompt, history, userMessage, toolDefinitions, ADVISOR_MAX_TOKENS);
+    }
 
-        JsonObject body = buildRequestBody(systemPrompt, history, userMessage);
+    /**
+     * Same as {@link #sendWithTools(String, List, String, List)} but with an explicit
+     * completion token budget, for callers that know upfront a query needs more headroom
+     * (e.g. no deterministic tool category matched, so the model must reason freely).
+     */
+    public CompletableFuture<OpenRouterResponse> sendWithTools(
+            String systemPrompt,
+            List<ChatMessage> history,
+            String userMessage,
+            List<JsonObject> toolDefinitions,
+            int maxTokens) {
+
+        JsonObject body = buildRequestBody(systemPrompt, history, userMessage, maxTokens);
         if (!toolDefinitions.isEmpty()) {
             JsonArray toolsArray = new JsonArray();
             toolDefinitions.forEach(toolsArray::add);
             body.add("tools", toolsArray);
             body.addProperty("tool_choice", "auto");
         }
-        return sendAsync(body).thenApplyAsync(raw -> parseOpenRouterResponse(raw), queryExecutor);
+        return sendAsync(body).thenComposeAsync(raw -> {
+            OpenRouterResponse parsed = parseOpenRouterResponse(raw);
+            if (parsed.hasToolCalls()) return CompletableFuture.completedFuture(parsed);
+            return repairBannedPhrasesIfNeeded(parsed.textContent())
+                .thenApply(repaired -> new OpenRouterResponse(repaired, List.of()));
+        }, queryExecutor);
     }
 
     /**
@@ -363,8 +393,25 @@ public class OpenRouterService {
             List<ToolCall> priorToolCalls,
             List<ToolResult> results,
             List<JsonObject> toolDefinitions) {
+        return sendWithToolResults(systemPrompt, history, userMessage, priorToolCalls, results, toolDefinitions,
+            ADVISOR_MAX_TOKENS);
+    }
 
-        JsonObject body = buildRequestBody(systemPrompt, history, userMessage);
+    /**
+     * Same as {@link #sendWithToolResults(String, List, String, List, List, List)} but with an
+     * explicit completion token budget, for callers that know upfront a query needs more
+     * headroom (e.g. synthesizing multiple tool results at once).
+     */
+    public CompletableFuture<String> sendWithToolResults(
+            String systemPrompt,
+            List<ChatMessage> history,
+            String userMessage,
+            List<ToolCall> priorToolCalls,
+            List<ToolResult> results,
+            List<JsonObject> toolDefinitions,
+            int maxTokens) {
+
+        JsonObject body = buildRequestBody(systemPrompt, history, userMessage, maxTokens);
         JsonArray messages = body.getAsJsonArray("messages");
 
         // Append assistant's tool-call message
@@ -400,8 +447,8 @@ public class OpenRouterService {
             body.add("tools", toolsArray);
         }
 
-        return sendAsync(body).thenApplyAsync(
-            raw -> parseOpenRouterResponse(raw).textContent(), queryExecutor);
+        return sendAsync(body).thenComposeAsync(
+            raw -> repairBannedPhrasesIfNeeded(parseOpenRouterResponse(raw).textContent()), queryExecutor);
     }
 
     // -----------------------------------------------------------------------
@@ -454,6 +501,8 @@ public class OpenRouterService {
 
     private static final List<String> BANNED_PHRASES =
         List.of("scan", "data", "results", "that's all", "hope that helps");
+    private static final long REPAIR_TIMEOUT_MS = 5_000;
+    private static final Pattern SENTENCE_SPLIT = Pattern.compile("(?<=[.!?])\\s+");
 
     static String stripBannedPhrases(String text) {
         if (text == null || text.isBlank()) return text == null ? "" : text.trim();
@@ -461,7 +510,84 @@ public class OpenRouterService {
         for (String phrase : BANNED_PHRASES) {
             result = result.replaceAll("(?i)\\b" + Pattern.quote(phrase) + "\\b[.,!]?\\s*", " ");
         }
-        return result.replaceAll("\\s{2,}", " ").trim();
+        String stripped = result.replaceAll("\\s{2,}", " ").trim();
+        if (!stripped.equals(text.trim())) {
+            LOGGER.info("[Advisor] stripBannedPhrases changed response text. before=\"{}\" after=\"{}\"", text, stripped);
+        }
+        return stripped;
+    }
+
+    /** Returns the banned phrases (if any) literally present in {@code text}, word-boundary matched. */
+    static List<String> findBannedPhraseHits(String text) {
+        if (text == null || text.isBlank()) return List.of();
+        List<String> hits = new ArrayList<>();
+        for (String phrase : BANNED_PHRASES) {
+            if (Pattern.compile("(?i)\\b" + Pattern.quote(phrase) + "\\b").matcher(text).find()) {
+                hits.add(phrase);
+            }
+        }
+        return hits;
+    }
+
+    /**
+     * Asks the model to rephrase a single sentence to remove specific banned words, with no
+     * system prompt, tools, or history — an isolated, minimal completion. Must not be called
+     * on the Minecraft main/server/render thread.
+     */
+    CompletableFuture<String> repairSentence(String sentence, List<String> hitPhrases) {
+        String prompt = "Rephrase the following sentence to remove these words while preserving its meaning and voice. " +
+            "Output only the rephrased sentence, nothing else. Words to remove: " +
+            String.join(", ", hitPhrases) + ". Sentence: \"" + sentence + "\"";
+
+        JsonObject body = new JsonObject();
+        body.addProperty("model", advisoryModelId);
+        JsonArray messages = new JsonArray();
+        JsonObject userMsg = new JsonObject();
+        userMsg.addProperty("role", "user");
+        userMsg.addProperty("content", prompt);
+        messages.add(userMsg);
+        body.add("messages", messages);
+        body.addProperty("max_tokens", 60);
+        body.addProperty("temperature", 0.3);
+
+        return sendAsync(body).thenApplyAsync(raw -> {
+            JsonObject root = JsonParser.parseString(raw).getAsJsonObject();
+            JsonElement contentEl = root.getAsJsonArray("choices")
+                .get(0).getAsJsonObject()
+                .getAsJsonObject("message")
+                .get("content");
+            if (contentEl == null || contentEl.isJsonNull()) return "";
+            return contentEl.getAsString().replaceAll("<\\|[^|]*\\|>", "").trim();
+        }, queryExecutor);
+    }
+
+    /**
+     * Repairs banned phrases sentence-by-sentence via {@link #repairSentence}, falling back to a
+     * mechanical strip (limited to the offending sentence) on timeout, error, or a still-dirty
+     * rephrase. Clean text is returned unchanged with no extra calls. Must not be called on the
+     * Minecraft main/server/render thread.
+     */
+    CompletableFuture<String> repairBannedPhrasesIfNeeded(String text) {
+        if (text == null || text.isBlank() || findBannedPhraseHits(text).isEmpty()) {
+            return CompletableFuture.completedFuture(text == null ? "" : text);
+        }
+
+        String[] sentences = SENTENCE_SPLIT.split(text.trim());
+        List<CompletableFuture<String>> pieces = new ArrayList<>();
+        for (String sentence : sentences) {
+            List<String> hits = findBannedPhraseHits(sentence);
+            if (hits.isEmpty()) {
+                pieces.add(CompletableFuture.completedFuture(sentence));
+                continue;
+            }
+            pieces.add(repairSentence(sentence, hits)
+                .orTimeout(REPAIR_TIMEOUT_MS, TimeUnit.MILLISECONDS)
+                .thenApply(rephrased -> findBannedPhraseHits(rephrased).isEmpty() ? rephrased : stripBannedPhrases(sentence))
+                .exceptionally(ex -> stripBannedPhrases(sentence)));
+        }
+
+        return CompletableFuture.allOf(pieces.toArray(new CompletableFuture[0]))
+            .thenApply(v -> pieces.stream().map(CompletableFuture::join).collect(Collectors.joining(" ")));
     }
 
     public void disable() {

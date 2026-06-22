@@ -67,63 +67,108 @@ class ToolCallOrchestratorTest {
         assertEquals(ToolCallOrchestrator.PERSONA_BIO, AdvisorChatHandler.SYSTEM_PROMPT);
     }
 
-    // ── world-state relevance tests — no player needed ────────────────────────
+    // ── classification table tests — no player needed ─────────────────────────
 
     @Test
-    void worldStateSignalRequiresGrounding() {
+    void classifiesEnvironmentSignalToSingleTool() {
         ToolCallOrchestrator orc = new ToolCallOrchestrator(null, List.of(), false);
-        assertTrue(orc.isWorldStateRelevant("where am i"));
-        assertTrue(orc.isWorldStateRelevant("what's the weather like"));
-        assertTrue(orc.isWorldStateRelevant("what creatures are nearby"));
+        var category = orc.classify("what's the weather like").orElseThrow();
+        assertEquals("environment", category.name());
+        assertEquals(List.of("get_environment"), category.tools());
     }
 
     @Test
-    void chitchatSignalSkipsGrounding() {
+    void classifiesLocationSignalToBothTools() {
         ToolCallOrchestrator orc = new ToolCallOrchestrator(null, List.of(), false);
-        assertFalse(orc.isWorldStateRelevant("hello there"));
-        assertFalse(orc.isWorldStateRelevant("hey, thanks for the help"));
+        var category = orc.classify("where am i").orElseThrow();
+        assertEquals("location", category.name());
+        assertEquals(List.of("get_environment", "scan_area"), category.tools());
     }
 
     @Test
-    void ambiguousQueryDefaultsToGrounding() {
+    void classifiesScanSignalAheadOfLocationWhenBothPresent() {
         ToolCallOrchestrator orc = new ToolCallOrchestrator(null, List.of(), false);
-        assertTrue(orc.isWorldStateRelevant("how do I make a sword?"));
+        // "creature" (scan) and "nearby" (location) both appear — scan wins, earlier in table order.
+        assertEquals("scan", orc.classify("is there a creature nearby").orElseThrow().name());
     }
 
-    // ── round-1 shortcut closure — handleQuery path tests ──────────────────────
+    @Test
+    void classifiesChitchatToNoTool() {
+        ToolCallOrchestrator orc = new ToolCallOrchestrator(null, List.of(), false);
+        var category = orc.classify("hello there").orElseThrow();
+        assertEquals("chitchat", category.name());
+        assertTrue(category.tools().isEmpty());
+    }
 
     @Test
-    void worldStateQueryWithNoToolCallForcesSecondAttempt() throws Exception {
+    void unmatchedQueryHasNoCategory() {
+        ToolCallOrchestrator orc = new ToolCallOrchestrator(null, List.of(), false);
+        assertTrue(orc.classify("how do I make a sword?").isEmpty());
+    }
+
+    // ── deterministic injection — handleQuery path tests ───────────────────────
+
+    @Test
+    void locationQueryWithNoToolCallForcesDeterministicInjection() throws Exception {
         ToolCallOrchestrator orc = new ToolCallOrchestrator(openRouter, List.of(), false);
         when(openRouter.sendWithTools(any(), any(), any(), any()))
-            .thenReturn(CompletableFuture.completedFuture(new OpenRouterResponse("It's a cavern.", List.of())))
+            .thenReturn(CompletableFuture.completedFuture(new OpenRouterResponse("It's a cavern.", List.of())));
+
+        List<List<ToolCall>> capturedCalls = new ArrayList<>();
+        doAnswer(inv -> {
+            capturedCalls.add(inv.getArgument(3));
+            return CompletableFuture.completedFuture("You're on the surface in a forest.");
+        }).when(openRouter).sendWithToolResults(any(), any(), any(), any(), any(), any(), eq(ToolCallOrchestrator.COMPLEX_MAX_TOKENS));
+
+        AdvisorSession session = new AdvisorSession(20);
+        List<String> delivered = new ArrayList<>();
+        orc.handleQuery("where am i", null, session, delivered::add, Runnable::run, () -> true)
+            .get(5, TimeUnit.SECONDS);
+
+        verify(openRouter, times(1)).sendWithTools(any(), any(), any(), any());
+        // Two forced tools (get_environment + scan_area) synthesized in one turn — uses the raised, complex budget.
+        verify(openRouter, times(1)).sendWithToolResults(any(), any(), any(), any(), any(), any(), eq(ToolCallOrchestrator.COMPLEX_MAX_TOKENS));
+        assertEquals(List.of("You're on the surface in a forest."), delivered);
+        assertEquals(1, capturedCalls.size());
+        assertEquals(List.of("get_environment", "scan_area"),
+            capturedCalls.get(0).stream().map(ToolCall::name).toList());
+    }
+
+    @Test
+    void ambiguousQueryWithNoToolCallRetriesOnceThenExecutesOfferedTool() throws Exception {
+        ToolCallOrchestrator orc = new ToolCallOrchestrator(openRouter, List.of(), false);
+        ToolCall call = new ToolCall("id1", "get_inventory", new JsonObject());
+        // No category matched ("how do I make a sword?") — both attempts go through the
+        // complex-budget overload since the model must reason freely with no grounding tool.
+        when(openRouter.sendWithTools(any(), any(), any(), any(), eq(ToolCallOrchestrator.COMPLEX_MAX_TOKENS)))
+            .thenReturn(CompletableFuture.completedFuture(new OpenRouterResponse("I'd use an anvil.", List.of())))
+            .thenReturn(CompletableFuture.completedFuture(new OpenRouterResponse(null, List.of(call))));
+        when(openRouter.sendWithToolResults(any(), any(), any(), any(), any(), any()))
+            .thenReturn(CompletableFuture.completedFuture("Check your inventory for an anvil."));
+
+        AdvisorSession session = new AdvisorSession(20);
+        List<String> delivered = new ArrayList<>();
+        orc.handleQuery("how do I make a sword?", null, session, delivered::add, Runnable::run, () -> true)
+            .get(5, TimeUnit.SECONDS);
+
+        verify(openRouter, times(2)).sendWithTools(any(), any(), any(), any(), eq(ToolCallOrchestrator.COMPLEX_MAX_TOKENS));
+        assertEquals(List.of("Check your inventory for an anvil."), delivered);
+    }
+
+    @Test
+    void ambiguousQueryWithNoToolCallOnEitherAttemptDeliversSecondAttemptText() throws Exception {
+        ToolCallOrchestrator orc = new ToolCallOrchestrator(openRouter, List.of(), false);
+        when(openRouter.sendWithTools(any(), any(), any(), any(), eq(ToolCallOrchestrator.COMPLEX_MAX_TOKENS)))
+            .thenReturn(CompletableFuture.completedFuture(new OpenRouterResponse("I'd use an anvil.", List.of())))
             .thenReturn(CompletableFuture.completedFuture(new OpenRouterResponse("I have no way to check that.", List.of())));
 
         AdvisorSession session = new AdvisorSession(20);
         List<String> delivered = new ArrayList<>();
-        orc.handleQuery("where am i", null, session, delivered::add, Runnable::run, () -> true)
+        orc.handleQuery("how do I make a sword?", null, session, delivered::add, Runnable::run, () -> true)
             .get(5, TimeUnit.SECONDS);
 
-        verify(openRouter, times(2)).sendWithTools(any(), any(), any(), any());
+        verify(openRouter, times(2)).sendWithTools(any(), any(), any(), any(), eq(ToolCallOrchestrator.COMPLEX_MAX_TOKENS));
         assertEquals(List.of("I have no way to check that."), delivered);
-    }
-
-    @Test
-    void worldStateQuerySelfCorrectsOnSecondAttempt() throws Exception {
-        ToolCallOrchestrator orc = new ToolCallOrchestrator(openRouter, List.of(), false);
-        ToolCall call = new ToolCall("id1", "get_environment", new JsonObject());
-        when(openRouter.sendWithTools(any(), any(), any(), any()))
-            .thenReturn(CompletableFuture.completedFuture(new OpenRouterResponse("It's a cavern.", List.of())))
-            .thenReturn(CompletableFuture.completedFuture(new OpenRouterResponse(null, List.of(call))));
-        when(openRouter.sendWithToolResults(any(), any(), any(), any(), any(), any()))
-            .thenReturn(CompletableFuture.completedFuture("You're on the surface in a forest."));
-
-        AdvisorSession session = new AdvisorSession(20);
-        List<String> delivered = new ArrayList<>();
-        orc.handleQuery("where am i", null, session, delivered::add, Runnable::run, () -> true)
-            .get(5, TimeUnit.SECONDS);
-
-        assertEquals(List.of("You're on the surface in a forest."), delivered);
     }
 
     @Test
@@ -190,7 +235,8 @@ class ToolCallOrchestratorTest {
         ToolCallOrchestrator orc = new ToolCallOrchestrator(openRouter, List.of(), false);
 
         ToolCall call = new ToolCall("id1", "unknown_tool", new JsonObject());
-        when(openRouter.sendWithTools(any(), any(), any(), any()))
+        // "do something" matches no category, so round 1 goes through the complex-budget overload.
+        when(openRouter.sendWithTools(any(), any(), any(), any(), eq(ToolCallOrchestrator.COMPLEX_MAX_TOKENS)))
             .thenReturn(CompletableFuture.completedFuture(new OpenRouterResponse(null, List.of(call))));
 
         List<ToolResult> capturedResults = new ArrayList<>();

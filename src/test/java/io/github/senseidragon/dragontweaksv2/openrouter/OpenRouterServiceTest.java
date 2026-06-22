@@ -1,7 +1,10 @@
 package io.github.senseidragon.dragontweaksv2.openrouter;
 
+import com.google.gson.JsonObject;
 import io.github.senseidragon.dragontweaksv2.advisor.ChatMessage;
 import io.github.senseidragon.dragontweaksv2.advisor.model.OpenRouterResponse;
+import io.github.senseidragon.dragontweaksv2.advisor.model.ToolCall;
+import io.github.senseidragon.dragontweaksv2.advisor.model.ToolResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -20,6 +23,9 @@ import java.util.concurrent.TimeUnit;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class OpenRouterServiceTest {
@@ -138,6 +144,55 @@ class OpenRouterServiceTest {
     }
 
     // -----------------------------------------------------------------------
+    // Advisor token budget — default cap and per-call override
+    // -----------------------------------------------------------------------
+
+    @Test
+    void buildRequestBodyDefaultsToRaisedAdvisorBudget() {
+        OpenRouterService service = new OpenRouterService(tempDir);
+        service.setModelIdsForTest("flavor-model", "advisory-model", "test-key");
+
+        JsonObject body = service.buildRequestBody("system", List.of(), "hello");
+
+        assertEquals(1000, body.get("max_tokens").getAsInt(),
+            "Reasoning model's hidden chain-of-thought shares this budget with the visible answer; " +
+                "175 was proven too low to reliably leave room for both.");
+    }
+
+    @Test
+    void buildRequestBodyHonorsExplicitMaxTokensOverride() {
+        OpenRouterService service = new OpenRouterService(tempDir);
+        service.setModelIdsForTest("flavor-model", "advisory-model", "test-key");
+
+        JsonObject body = service.buildRequestBody("system", List.of(), "hello", 1500);
+
+        assertEquals(1500, body.get("max_tokens").getAsInt());
+    }
+
+    @Test
+    void sendWithToolsExplicitMaxTokensOverloadStillParsesResponse() throws Exception {
+        OpenRouterService service = buildServiceWithStubbedHttp(textResponseJson("Here is my answer."));
+
+        OpenRouterResponse result = service.sendWithTools("system", List.of(), "hello", List.of(), 1500)
+            .get(5, TimeUnit.SECONDS);
+
+        assertEquals("Here is my answer.", result.textContent());
+    }
+
+    @Test
+    void sendWithToolResultsExplicitMaxTokensOverloadStillParsesResponse() throws Exception {
+        OpenRouterService service = buildServiceWithStubbedHttp(textResponseJson("Here is my answer."));
+        ToolCall call = new ToolCall("id1", "get_inventory", new JsonObject());
+        ToolResult toolResult = new ToolResult("id1", "Bread x5");
+
+        String result = service.sendWithToolResults("system", List.of(), "hello",
+                List.of(call), List.of(toolResult), List.of(), 1500)
+            .get(5, TimeUnit.SECONDS);
+
+        assertEquals("Here is my answer.", result);
+    }
+
+    // -----------------------------------------------------------------------
     // sendWithTools — HTTP stubbing tests
     // -----------------------------------------------------------------------
 
@@ -208,5 +263,190 @@ class OpenRouterServiceTest {
 
         assertTrue(result.hasToolCalls(), "Expected tool calls in the response");
         assertEquals("get_inventory", result.toolCalls().get(0).name());
+    }
+
+    // -----------------------------------------------------------------------
+    // Denylist repair loop — findBannedPhraseHits / repairBannedPhrasesIfNeeded
+    // -----------------------------------------------------------------------
+
+    private static String textResponseJson(String content) {
+        return """
+            {
+              "choices": [{
+                "message": { "role": "assistant", "content": "%s" },
+                "finish_reason": "stop"
+              }]
+            }
+            """.formatted(content.replace("\"", "\\\""));
+    }
+
+    @SuppressWarnings("unchecked")
+    private OpenRouterService buildServiceWithStubbedHttpSequence(Object... responses) throws Exception {
+        HttpClient fakeClient = mock(HttpClient.class);
+        List<CompletableFuture<HttpResponse<String>>> futures = new ArrayList<>();
+        for (Object response : responses) {
+            if (response instanceof Exception ex) {
+                CompletableFuture<HttpResponse<String>> failed = new CompletableFuture<>();
+                failed.completeExceptionally(ex);
+                futures.add(failed);
+            } else {
+                HttpResponse<String> fakeResponse = mock(HttpResponse.class);
+                when(fakeResponse.statusCode()).thenReturn(200);
+                when(fakeResponse.body()).thenReturn((String) response);
+                futures.add(CompletableFuture.completedFuture(fakeResponse));
+            }
+        }
+        CompletableFuture<HttpResponse<String>>[] rest =
+            futures.subList(1, futures.size()).toArray(new CompletableFuture[0]);
+        when(fakeClient.sendAsync(any(HttpRequest.class), any(HttpResponse.BodyHandler.class)))
+            .thenReturn(futures.get(0), rest);
+
+        OpenRouterService service = new OpenRouterService(tempDir, fakeClient);
+        service.setModelIdsForTest("flavor-model", "advisory-model", "test-key");
+        return service;
+    }
+
+    @Test
+    void findBannedPhraseHitsDetectsBannedWords() {
+        assertEquals(List.of("scan"), OpenRouterService.findBannedPhraseHits("I did a scan of the area."));
+        assertEquals(List.of("data", "results"),
+            OpenRouterService.findBannedPhraseHits("Here is the data and results."));
+    }
+
+    @Test
+    void findBannedPhraseHitsReturnsEmptyForCleanText() {
+        assertTrue(OpenRouterService.findBannedPhraseHits("Stay alert out there.").isEmpty());
+    }
+
+    @Test
+    void repairBannedPhrasesIfNeededLeavesCleanTextUnchangedWithNoHttpCalls() throws Exception {
+        HttpClient fakeClient = mock(HttpClient.class);
+        OpenRouterService service = new OpenRouterService(tempDir, fakeClient);
+        service.setModelIdsForTest("flavor-model", "advisory-model", "test-key");
+
+        String result = service.repairBannedPhrasesIfNeeded("Stay alert out there.").get(5, TimeUnit.SECONDS);
+
+        assertEquals("Stay alert out there.", result);
+        verify(fakeClient, never()).sendAsync(any(), any());
+    }
+
+    @Test
+    void repairBannedPhrasesIfNeededRepairsOffendingSentenceOnly() throws Exception {
+        OpenRouterService service = buildServiceWithStubbedHttpSequence(
+            textResponseJson("I looked over the area."));
+
+        String result = service.repairBannedPhrasesIfNeeded("I did a scan of the area. Nothing to report.")
+            .get(5, TimeUnit.SECONDS);
+
+        assertEquals("I looked over the area. Nothing to report.", result);
+    }
+
+    @Test
+    void repairBannedPhrasesIfNeededFallsBackToMechanicalStripWhenRephraseStillDirty() throws Exception {
+        String dirtySentence = "I did a scan of the area.";
+        OpenRouterService service = buildServiceWithStubbedHttpSequence(
+            textResponseJson("I performed another scan."));
+
+        String result = service.repairBannedPhrasesIfNeeded(dirtySentence + " Nothing to report.")
+            .get(5, TimeUnit.SECONDS);
+
+        String expectedFallback = OpenRouterService.stripBannedPhrases(dirtySentence);
+        assertEquals(expectedFallback + " Nothing to report.", result);
+        assertTrue(OpenRouterService.findBannedPhraseHits(result).isEmpty());
+    }
+
+    @Test
+    void repairBannedPhrasesIfNeededFallsBackToMechanicalStripOnRepairError() throws Exception {
+        String dirtySentence = "I did a scan of the area.";
+        OpenRouterService service = buildServiceWithStubbedHttpSequence(
+            new RuntimeException("network down"));
+
+        String result = service.repairBannedPhrasesIfNeeded(dirtySentence + " Nothing to report.")
+            .get(5, TimeUnit.SECONDS);
+
+        String expectedFallback = OpenRouterService.stripBannedPhrases(dirtySentence);
+        assertEquals(expectedFallback + " Nothing to report.", result);
+    }
+
+    @Test
+    void repairBannedPhrasesIfNeededRepairsMultipleOffendingSentencesIndependently() throws Exception {
+        OpenRouterService service = buildServiceWithStubbedHttpSequence(
+            textResponseJson("I looked over the area."),
+            textResponseJson("Here is what I found."));
+
+        String result = service.repairBannedPhrasesIfNeeded(
+                "I did a scan of the area. Here is the data.")
+            .get(5, TimeUnit.SECONDS);
+
+        assertEquals("I looked over the area. Here is what I found.", result);
+    }
+
+    // -----------------------------------------------------------------------
+    // Denylist repair loop — full pipeline (sendWithTools / sendWithToolResults)
+    // -----------------------------------------------------------------------
+
+    @Test
+    void sendWithToolsAppliesRepairToOffendingSentenceOnly() throws Exception {
+        OpenRouterService service = buildServiceWithStubbedHttpSequence(
+            textResponseJson("I did a scan of the area. Nothing to report."),
+            textResponseJson("I looked over the area."));
+
+        OpenRouterResponse result = service.sendWithTools("system", List.of(), "hello", List.of())
+            .get(5, TimeUnit.SECONDS);
+
+        assertFalse(result.hasToolCalls());
+        assertEquals("I looked over the area. Nothing to report.", result.textContent());
+    }
+
+    @Test
+    void sendWithToolsSkipsRepairWhenToolCallsPresent() throws Exception {
+        String toolCallResponse = """
+            {
+              "choices": [{
+                "message": {
+                  "role": "assistant",
+                  "content": null,
+                  "tool_calls": [{
+                    "id": "call_abc123",
+                    "type": "function",
+                    "function": { "name": "get_inventory", "arguments": "{}" }
+                  }]
+                },
+                "finish_reason": "tool_calls"
+              }]
+            }
+            """;
+        HttpResponse<String> fakeResponse = mock(HttpResponse.class);
+        when(fakeResponse.statusCode()).thenReturn(200);
+        when(fakeResponse.body()).thenReturn(toolCallResponse);
+
+        HttpClient fakeClient = mock(HttpClient.class);
+        when(fakeClient.sendAsync(any(HttpRequest.class), any(HttpResponse.BodyHandler.class)))
+            .thenReturn(CompletableFuture.completedFuture(fakeResponse));
+
+        OpenRouterService service = new OpenRouterService(tempDir, fakeClient);
+        service.setModelIdsForTest("flavor-model", "advisory-model", "test-key");
+
+        OpenRouterResponse result = service.sendWithTools("system", List.of(), "hello", List.of())
+            .get(5, TimeUnit.SECONDS);
+
+        assertTrue(result.hasToolCalls());
+        verify(fakeClient, times(1)).sendAsync(any(), any());
+    }
+
+    @Test
+    void sendWithToolResultsAppliesRepairToFinalText() throws Exception {
+        OpenRouterService service = buildServiceWithStubbedHttpSequence(
+            textResponseJson("I did a scan of the area. Nothing to report."),
+            textResponseJson("I looked over the area."));
+
+        ToolCall call = new ToolCall("id1", "get_inventory", new JsonObject());
+        ToolResult toolResult = new ToolResult("id1", "Bread x5");
+
+        String result = service.sendWithToolResults("system", List.of(), "hello",
+                List.of(call), List.of(toolResult), List.of())
+            .get(5, TimeUnit.SECONDS);
+
+        assertEquals("I looked over the area. Nothing to report.", result);
     }
 }
