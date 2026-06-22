@@ -312,9 +312,8 @@ public class OpenRouterService {
     /** Parses a raw OpenRouter completion response into an {@link OpenRouterResponse}. */
     private OpenRouterResponse parseOpenRouterResponse(String rawJson) {
         JsonObject root = JsonParser.parseString(rawJson).getAsJsonObject();
-        JsonObject message = root.getAsJsonArray("choices")
-            .get(0).getAsJsonObject()
-            .getAsJsonObject("message");
+        JsonObject choice = root.getAsJsonArray("choices").get(0).getAsJsonObject();
+        JsonObject message = choice.getAsJsonObject("message");
 
         JsonElement toolCallsEl = message.get("tool_calls");
         if (toolCallsEl != null && !toolCallsEl.isJsonNull()) {
@@ -328,6 +327,14 @@ public class OpenRouterService {
                 calls.add(new ToolCall(id, name, args));
             }
             return new OpenRouterResponse(null, calls);
+        }
+
+        JsonElement finishReasonEl = choice.get("finish_reason");
+        String finishReason = (finishReasonEl != null && !finishReasonEl.isJsonNull())
+            ? finishReasonEl.getAsString() : "unknown";
+        if ("length".equals(finishReason)) {
+            LOGGER.warn("[Advisor] response truncated by max_tokens. model={}, finish_reason={}, usage={}",
+                advisoryModelId, finishReason, root.has("usage") ? root.get("usage") : "absent");
         }
 
         JsonElement contentEl = message.get("content");
