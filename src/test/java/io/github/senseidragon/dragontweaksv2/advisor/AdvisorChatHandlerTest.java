@@ -12,10 +12,13 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -33,6 +36,7 @@ class AdvisorChatHandlerTest {
         savedData = new AdvisorSavedData(5);
         handler = new AdvisorChatHandler(
             openRouter,
+            null,              // orchestrator — tests exercise the fallback queryAsync path
             overworld -> savedData,
             (p, l) -> "context",
             Executors.newScheduledThreadPool(1),
@@ -50,7 +54,8 @@ class AdvisorChatHandlerTest {
             cancelEvent,
             deliver,
             dispatch,
-            () -> true
+            () -> true,
+            null  // ServerPlayer — not used by the fallback queryAsync path
         );
     }
 
@@ -129,6 +134,72 @@ class AdvisorChatHandlerTest {
         when(openRouter.queryAsync(any(), any())).thenReturn(new CompletableFuture<>());
         invokeHandleChat("Dragon", playerId, "hello", () -> {}, msg -> {}, Runnable::run);
         verify(openRouter).queryAsync(argThat(prompt -> prompt.contains("test context")), any());
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    void timeoutDoesNotDisableOpenRouter() {
+        ScheduledExecutorService mockScheduler = mock(ScheduledExecutorService.class);
+        ScheduledFuture<?> mockFuture = mock(ScheduledFuture.class);
+        List<Runnable> scheduled = new ArrayList<>();
+        doAnswer(inv -> { scheduled.add(inv.getArgument(0)); return mockFuture; })
+            .when(mockScheduler).schedule(any(Runnable.class), anyLong(), any());
+
+        AdvisorChatHandler h = new AdvisorChatHandler(
+            openRouter, null,
+            overworld -> savedData,
+            (p, l) -> "context",
+            mockScheduler,
+            p -> true
+        );
+
+        when(openRouter.queryAsync(any(), any())).thenReturn(new CompletableFuture<>());
+
+        List<String> messages = new ArrayList<>();
+        h.handleChat("Dragon", playerId, "hello",
+            () -> "context", () -> savedData,
+            () -> {}, messages::add,
+            Runnable::run, () -> true, null);
+
+        // Three schedules in order: 5s ("Hmm..."), 10s ("How should I..."), 60s (timeout)
+        assertEquals(3, scheduled.size(), "expected exactly 3 scheduled tasks");
+        scheduled.get(2).run();  // fire the 60s timeout lambda
+
+        verify(openRouter, never()).disable();
+        assertTrue(messages.stream().anyMatch(m -> m.contains("Brain fart")),
+            "fallback message should be delivered on timeout");
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    void withOrchestrator_handlerDoesNotSchedule60sTimeout() {
+        ScheduledExecutorService mockScheduler = mock(ScheduledExecutorService.class);
+        ScheduledFuture<?> mockFuture = mock(ScheduledFuture.class);
+        List<Long> scheduledDelays = new ArrayList<>();
+        doAnswer(inv -> { scheduledDelays.add(inv.getArgument(1)); return mockFuture; })
+            .when(mockScheduler).schedule(any(Runnable.class), anyLong(), any());
+
+        ToolCallOrchestrator mockOrchestrator = mock(ToolCallOrchestrator.class);
+        when(mockOrchestrator.handleQuery(any(), any(), any(), any()))
+            .thenReturn(new CompletableFuture<>());
+
+        AdvisorChatHandler h = new AdvisorChatHandler(
+            openRouter, mockOrchestrator,
+            overworld -> savedData,
+            (p, l) -> "context",
+            mockScheduler,
+            p -> true
+        );
+
+        h.handleChat("Dragon", playerId, "hello",
+            () -> "context", () -> savedData,
+            () -> {}, msg -> {},
+            Runnable::run, () -> true, null);
+
+        assertEquals(2, scheduledDelays.size(),
+            "orchestrator path must schedule only 5s and 10s thinking messages, not the 60s timeout");
+        assertTrue(scheduledDelays.stream().noneMatch(d -> d == 60L),
+            "60s timeout must not be scheduled in handler when orchestrator owns it");
     }
 
     // Helper alias to avoid Consumer<String> import conflict in tests

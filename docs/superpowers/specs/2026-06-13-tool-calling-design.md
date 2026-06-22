@@ -1,9 +1,10 @@
 # Advisor Tool-Calling — Design Spec
 
 **Date:** 2026-06-13
+**Implemented:** 2026-06-14
 **Mod:** DragonTweaksV2 (NeoForge 1.21.1)
 **Branch:** advisor
-**Status:** Brainstorm complete — pending user spec review. Not yet approved for implementation.
+**Status:** Implemented and extended (2026-06-15). `./gradlew test` — 83 tests, 0 failures.
 
 ---
 
@@ -22,7 +23,9 @@ Replace the current "push all context upfront" approach with tool-calling: the m
 | `ToolCallOrchestrator` | 2-round-trip protocol, tool definitions, history inclusion decision, `modelRetainsContext` flag, lore lookup integration |
 | `AdvisorTool` | Interface: `name()`, `definition()` (JSON schema), `execute(args, player)` → `String` |
 | `InventoryTool` | Implements `get_inventory()` |
-| `ScanAreaTool` | Implements `scan_area(radius, depth, detectOres)` |
+| `EnvironmentTool` | Implements `get_environment()` — time, day, weather, biome, elevation relative to Y=63 |
+| `StatusTool` | Implements `get_status()` — active detrimental effects with duration in seconds |
+| `ScanAreaTool` | Implements `scan_area(radius, depth, passives, neutrals, hostiles, aggro, detectOres)` |
 | `LoreIndex` | Loads lore from classpath at mod startup; keyword index; `query(String)` → `List<String>` |
 | `AdvisorStatusMonitor` | NeoForge event handler for effect-applied events; circuit breaker; self-disable on spam |
 
@@ -84,7 +87,7 @@ keywords: [enderman, endermen, ender]
 
 ### LoreIndex
 
-Loaded at mod startup from the classpath. Builds a keyword → content map. Exposes `query(String playerMessage) → List<String>` which tokenizes the input and returns matching lore file contents.
+Loaded at mod startup from the classpath. Builds a keyword → content map. Exposes `inject(String playerMessage) → String` (static method) which word-boundary-matches the input against lore filenames and returns matching lore content concatenated as a prompt-ready block. Returns empty string on no match. (Spec originally said `query() → List<String>`; implemented as `inject() → String` for direct insertion.)
 
 ### Lookup step
 
@@ -116,15 +119,31 @@ No parameters.
 
 ---
 
-### `scan_area(radius, depth, detectOres)`
+### `get_environment()`
+
+No parameters. Returns: time of day, day number, weather (clear/raining/thunderstorm), biome, elevation relative to Y=63 (sea level).
+
+---
+
+### `get_status()`
+
+No parameters. Returns active detrimental `MobEffect` entries with name and remaining duration in seconds. Returns "No active detrimental effects." if none present. Included in tool list unconditionally; model is guided to call it only when relevant.
+
+---
+
+### `scan_area(radius, depth, passives, neutrals, hostiles, aggro, detectOres)`
 
 **Parameters:**
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `radius` | int | standard visibility range | Block radius from advisor entity position |
+| `radius` | int | 16 | Block radius from advisor entity position |
 | `depth` | int | 4 | Y levels to scan, starting at player Y+3 downward |
-| `detectOres` | boolean | false | Whether to report ore presence in detected voids |
+| `passives` | boolean | true | Include passive/animal entities |
+| `neutrals` | boolean | true | Include neutral entities (wolves, endermen, piglins) |
+| `hostiles` | boolean | true | Include hostile mob entities |
+| `aggro` | boolean | true | Include entities currently targeting the player |
+| `detectOres` | boolean | false | Report ore types on exposed void surfaces (deferred) |
 
 **Y range:** player Y+3 − depth to player Y+3. Default (depth 4) = surface scan. Depth 10 = Y+3 to Y-7.
 
@@ -177,16 +196,15 @@ AABB query against entity chunk entity lists. No block iteration.
 
 ---
 
-## System Prompt — Proactive Tool Guidance
+## System Prompt — Tool Guidance
 
-The system prompt includes explicit behavioral instructions telling the model when to call `get_inventory()` proactively, regardless of what the player asked:
+**Framing (revised 2026-06-15):** The model is told it has **no innate knowledge** of the player's world state. All location, weather, biome, entities, inventory, and status data are unknown until retrieved via tool. The prior approach (listing when to call tools) failed — the model used Minecraft training knowledge to hallucinate answers instead of calling tools.
 
-> "You have access to the player's inventory. Call `get_inventory()` proactively when:
-> - The player has an active detrimental status effect that an item could cure or prevent
-> - The player's hunger state is Hungry, Very Hungry, or Starving — check for consumables and advise based on quality (rotten flesh can be eaten but is not advisable)
-> - The player's query involves a threat, hostile mob, or dangerous situation where specific items would matter
->
-> In all cases: if the player has the relevant item, tell them. If not, suggest acquiring it."
+Current prompt framing:
+
+> "CRITICAL: You have no innate knowledge of the player's current world state. Location, biome, weather, time of day, nearby entities, inventory contents, and active effects are ALL unknown to you until retrieved via a tool call. Any answer you give about the world without first calling a tool will be wrong. Do not say things like 'you're in a cavern', 'it looks like night', or 'you have a sword' — these require a tool call first."
+
+Each tool is then listed with a one-line description of when to call it. Validated via `EnvironmentToolSimulationTest` — model correctly calls `get_environment` for "where am i" and returns accurate data rather than hallucinating.
 
 ---
 
@@ -360,12 +378,19 @@ Testing is organized into three tiers by what runtime environment each requires.
 
 No Minecraft environment needed. `OpenRouterService` and tool dispatch are mocked. `ToolCallOrchestrator` is tested against fake `AdvisorTool` implementations returning canned strings.
 
-| Class | Coverage |
+**NeoForge bootstrap constraint:** `ServerPlayer`, `MinecraftServer`, and `PlayerList` cannot be mocked via Mockito in a NeoForge unit test — loading `ServerPlayer`'s class hierarchy triggers `BuiltInRegistries.<clinit>` which calls `Bootstrap.checkBootstrapCalled()` and fails. `Bootstrap.bootStrap()` itself also fails in the NeoForge unit test environment (NPE / `FeatureFlagLoader` resource error). As a result:
+
+- `ToolCallOrchestrator` has a package-private `handleQuery` overload accepting `Consumer<Runnable> executor` and `BooleanSupplier isOnline` instead of deriving those from `ServerPlayer`. Tests pass `Runnable::run` and `() -> true/false`. The `ServerPlayer` argument is `null`; fake tools in tests ignore it.
+- `AdvisorStatusMonitor` testable methods take `UUID`, `String playerName`, `Consumer<String> messageSender`, and `ServerPlayer playerRef` (null in tests) instead of a `ServerPlayer`. Event handlers extract these from the real player at the NeoForge event layer before delegating.
+
+| Class | Actual coverage (implemented) |
 |---|---|
 | `LoreIndex` | Classpath loading; keyword tokenization; single/multi-keyword match; no-match returns empty; case-insensitive matching |
-| `ToolCallOrchestrator` | Text-only response path (no tool calls); tool-call path (round trip 1 → dispatch → round trip 2); history inclusion decision — follow-up signals → include, pure state query → suppress, default → include; parallel tool dispatch order-independence; disconnect check between round trips; tool failure → structured error string; unrecognized tool name → `[Unknown tool: x]`; malformed parse exception → treated as tool failure; round trip 2 timeout → fallback message sent to player |
-| `AdvisorStatusMonitor` | Effect applied → notification fires; same effect not re-notified while still active; effect removed → flag clears → re-notified on reapply; multiple simultaneous effects → one consolidated message; circuit breaker fires at threshold; sends one in-game message then stops; all other advisor functionality continues after circuit breaker |
+| `ToolCallOrchestrator` | Text-only response path; tool-call round-trip path; history inclusion — follow-up signals → include, pure state query → suppress, default → include; disconnect between round trips → response discarded; unrecognized tool name → `[Unknown tool: x]` |
+| `AdvisorStatusMonitor` | Effect applied → notification fires; same effect not re-fired while active; effect removed → flag clears; circuit breaker fires at threshold (atMost 5 of 6 calls reach orchestrator); non-detrimental effect ignored |
 | Capability probe | Apple-reference response → `modelRetainsContext = true`; non-reference response → `false` |
+
+**Not unit-tested (require game runtime):** parallel tool dispatch order, tool execution failure path, malformed parse exception, round-trip-2 timeout path, multiple simultaneous effects, re-notification after reapplication.
 
 ### Tier 2 — Game tests (`runGameTestServer`)
 

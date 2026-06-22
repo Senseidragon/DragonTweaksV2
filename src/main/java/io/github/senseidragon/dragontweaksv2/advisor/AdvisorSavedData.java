@@ -25,6 +25,11 @@ public class AdvisorSavedData extends SavedData {
         return sessions.computeIfAbsent(playerUuid, id -> new AdvisorSession(historyCap));
     }
 
+    public void clearSession(UUID playerUuid) {
+        sessions.remove(playerUuid);
+        setDirty();
+    }
+
     @Override
     public CompoundTag save(CompoundTag tag, HolderLookup.Provider registries) {
         CompoundTag sessionsTag = new CompoundTag();
