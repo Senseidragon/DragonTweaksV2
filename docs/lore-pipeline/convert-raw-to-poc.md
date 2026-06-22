@@ -2,7 +2,7 @@
 
 ## Overview
 
-Starting point: a raw firecrawl JSON file in `docs/<mob>-raw.md`
+Starting point: a raw firecrawl JSON file in `docs/lore-pipeline/<mob>-raw.md`
 End point: a distilled advisor fact block at `.memsearch/memory/domains/minecraft/candidates/extracted/<Mob>.mc`, fully ready for validation
 
 ---
@@ -19,7 +19,7 @@ excludeTags: ["img", "script", "style", "nav", "footer", "table.navbox", ".mw-ed
 removeBase64Images: true
 ```
 
-Write the raw JSON output verbatim to `docs/<mob>-raw.md`.
+Write the raw JSON output verbatim to `docs/lore-pipeline/<mob>-raw.md`.
 
 ### Follow relevant links — mandatory
 
@@ -31,7 +31,7 @@ After scraping the main page, identify and also scrape the pages of any mobs or 
 2. **Use this mob as food, lure, bait, or currency** — e.g. axolotls are bred with buckets of tropical fish; that fact lives on the Axolotl page, not the Tropical Fish page
 3. **Are explicitly cross-referenced in the main page's Behavior or See Also sections** as ecological partners or competitors
 
-For each related page scraped, extract only the sentences or paragraphs that refer back to the current mob. Append these as a `## Cross-References` section at the bottom of `docs/<mob>-raw.md` before proceeding to Step 2.
+For each related page scraped, extract only the sentences or paragraphs that refer back to the current mob. Append these as a `## Cross-References` section at the bottom of `docs/lore-pipeline/<mob>-raw.md` before proceeding to Step 2.
 
 The clean file and advisor artifact must reflect this combined data — not just the main page alone.
 
@@ -52,7 +52,7 @@ The `wikitable` CSS class exists on all wiki tables, but excluding it would remo
 Run the cleaning script:
 
 ```
-PYTHONUTF8=1 python3 scripts/clean-wiki-scrape.py docs/<mob>-raw.md docs/<mob>-clean.md
+PYTHONUTF8=1 python3 scripts/clean-wiki-scrape.py docs/lore-pipeline/<mob>-raw.md docs/lore-pipeline/<mob>-clean.md
 ```
 
 The script handles:
@@ -215,6 +215,6 @@ Do not iterate after this step. One evaluation pass, then the file is done.
 
 | File | Purpose | Target size |
 |------|---------|-------------|
-| `docs/<mob>-raw.md` | Verbatim firecrawl output | ~100k chars |
-| `docs/<mob>-clean.md` | Cleaned, BE-stripped, noise-stripped | ~6–12k chars |
+| `docs/lore-pipeline/<mob>-raw.md` | Verbatim firecrawl output | ~100k chars |
+| `docs/lore-pipeline/<mob>-clean.md` | Cleaned, BE-stripped, noise-stripped | ~6–12k chars |
 | `.memsearch/memory/domains/minecraft/candidates/extracted/<Mob>.md` | Advisor fact block, validation-ready candidate | ~2,000–5,000 chars |

@@ -1,5 +1,7 @@
 # Assistant Roles
 
+> **Superseded.** `#a`/`#f` persona-prefix routing is abandoned. Persona content now lives in `AdvisorChatHandler.SYSTEM_PROMPT`, defined in `docs/superpowers/specs/2026-06-20-advisor-persona-grounding-design.md`. Kept here for historical reference.
+
 ## Role 1: Advisor (`#a`)
 
 **Model:** Cheapest available advisor (reasoning) model  
