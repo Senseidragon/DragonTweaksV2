@@ -1,0 +1,12 @@
+{
+  "host": "0.0.0.0",
+  "port": 8000,
+  "sandbox_root": "./sandbox",
+  "bearer_token": "REPLACE_WITH_STRONG_SECRET_TOKEN",
+  "max_read_bytes": 524288,
+  "max_write_bytes": 524288,
+  "allowed_extensions": [".txt", ".md", ".json", ".csv", ".log"],
+  "use_tls": false,
+  "cert_file": "",
+  "key_file": ""
+}

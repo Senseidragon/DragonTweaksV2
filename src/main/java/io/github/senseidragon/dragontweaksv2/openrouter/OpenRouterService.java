@@ -338,9 +338,11 @@ public class OpenRouterService {
         }
 
         JsonElement contentEl = message.get("content");
-        String text = (contentEl != null && !contentEl.isJsonNull())
-            ? contentEl.getAsString().replaceAll("<\\|[^|]*\\|>", "").trim()
-            : "";
+        String rawContent = (contentEl != null && !contentEl.isJsonNull()) ? contentEl.getAsString() : "";
+        if (!rawContent.isBlank()) {
+            LOGGER.info("[Advisor] raw response content (pre-strip): \"{}\"", rawContent);
+        }
+        String text = rawContent.replaceAll("<\\|[^|]*\\|>", "").trim();
         return new OpenRouterResponse(text, List.of());
     }
 

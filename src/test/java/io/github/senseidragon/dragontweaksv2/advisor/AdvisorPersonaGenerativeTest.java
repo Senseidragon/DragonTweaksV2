@@ -19,6 +19,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Predicate;
@@ -83,11 +86,32 @@ class AdvisorPersonaGenerativeTest {
         assumeTrue(service.isEnabled(), "Skipping — OpenRouter failed to enable");
 
         Random random = new Random();
-        for (Intent intent : INTENTS) {
-            for (int i = 0; i < TRIALS_PER_INTENT; i++) {
-                String question = intent.paraphrases().get(random.nextInt(intent.paraphrases().size()));
-                results.add(runTrial(intent, question, random));
+        int trialCount = INTENTS.size() * TRIALS_PER_INTENT;
+
+        // Each trial is independent (its own tools/orchestrator/session) and makes two
+        // live API round-trips internally. Running them concurrently instead of in a
+        // sequential loop turns ~trialCount sequential round-trips into one wait for the
+        // slowest trial -- this is what actually drives wall-clock time, not test count.
+        ExecutorService trialExecutor = Executors.newFixedThreadPool(trialCount);
+        try {
+            List<CompletableFuture<TrialResult>> futures = new ArrayList<>();
+            for (Intent intent : INTENTS) {
+                for (int i = 0; i < TRIALS_PER_INTENT; i++) {
+                    String question = intent.paraphrases().get(random.nextInt(intent.paraphrases().size()));
+                    futures.add(CompletableFuture.supplyAsync(() -> {
+                        try {
+                            return runTrial(intent, question, random);
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    }, trialExecutor));
+                }
             }
+            for (CompletableFuture<TrialResult> future : futures) {
+                results.add(future.get());
+            }
+        } finally {
+            trialExecutor.shutdown();
         }
     }
 
@@ -212,9 +236,17 @@ class AdvisorPersonaGenerativeTest {
     }
 
     private static String randomScanReading(Random r) {
-        if (r.nextBoolean()) return "Nothing notable detected nearby.";
+        List<String> lightBuckets  = List.of("dark", "dim", "low", "moderate", "well-lit", "bright");
+        List<String> lightSources  = List.of(
+            "",
+            " — torch x1 (above)",
+            " — torch x2 (above, at level)",
+            " — lava x1 (below)",
+            " — torch x1 (at level); glow lichen x2 (above, below)");
+        String lighting = "Lighting: " + pick(lightBuckets, r) + pick(lightSources, r);
+        if (r.nextBoolean()) return lighting + "\nEntities: none";
         List<String> creatures = List.of("Passive: 2x Sheep", "Hostile: 1x Zombie", "Neutral: 1x Wolf");
-        return pick(creatures, r);
+        return lighting + "\n" + pick(creatures, r);
     }
 
     private static <T> T pick(List<T> options, Random r) {

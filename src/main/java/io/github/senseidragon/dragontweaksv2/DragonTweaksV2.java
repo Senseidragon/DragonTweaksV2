@@ -8,9 +8,11 @@ import io.github.senseidragon.dragontweaksv2.advisor.AdvisorSessionManager;
 import io.github.senseidragon.dragontweaksv2.advisor.AdvisorStatusMonitor;
 import io.github.senseidragon.dragontweaksv2.advisor.ToolCallOrchestrator;
 import io.github.senseidragon.dragontweaksv2.advisor.tools.EnvironmentTool;
+import io.github.senseidragon.dragontweaksv2.advisor.tools.IdentifyNearbyTool;
 import io.github.senseidragon.dragontweaksv2.advisor.tools.InventoryTool;
 import io.github.senseidragon.dragontweaksv2.advisor.tools.ScanAreaTool;
 import io.github.senseidragon.dragontweaksv2.advisor.tools.StatusTool;
+import io.github.senseidragon.dragontweaksv2.advisor.tools.VillageLocatorTool;
 import io.github.senseidragon.dragontweaksv2.openrouter.ChatCommandHandler;
 import io.github.senseidragon.dragontweaksv2.openrouter.OpenRouterService;
 import net.minecraft.core.registries.Registries;
@@ -59,7 +61,8 @@ public class DragonTweaksV2 {
         // the probe result is stored on OpenRouterService and consulted lazily if needed.
         ToolCallOrchestrator orchestrator = new ToolCallOrchestrator(
             service,
-            List.of(new InventoryTool(), new EnvironmentTool(), new StatusTool(), new ScanAreaTool()),
+            List.of(new InventoryTool(), new EnvironmentTool(), new StatusTool(), new ScanAreaTool(),
+                new VillageLocatorTool(), new IdentifyNearbyTool()),
             false // updated from service.isModelRetainsContext() after init runs
         );
 

@@ -36,15 +36,47 @@ Set-Location $repoRoot
 #
 # If pending-reindex.txt names a path outside the approved list, STOP and
 # report to Dragon. Do not add it here without explicit authorization.
-memsearch index `
-    "$memoryDir\seed-framework-rules.md" `
-    "$memoryDir\2026-05-25.md" `
-    "$memoryDir\framework\approved" `
-    "$memoryDir\domains\neoforge\approved" `
-    "$memoryDir\domains\minecolonies\approved" `
-    "$memoryDir\domains\minecraft\approved" `
-    "$memoryDir\projects\dragontweaksv2\approved" `
-    --force -c $collection
+$indexPaths = @(
+    "$memoryDir\seed-framework-rules.md",
+    "$memoryDir\2026-05-25.md",
+    "$memoryDir\framework\approved",
+    "$memoryDir\domains\neoforge\approved",
+    "$memoryDir\domains\minecolonies\approved",
+    "$memoryDir\domains\minecraft\approved",
+    "$memoryDir\projects\dragontweaksv2\approved"
+)
+
+# Standing requirement: all input to memory/KB systems must be UTF-8 encoded.
+# PYTHONUTF8=1 (above) makes memsearch's own Python process assume/emit UTF-8,
+# but does not verify the source files actually are -- fail loudly here rather
+# than let a mis-encoded file pass through silently.
+Write-Host "[2a/4] Validating UTF-8 encoding of files to be indexed..."
+$strictUtf8 = New-Object System.Text.UTF8Encoding($false, $true)  # throwOnInvalidBytes = true
+$badFiles = @()
+foreach ($p in $indexPaths) {
+    $files = if (Test-Path $p -PathType Container) {
+        Get-ChildItem -Path $p -Recurse -File
+    } elseif (Test-Path $p -PathType Leaf) {
+        Get-Item $p
+    } else {
+        @()
+    }
+    foreach ($f in $files) {
+        try {
+            $null = $strictUtf8.GetString([System.IO.File]::ReadAllBytes($f.FullName))
+        } catch {
+            $badFiles += $f.FullName
+        }
+    }
+}
+if ($badFiles.Count -gt 0) {
+    Write-Error "[UTF-8 VALIDATION FAILED] The following file(s) are not valid UTF-8 and must be fixed before indexing:"
+    $badFiles | ForEach-Object { Write-Error "  $_" }
+    exit 1
+}
+Write-Host "  All files valid UTF-8."
+
+memsearch index $indexPaths --force -c $collection
 
 Write-Host "[3/4] Flushing collection so rows are visible to search..."
 python -c "from pymilvus import MilvusClient; c=MilvusClient(uri='$milvusUri'); c.flush('$collection'); stats=c.get_collection_stats('$collection'); print('Row count:', stats)"

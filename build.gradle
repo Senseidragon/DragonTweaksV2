@@ -158,7 +158,9 @@ def devModFiles = [
     'libs/minecolonies-1.1.1299-1.21.1-snapshot.jar',
     'libs/structurize-1.0.820-1.21.1-snapshot.jar',
     'libs/domum-ornamentum-1.0.233-snapshot-main.jar',
-    'libs/blockui-1.0.211-1.21.1-snapshot.jar'
+    'libs/blockui-1.0.211-1.21.1-snapshot.jar',
+    'libs/ProjectE-1.21.1-PE1.1.0.jar',
+    'libs/ProjectE_Integration-1.21.1-8.3.1.jar'
 ]
 
 tasks.register('copyDevModsClient', Copy) {
@@ -180,22 +182,24 @@ afterEvaluate {
     tasks.named('runServer') { dependsOn 'copyDevMods' }
 }
 
-// Promotes manifest-listed lore entries from the docs/minecraft-lore authoring tier into the
-// runtime-loaded resources tree (LoreIndex.java reads only the latter via classpath + manifest).
-// Run manually (./gradlew syncLoreFromDocs) after editing docs/minecraft-lore and updating
-// lore-manifest.txt -- not wired into build/test so CI and routine builds never silently rewrite
-// checked-in resource files. Manifest entries with no docs/minecraft-lore counterpart (e.g. the
-// effects/ category, authored directly in resources) are left untouched, not deleted or flagged as errors.
+// Promotes manifest-listed lore entries from the docs/*-lore authoring tiers (one per domain --
+// docs/minecraft-lore, docs/minecolonies-lore, etc.) into the runtime-loaded resources tree
+// (LoreIndex.java reads only the latter via classpath + manifest). Run manually
+// (./gradlew syncLoreFromDocs) after editing a docs/*-lore entry and updating lore-manifest.txt --
+// not wired into build/test so CI and routine builds never silently rewrite checked-in resource
+// files. Each manifest entry is resolved against docsRoots in order, first match wins; entries with
+// no docs/ counterpart in any root (e.g. the effects/ category, authored directly in resources) are
+// left untouched, not deleted or flagged as errors.
 tasks.register('syncLoreFromDocs') {
-    description = 'Copy manifest-listed lore entries from docs/minecraft-lore into src/main/resources/data/dragontweaksv2/lore'
+    description = 'Copy manifest-listed lore entries from docs/*-lore into src/main/resources/data/dragontweaksv2/lore'
     group = 'documentation'
 
     def manifestFile = file('src/main/resources/data/dragontweaksv2/lore/lore-manifest.txt')
-    def docsRoot = file('docs/minecraft-lore')
+    def docsRoots = [file('docs/minecraft-lore'), file('docs/minecolonies-lore')]
     def resourcesRoot = file('src/main/resources/data/dragontweaksv2/lore')
 
     inputs.file(manifestFile)
-    inputs.dir(docsRoot)
+    docsRoots.each { inputs.dir(it) }
     outputs.dir(resourcesRoot)
 
     doLast {
@@ -203,8 +207,8 @@ tasks.register('syncLoreFromDocs') {
         int synced = 0
         int skipped = 0
         entries.each { entry ->
-            def src = new File(docsRoot, "${entry}.md")
-            if (src.exists()) {
+            def src = docsRoots.collect { new File(it, "${entry}.md") }.find { it.exists() }
+            if (src != null) {
                 def dest = new File(resourcesRoot, "${entry}.md")
                 dest.parentFile.mkdirs()
                 java.nio.file.Files.copy(src.toPath(), dest.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING)
@@ -213,7 +217,7 @@ tasks.register('syncLoreFromDocs') {
                 skipped++
             }
         }
-        logger.lifecycle("syncLoreFromDocs: synced ${synced} entries from docs/minecraft-lore; ${skipped} manifest entries have no docs/ counterpart and were left untouched.")
+        logger.lifecycle("syncLoreFromDocs: synced ${synced} entries from docs/*-lore; ${skipped} manifest entries have no docs/ counterpart in any root and were left untouched.")
     }
 }
 

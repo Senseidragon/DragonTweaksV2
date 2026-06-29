@@ -18,6 +18,9 @@ public class AdvisorEntityManager {
     @SubscribeEvent
     public void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer player)) return;
+        // Privacy gate: don't follow a player who hasn't unlocked the advisor. The login hint
+        // in DragonTweaksV2.onPlayerLoggedIn fires independently of this spawn.
+        if (!AdvisorChatHandler.hasBuildTool(player)) return;
         AdvisorEntity entity = new AdvisorEntity(ADVISOR_ENTITY_TYPE.get(), player.serverLevel());
         entity.setPos(player.position());
         player.serverLevel().addFreshEntity(entity);

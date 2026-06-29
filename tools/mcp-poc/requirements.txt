@@ -1,0 +1,4 @@
+# No external dependencies required.
+# server.py uses only Python standard library modules:
+#   http.server, json, os, pathlib, sys
+# Python 3.9+ required (for type hint syntax used in type aliases).

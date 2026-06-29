@@ -63,6 +63,14 @@ class ToolCallOrchestratorTest {
     }
 
     @Test
+    void personaBioInstructsAgainstListFormatting() {
+        ToolCallOrchestrator orc = new ToolCallOrchestrator(null, List.of(), false);
+        String prompt = orc.buildSystemPrompt("");
+        assertTrue(prompt.contains("never bullet points, dashes, or headers"),
+            "Expected persona bio to reject list-style formatting");
+    }
+
+    @Test
     void systemPromptConstantMatchesOrchestratorPersonaBio() {
         assertEquals(ToolCallOrchestrator.PERSONA_BIO, AdvisorChatHandler.SYSTEM_PROMPT);
     }
@@ -90,6 +98,22 @@ class ToolCallOrchestratorTest {
         ToolCallOrchestrator orc = new ToolCallOrchestrator(null, List.of(), false);
         // "creature" (scan) and "nearby" (location) both appear — scan wins, earlier in table order.
         assertEquals("scan", orc.classify("is there a creature nearby").orElseThrow().name());
+    }
+
+    @Test
+    void classifiesVillageSignalToLocatorTool() {
+        ToolCallOrchestrator orc = new ToolCallOrchestrator(null, List.of(), false);
+        var category = orc.classify("which way to the nearest village").orElseThrow();
+        assertEquals("village", category.name());
+        assertEquals(List.of("find_nearest_village"), category.tools());
+    }
+
+    @Test
+    void classifiesVillageSignalAheadOfLocationWhenBothPresent() {
+        ToolCallOrchestrator orc = new ToolCallOrchestrator(null, List.of(), false);
+        // "where" (location) and "village" both appear — only find_nearest_village can actually
+        // answer this, so "village" is placed earlier than "location" in the table to win here.
+        assertEquals("village", orc.classify("where is the nearest village").orElseThrow().name());
     }
 
     @Test

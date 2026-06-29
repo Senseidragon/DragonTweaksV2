@@ -132,7 +132,7 @@ public class AdvisorChatHandler {
         String context = getContext.get();
         deliver.accept("<" + playerName + "> " + chatText);
 
-        LOG.info("[Advisor] [{}] player: {}", playerName, chatText);
+        LOG.info("[DT_CHAT] [{}] player: {}", playerName, chatText);
 
         ScheduledFuture<?> task5s = scheduler.schedule(
             () -> dispatch.accept(() -> { if (isOnline.getAsBoolean()) deliver.accept("Hmm..."); }),
@@ -154,7 +154,7 @@ public class AdvisorChatHandler {
                     task5s.cancel(false);
                     task10s.cancel(false);
                     savedData.setDirty();
-                    LOG.info("[Advisor] [{}] advisor: {}", playerName, response);
+                    LOG.info("[DT_CHAT] [{}] advisor: {}", playerName, response);
                     dispatch.accept(() -> { if (isOnline.getAsBoolean()) deliver.accept(response); });
                 }
             ).exceptionally(err -> {
@@ -178,7 +178,7 @@ public class AdvisorChatHandler {
                     timeout.cancel(false);
                     session.addMessage("advisor", response);
                     savedData.setDirty();
-                    LOG.info("[Advisor] [{}] advisor: {}", playerName, response);
+                    LOG.info("[DT_CHAT] [{}] advisor: {}", playerName, response);
                     dispatch.accept(() -> { if (isOnline.getAsBoolean()) deliver.accept(response); });
                 })
                 .exceptionally(err -> {

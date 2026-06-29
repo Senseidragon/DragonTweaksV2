@@ -30,13 +30,17 @@ public class ToolCallOrchestrator {
     static final String PERSONA_BIO =
         "You are a seasoned adventurer who has spent years living in and surviving this land. " +
         "You speak plainly, from experience, the way someone talks while working — not the way someone lectures. " +
+        "You talk in plain sentences, the way you'd say it out loud — never bullet points, dashes, or headers; " +
+        "nobody describes what they saw to a friend with a list. " +
         "You answer exactly what you're asked, nothing more; you don't pad an answer with extra observations nobody asked for, " +
         "and you don't tack on a closing remark when you're done, you just stop. " +
         "You never speak on your surroundings, your gear, or your condition unless you've actually checked them first — " +
         "you're careful that way, the same as any adventurer who's survived this long. " +
         "If you're asked how something works and you've never learned it firsthand, you say plainly that you don't know — " +
         "you'd rather admit you don't know than guess and sound a fool. " +
-        "You've never set foot outside this land and have nothing to say about places, things, or ideas beyond it.\n\n";
+        "You've never set foot outside this land and have nothing to say about places, things, or ideas beyond it. " +
+        "What the tools show you is what you know. You don't revise your read of the area because someone pushes back — " +
+        "if the scan came up empty, that's what you saw. You'd rather say you saw nothing than invent something you didn't.\n\n";
 
     private final OpenRouterService openRouter;
     private final List<AdvisorTool> tools;
@@ -205,6 +209,9 @@ public class ToolCallOrchestrator {
     record Category(String name, List<String> signals, List<String> tools, boolean includeHistory) {}
 
     private static final List<Category> CATEGORIES = List.of(
+        // Must come before "location" and "scan" — "what kind of logs" matches "nearby" too
+        new Category("identify", List.of("what kind", "what type of", "which kind", "which type", "identify"),
+            List.of("identify_nearby"), true),
         new Category("environment", List.of("what time", "weather", "biome"),
             List.of("get_environment"), true),
         new Category("inventory", List.of("inventory", "holding", "wearing", "what do i have"),
@@ -213,6 +220,10 @@ public class ToolCallOrchestrator {
             List.of("get_status"), true),
         new Category("scan", List.of("creature", "threat", "scan"),
             List.of("scan_area"), false),
+        // Must come before "location" -- "where is the nearest village" matches both signals,
+        // and only this category's tool can actually answer a village-finding question.
+        new Category("village", List.of("village"),
+            List.of("find_nearest_village"), false),
         new Category("location", List.of("where", "nearby", "around me", "see"),
             List.of("get_environment", "scan_area"), false),
         new Category("chitchat", List.of("hello", "hi", "hey", "thanks", "thank you", "bye", "goodbye", "lol"),
@@ -261,7 +272,11 @@ public class ToolCallOrchestrator {
                     return;
                 }
                 try {
-                    future.complete(new ToolResult(call.id(), tool.execute(call.args(), player)));
+                    String result = tool.execute(call.args(), player);
+                    for (String line : result.split("\n", -1)) {
+                        LOGGER.info("[DT_TOOL] [{}] {}", call.name(), line);
+                    }
+                    future.complete(new ToolResult(call.id(), result));
                 } catch (Exception e) {
                     LOGGER.debug("[ToolCallOrchestrator] Tool '{}' failed: {}", call.name(), e.getMessage());
                     future.complete(new ToolResult(call.id(), "[Tool error: " + call.name() + " unavailable]"));

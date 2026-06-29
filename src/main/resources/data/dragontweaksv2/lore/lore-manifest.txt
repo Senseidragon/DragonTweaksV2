@@ -89,3 +89,4 @@ effects/hunger
 effects/poison
 effects/wither
 dimensions/nether
+needs/food
