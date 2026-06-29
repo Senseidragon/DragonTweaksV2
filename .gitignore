@@ -77,3 +77,7 @@ libs/*.jar
 .memsearch/candidates/
 .memsearch/test-quarantine/
 review-patches/
+
+# Local scratch / purpose TBD
+feed-me.md
+notes.md
