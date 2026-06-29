@@ -58,6 +58,7 @@ public class IdentifyNearbyTool implements AdvisorTool {
             bs.is(Blocks.RED_MUSHROOM) || bs.is(Blocks.BROWN_MUSHROOM)
             || bs.is(Blocks.RED_MUSHROOM_BLOCK) || bs.is(Blocks.BROWN_MUSHROOM_BLOCK)
             || bs.is(Blocks.MUSHROOM_STEM));
+        TARGETS.put("spawner",         bs -> bs.is(Blocks.SPAWNER));
     }
 
     @Override

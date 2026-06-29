@@ -264,3 +264,21 @@ The previous non-solid bypass block in `ScanAreaTool.samplePos()` (including air
 - **In-game confirmation (2026-06-29):** Standing in a grassy plain next to sugar cane, dandelions, an oxeye daisy, and still water. (1) `scan_area` correctly reported "a single flower, some sugar-cane" alongside grass, dirt, and water — no per-block bypass needed. (2) `identify_nearby` on "flower" returned "There are dandelions and an oxeye daisy nearby" — specific display names, correct count. (3) A second `scan_area` call also detected short grass and tall grass (via display-name fallback), a crafting table (concept detection), and sugar cane again. All non-solid blocks now detected uniformly.
 - **Not committed:** git access remains revoked per standing instruction.
 - **Result:** PASS — compile, test-suite, and in-game confirmed.
+
+---
+
+## 2026-06-29 — Fix: add spawner to identify_nearby; fix modded block display names in scan_area
+
+- **Files:** `advisor/tools/IdentifyNearbyTool.java` (modified), `advisor/tools/ScanAreaTool.java` (modified)
+
+### identify_nearby — spawner entry
+- **Root cause:** "what kind of spawner is it" routed correctly to `identify_nearby` via the "what kind" signal, but "spawner" had no entry in the TARGETS lookup table. The tool returned an unknown-target hint and the model produced three failed attempts.
+- **Fix:** Added `TARGETS.put("spawner", bs -> bs.is(Blocks.SPAWNER));` to the TARGETS map.
+
+### scan_area — modded block display names
+- **Root cause:** `state.getBlock().getName().getString()` in `categorizeBlock`'s fallback path calls the translation system. On the server thread, client-side language files are not loaded, so modded blocks return their raw translation key (e.g. `block.domum_ornamentum.shingle`) instead of a human-readable name. Vanilla blocks are unaffected because they have compiled-in English names.
+- **Fix:** Extracted `private static String friendlyName(BlockState)`. If `getName().getString()` returns a value containing dots and no spaces (signature of a translation key), it splits on `.`, takes the last segment, splits on `_`, and titlecases each word. Examples: `block.domum_ornamentum.shingle` → `Shingle`; `block.domum_ornamentum.shingle_slab` → `Shingle Slab`. Vanilla display names ("Oak Log", "Dirt") pass through unchanged.
+- **Tests:** `./gradlew test --rerun` — BUILD SUCCESSFUL, 27 tasks, 0 failures.
+- **Coverage limitation:** `friendlyName` logic is a static private method; not independently unit-tested. In-game confirmation required with Domum Ornamentum blocks present.
+- **Not yet committed:** pending next commit cycle.
+- **Result:** PASS (compile- and test-suite-verified). In-game confirmation required.

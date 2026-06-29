@@ -395,11 +395,27 @@ public class ScanAreaTool implements AdvisorTool {
         if (state.is(BlockTags.FLOWERS))          return "flower";
         // Light sources (torches, lanterns, glowstone, etc.) — checked last
         if (state.getLightEmission(level, pos) > 0) return "light_source";
-        // Fallback: return the block's in-game display name so no solid block is silently dropped.
+        // Fallback: return the block's display name so no solid block is silently dropped.
         // Named categories above aggregate variants (e.g. all log types → "tree_log");
         // unknown blocks fall back to their display name (e.g. "Packed Ice", "Calcite").
-        String displayName = state.getBlock().getName().getString();
-        return displayName.isBlank() ? null : displayName;
+        return friendlyName(state);
+    }
+
+    // getName().getString() returns the raw translation key on the server thread for modded blocks
+    // (e.g. "block.domum_ornamentum.shingle" instead of "Shingle") because the server has no
+    // client language files. If the result looks like a key (dots, no spaces), extract and
+    // titlecase the last segment so the model receives a readable name.
+    private static String friendlyName(BlockState state) {
+        String name = state.getBlock().getName().getString();
+        if (name.contains(".") && !name.contains(" ")) {
+            String[] parts = name.split("\\.");
+            String last = parts[parts.length - 1];
+            name = java.util.Arrays.stream(last.split("_"))
+                .filter(w -> !w.isEmpty())
+                .map(w -> Character.toUpperCase(w.charAt(0)) + w.substring(1))
+                .collect(java.util.stream.Collectors.joining(" "));
+        }
+        return name.isBlank() ? null : name;
     }
 
     private String formatCounts(Map<String, Integer> counts) {
