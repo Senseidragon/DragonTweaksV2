@@ -1,0 +1,19 @@
+There is an **overall** colony happiness and an **individual** citizen happiness. Higher colony happiness increases the initial level and skills of new colonists. Higher citizen happiness increases the maximum possible Intelligence when studying at a [[Library]].
+
+Overall colony happiness depends on three basic factors: **security, housing, and saturation**.
+
+If a colonist's saturation is sufficiently high, they will be happier.
+If the colonist's home (or for Guards/trainees, their workplace) is above level 2.5, the colonist will be happier.
+If at least two Guards exist for every three citizens, the colonists will be happier.
+
+These basic factors benefit from partial completion. Citizens will be happier with 5 shanks of saturation than 1, with 1 Guard for every 4 workers than 1 Guard for every 10, and enjoy a level 2 [[House]] more than a level 1 [[House]]. Colonists also become happier as these values increase further, such as from upgrading a [[House]] to level 4 or 5 or having completely full saturation.
+
+Each time a citizen (other than a Guard) dies, other citizens will mourn the next day and be less happy for the next three days. All citizens become slightly less happy for the next day when injured.
+
+Every night, colonists will also become less happy if they are sick, homeless, unemployed, or have nothing to do at their job, and will become increasingly unhappy the longer the problem persists. Citizens (other than Guards) unable to make it to their bed at night to sleep will become unhappy. Fellow colonists' livelihood also matters for happiness (the Social Factor in the [[Town Hall]] its happiness page).
+
+Surviving a raid without losing any colonists provides a colony-wide happiness boost.
+
+Colonists also like to have Guards near their homes and work places. Each [[Guard Tower]] will provide a feeling of protection to the colonists based on how far it expands your borders. However, sometimes colonists may not recognize a newly placed [[Guard Tower]] until you tell them that their concerns for their safety have to do for now.
+
+← [[Lore-Needs]]
