@@ -142,6 +142,7 @@ public class ScanAreaTool implements AdvisorTool {
             "nearby entities (passives, neutrals, hostiles, aggro-on-player), cave morphology when " +
             "underground, and notable fixtures within reach (ladder, bed, chest, door). " +
             "Use this tool when asked about surroundings, what is nearby, or what can be seen. " +
+            "For specific identification — what type or kind of something is — use identify_nearby instead. " +
             "Use category flags to limit results to what is needed.");
         fn.add("parameters", params);
 
@@ -401,21 +402,8 @@ public class ScanAreaTool implements AdvisorTool {
         return friendlyName(state);
     }
 
-    // getName().getString() returns the raw translation key on the server thread for modded blocks
-    // (e.g. "block.domum_ornamentum.shingle" instead of "Shingle") because the server has no
-    // client language files. If the result looks like a key (dots, no spaces), extract and
-    // titlecase the last segment so the model receives a readable name.
     private static String friendlyName(BlockState state) {
-        String name = state.getBlock().getName().getString();
-        if (name.contains(".") && !name.contains(" ")) {
-            String[] parts = name.split("\\.");
-            String last = parts[parts.length - 1];
-            name = java.util.Arrays.stream(last.split("_"))
-                .filter(w -> !w.isEmpty())
-                .map(w -> Character.toUpperCase(w.charAt(0)) + w.substring(1))
-                .collect(java.util.stream.Collectors.joining(" "));
-        }
-        return name.isBlank() ? null : name;
+        return BlockUtil.friendlyName(state);
     }
 
     private String formatCounts(Map<String, Integer> counts) {

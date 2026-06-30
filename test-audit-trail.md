@@ -282,3 +282,95 @@ The previous non-solid bypass block in `ScanAreaTool.samplePos()` (including air
 - **Coverage limitation:** `friendlyName` logic is a static private method; not independently unit-tested. In-game confirmation required with Domum Ornamentum blocks present.
 - **Not yet committed:** pending next commit cycle.
 - **Result:** PASS (compile- and test-suite-verified). In-game confirmation required.
+
+---
+
+## 2026-06-30 — Redesign: identify_nearby general scan + enrichBlockEntity; TCO routing fixes
+
+- **Files:** `advisor/tools/IdentifyNearbyTool.java` (rewritten), `advisor/tools/BlockUtil.java` (new), `advisor/tools/ScanAreaTool.java` (modified), `advisor/ToolCallOrchestrator.java` (modified), `advisor/ToolCallOrchestratorTest.java` (modified)
+
+### identify_nearby redesign
+- **Root cause:** The TARGETS `LinkedHashMap<String, Predicate<BlockState>>` is structurally limited — `Predicate<BlockState>` cannot access block entities, so questions like "what kind of spawner" return the display name only, not the mob type. It also required manual maintenance for every new block category and had broken singularization ("moss" → "mos", "glass" → "glas").
+- **Fix:** Dropped the TARGETS table entirely. `execute()` now scans all visible non-air blocks in radius-8 × height-8 with the same `COLLIDER + NONE` occlusion as before, resolves each block name via `BlockUtil.friendlyName()`, enriches block entities via `enrichBlockEntity()`, and filters by whether the player's target string is a substring of the resolved name (case-insensitive). When target is empty, all visible blocks are returned. When a non-empty target matches nothing, returns "None found nearby."
+- **enrichBlockEntity:** For `SpawnerBlockEntity`, reads spawn data via `saveWithoutMetadata(registryAccess())` NBT and extracts `SpawnData.entity.id`. Formats as "Monster Spawner (spawns Zombie)". Unknown block entities and API failures degrade gracefully to the display name via try/catch.
+- **definition() updated:** `target` is now optional (removed from `required`). Description is generalized.
+
+### BlockUtil.java
+- Extracted `friendlyName(BlockState)` from `ScanAreaTool` into a shared static utility class in the same package. `ScanAreaTool` delegates to it. Zero behavior change.
+
+### ScanAreaTool description
+- Added disclaimer: "For specific identification — what type or kind of something is — use identify_nearby instead."
+
+### ToolCallOrchestrator routing fixes
+- **`includeHistory` removed from Category:** Dropped `includeHistory` field. `shouldIncludeHistory` now uses only explicit signal detection (`"you said"`, `"earlier"`, `"what about"`, `"tell me more"`). Queries with no conversational reference default to false.
+- **Force-inject fix for identify_nearby:** `identify_nearby` filtered out of the force-inject list. When `identify` category fires with no round-1 tool call, falls through to the rt2 grounding prompt path instead of forcing an empty call.
+- **Chitchat fallthrough fix:** Chitchat branch now checks `category.get().tools().isEmpty()` so identify-category misses fall through to rt2 rather than delivering rt1 text.
+- **PERSONA_BIO anchor:** Added sentence directing the model to call `identify_nearby` when the player asks what type or kind of something is nearby.
+
+### Tests
+- `ToolCallOrchestratorTest.defaultIncludesHistory` renamed `defaultExcludesHistory`; assertions changed to `assertFalse` to match new signal-only behavior.
+- **`./gradlew test --rerun`:** BUILD SUCCESSFUL, 27 tasks, 0 failures.
+- **Coverage limitation:** `IdentifyNearbyTool.execute()` and `enrichBlockEntity()` require a live `ServerLevel`. Spawner mob-type enrichment and the signal-only history behavior need in-game confirmation.
+- **Result:** PASS (compile- and test-suite-verified). In-game confirmation required.
+
+---
+
+## 2026-06-30 — Live confirmation: identify_nearby spawner enrichment
+
+- **No code change.** Live-test confirmation only.
+- **Test:** Asked "what kind of spawner am I looking at" near a MineColonies spawner.
+- **Result:** PASS — advisor returned "It's a monster spawner that spawns Camparcherbarbarians." NBT-based mob type extraction via `saveWithoutMetadata(registryAccess())` confirmed working in-game with a modded entity type (`minecolonies:camparcherbarbarians`). Entity ID parsed and titlecased correctly.
+- **Observation (not a bug):** "I hate being in the rain" (casual complaint, no question asked) produced a long unsolicited tip block about shelter, buckets, lightning, and waterproof gear. PERSONA_BIO instructs against padding with extra observations nobody asked for — model is not holding to it for casual complaints. Model behavior issue; no code fix available.
+
+---
+
+## 2026-06-30 — Fix: AdvisorChatHandler filters `--` dev comments before advisor pipeline
+
+- **File:** `advisor/AdvisorChatHandler.java` — `onServerChat()`
+- **Root cause:** Messages prefixed with `--` are dev comments intended for Claude Code, not for the advisor. Previously the advisor received and responded to them, causing persona slips (e.g. "Sorry about that, I'll keep it plain." in response to `-- incorrect presentation`).
+- **Fix:** Extracted `message` from `event.getMessage().getString()` at the top of `onServerChat`. Added early return `if (message.startsWith("--")) return;` before any advisor processing. The message still appears in normal game chat; the advisor pipeline never sees it.
+- **Tests:** `./gradlew test --rerun` — BUILD SUCCESSFUL, 27 tasks, 0 failures.
+- **Coverage limitation:** No unit test for this path (requires live `ServerChatEvent`). In-game confirmation required.
+- **Result:** PASS (compile- and test-suite-verified). In-game confirmation pending.
+
+---
+
+## 2026-06-30 — Live confirmation: -- dev comment filter
+
+- **No code change.** Live-test confirmation only.
+- **Test:** Typed `-- testing the filter` in game chat with build tool in inventory.
+- **Result:** PASS — log shows `[Advisor] chat received from Dev` then stops; no `[DT_CHAT]`, no build tool check, no advisor pipeline. Message appeared in game chat normally. Filter working as intended.
+
+---
+
+## 2026-06-30 — Live confirmation: player fluid state line (test 1)
+
+- **No code change.** Live-test confirmation only.
+- **Test:** Asked "what do i see" while submerged in water, then again on dry land.
+- **Result:** PASS — `In fluid: water (submerged)` appeared in scan output after Sky line when submerged. Line absent when player was on dry land. Advisor response naturally incorporated being in water ("The area's mostly water… two salmon and two squids swimming nearby"). Correct presence/absence behavior confirmed.
+
+---
+
+## 2026-06-30 — Live confirmation: MineColonies food lore injection (test 2)
+
+- **No code change.** Live-test confirmation only.
+- **Test:** Asked "sht dues my colony need for food" (typo-laden; lore still matched).
+- **Result:** PASS — `[Advisor] lore matched: food` fired immediately. Advisor response drew correctly from MineColonies food lore: tier-specific biome crops (cold/temperate/humid/dry), Cookery with Chef, Restaurant with Cook, Bakery with Baker. No fabrication; all MineColonies-specific content accurate.
+
+---
+
+## 2026-06-30 — Live confirmation: build-tool spawn gate (test 4)
+
+- **No code change.** Live-test confirmation only.
+- **Test:** Logged into a fresh world without a build tool in inventory.
+- **Result:** PASS — `[DragonTweaks]` build tool hint fired unconditionally (expected). Chat handler correctly blocked advisor pipeline on "hi" and subsequent messages (no build tool found, hotbar: bread + ability bottle). No advisor entity spawned. Dragon confirmed in-game: "no advisor yet."
+
+---
+
+## 2026-06-30 — Fix: needs/food.md lore rewritten for immersion and conciseness
+
+- **File:** `docs/minecolonies-lore/needs/food.md`
+- **Root cause:** Lore document used game-mechanic language ("tiered crops", "tiers", "satisfaction penalty") and structured markdown (section headers, bullet lists) that caused the model to produce a wordy, game-mechanic-flavored response.
+- **Fix:** Rewrote as flowing prose. Removed all section headers and bullet lists. Replaced "tiered crops" with "crops suited to the local climate". Replaced tier-satisfaction language with "colony-grown meals satisfy citizens better than food the player hands them directly". Retained all factual content (production chain, citizen hunger, climate-based crops, Restaurant requirement).
+- **Tests:** `./gradlew test --rerun` — BUILD SUCCESSFUL, 27 tasks, 0 failures. No unit test coverage for lore content; in-game re-test required to confirm response quality improvement.
+- **Result:** PASS (compile- and test-suite-verified). In-game confirmation pending.

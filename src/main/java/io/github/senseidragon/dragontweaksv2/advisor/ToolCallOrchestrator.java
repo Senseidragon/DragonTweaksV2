@@ -40,7 +40,8 @@ public class ToolCallOrchestrator {
         "you'd rather admit you don't know than guess and sound a fool. " +
         "You've never set foot outside this land and have nothing to say about places, things, or ideas beyond it. " +
         "What the tools show you is what you know. You don't revise your read of the area because someone pushes back — " +
-        "if the scan came up empty, that's what you saw. You'd rather say you saw nothing than invent something you didn't.\n\n";
+        "if the scan came up empty, that's what you saw. You'd rather say you saw nothing than invent something you didn't. " +
+        "When the player asks what type or kind of something is nearby — what mob a spawner spawns, which variety of flower, what kind of ore — call identify_nearby.\n\n";
 
     private final OpenRouterService openRouter;
     private final List<AdvisorTool> tools;
@@ -106,17 +107,21 @@ public class ToolCallOrchestrator {
                 }
 
                 if (category.isPresent() && !category.get().tools().isEmpty()) {
-                    // Known category with tool(s), but round 1 made no tool calls — don't ask
-                    // again and trust a freeform retry. Ground deterministically instead.
+                    // Known category with zero-arg tool(s) — ground deterministically.
+                    // identify_nearby requires a target arg; exclude it from force-inject
+                    // and let it fall through to rt2 for a second attempt.
                     List<ToolCall> forcedCalls = category.get().tools().stream()
+                        .filter(t -> !t.equals("identify_nearby"))
                         .map(toolName -> new ToolCall("forced-" + toolName, toolName, new JsonObject()))
                         .collect(Collectors.toList());
-                    executeToolsAndDeliver(forcedCalls, playerMessage, systemPrompt, history, defs,
-                        player, session, responseCallback, executor, isOnline);
-                    return;
+                    if (!forcedCalls.isEmpty()) {
+                        executeToolsAndDeliver(forcedCalls, playerMessage, systemPrompt, history, defs,
+                            player, session, responseCallback, executor, isOnline);
+                        return;
+                    }
                 }
 
-                if (category.isPresent()) {
+                if (category.isPresent() && category.get().tools().isEmpty()) {
                     // Chitchat: no tool to ground with — round 1's text is the answer.
                     deliverTextOnly(rt1.textContent(), playerMessage, session, responseCallback, isOnline);
                     return;
@@ -206,28 +211,28 @@ public class ToolCallOrchestrator {
     }
 
     // package-private for testing
-    record Category(String name, List<String> signals, List<String> tools, boolean includeHistory) {}
+    record Category(String name, List<String> signals, List<String> tools) {}
 
     private static final List<Category> CATEGORIES = List.of(
         // Must come before "location" and "scan" — "what kind of logs" matches "nearby" too
         new Category("identify", List.of("what kind", "what type of", "which kind", "which type", "identify"),
-            List.of("identify_nearby"), true),
+            List.of("identify_nearby")),
         new Category("environment", List.of("what time", "weather", "biome"),
-            List.of("get_environment"), true),
+            List.of("get_environment")),
         new Category("inventory", List.of("inventory", "holding", "wearing", "what do i have"),
-            List.of("get_inventory"), false),
+            List.of("get_inventory")),
         new Category("status", List.of("health", "effect", "how am i feeling"),
-            List.of("get_status"), true),
+            List.of("get_status")),
         new Category("scan", List.of("creature", "threat", "scan"),
-            List.of("scan_area"), false),
+            List.of("scan_area")),
         // Must come before "location" -- "where is the nearest village" matches both signals,
         // and only this category's tool can actually answer a village-finding question.
         new Category("village", List.of("village"),
-            List.of("find_nearest_village"), false),
+            List.of("find_nearest_village")),
         new Category("location", List.of("where", "nearby", "around me", "see"),
-            List.of("get_environment", "scan_area"), false),
+            List.of("get_environment", "scan_area")),
         new Category("chitchat", List.of("hello", "hi", "hey", "thanks", "thank you", "bye", "goodbye", "lol"),
-            List.of(), true)
+            List.of())
     );
 
     // package-private for testing — first matching category wins, in table order above
@@ -247,11 +252,8 @@ public class ToolCallOrchestrator {
     // package-private for testing
     boolean shouldIncludeHistory(String playerMessage) {
         String lower = playerMessage.toLowerCase(Locale.ROOT);
-        if (lower.contains("you said") || lower.contains("earlier") ||
-            lower.contains("what about") || lower.contains("tell me more")) {
-            return true;
-        }
-        return classify(playerMessage).map(Category::includeHistory).orElse(true);
+        return lower.contains("you said") || lower.contains("earlier") ||
+            lower.contains("what about") || lower.contains("tell me more");
     }
 
     List<JsonObject> toolDefinitions() {

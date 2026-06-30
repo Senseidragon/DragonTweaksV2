@@ -80,7 +80,10 @@ public class AdvisorChatHandler {
     @SubscribeEvent
     public void onServerChat(ServerChatEvent event) {
         ServerPlayer player = event.getPlayer();
+        String message = event.getMessage().getString();
         LOG.info("[Advisor] chat received from {}", player.getName().getString());
+
+        if (message.startsWith("--")) return;
 
         if (!openRouter.isEnabled()) {
             LOG.warn("[Advisor] OpenRouter not enabled, skipping");
@@ -106,7 +109,7 @@ public class AdvisorChatHandler {
         handleChat(
             player.getName().getString(),
             player.getUUID(),
-            event.getMessage().getString(),
+            message,
             () -> contextBuilder.build(player, player.serverLevel()),
             () -> sessionData.get(player.getServer().overworld()),
             () -> event.setCanceled(true),

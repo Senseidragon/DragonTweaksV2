@@ -44,10 +44,10 @@ class ToolCallOrchestratorTest {
     }
 
     @Test
-    void defaultIncludesHistory() {
+    void defaultExcludesHistory() {
         ToolCallOrchestrator orc = new ToolCallOrchestrator(null, List.of(), false);
-        assertTrue(orc.shouldIncludeHistory("how do I make a sword?"));
-        assertTrue(orc.shouldIncludeHistory("good morning"));
+        assertFalse(orc.shouldIncludeHistory("how do I make a sword?"));
+        assertFalse(orc.shouldIncludeHistory("good morning"));
     }
 
     // ── persona bio tests ──────────────────────────────────────────────────────
