@@ -1,0 +1,33 @@
+---
+topic: Barracks Tower
+type: advisor-artifact
+source: "[[https://wiki.minecolonies.ldtteam.com/source/buildings/barrackstower]]"
+pipeline_stage: advisor-artifact
+version: latest
+---
+
+The [[Barracks Tower]] will employ and house one Guard for every level built (unlike the normal [[Guard Tower]], which can only have 1 Guard at a time). For a detailed description of each guard type, see the [[Barracks]] page. Each new Guard will need a bed in a house in order to spawn. However, once they are hired at the [[Barracks Tower]], that becomes their new residence and the bed in the house will open up for another new citizen (child or recruit).
+
+| Building Level | Max # of Guards |
+| -------------- | --------------- |
+| 1              | 1               |
+| 2              | 2               |
+| 3              | 3               |
+| 4              | 4               |
+| 5              | 5               |
+
+The [[Barracks Tower]] locations are predetermined by the [[Barracks]] that you choose. They are placed in specific locations to fit within the [[Barracks]]. 
+
+The maximum level of the [[Barracks Tower]] is the same as the [[Barracks]].
+
+Guard(s) will patrol a set distance around their tower, which is based on their tower's level.
+
+| Tower Level | Max Patrol Distance |
+| ----------- | ------------------- |
+| 1           | 80 blocks           |
+| 2           | 110 blocks          |
+| 3           | 140 blocks          |
+| 4           | 170 blocks          |
+| 5           | 200 blocks          |
+
+> **Note:** If you place [[Barracks]]/[[Barracks Tower]] near your colony border and level them up, your border will expand.
