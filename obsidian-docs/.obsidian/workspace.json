@@ -4,17 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "fb2a227672517519",
+        "id": "4b77d50d6d676a69",
         "type": "tabs",
         "children": [
           {
-            "id": "5d8cce704e7c976d",
+            "id": "4445cd8a9ed6d9e0",
             "type": "leaf",
             "state": {
-              "type": "graph",
+              "type": "empty",
               "state": {},
-              "icon": "lucide-git-fork",
-              "title": "Graph view"
+              "icon": "lucide-file",
+              "title": "New tab"
             }
           }
         ]
@@ -177,10 +177,10 @@
       "bases:Create new base": false
     }
   },
-  "active": "5d8cce704e7c976d",
+  "active": "4445cd8a9ed6d9e0",
   "lastOpenFiles": [
-    "minecolonies/MineColonies.md",
     "minecolonies/Lore-Content.md",
+    "minecolonies/MineColonies.md",
     "DragonTweaks-v2.md.tmp.28540.1780008653216",
     "DragonTweaks-v2.md.tmp.28540.1780008639471",
     "DragonTweaks-v2.md.tmp.28540.1780008626773",

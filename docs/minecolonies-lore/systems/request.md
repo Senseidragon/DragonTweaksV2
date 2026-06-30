@@ -6,38 +6,14 @@ pipeline_stage: advisor-artifact
 version: latest
 ---
 
-As the mayor of a fledgling colony, you are sure to be busy managing your citizens and the multitude of issues that arise. At some point, you’ll have too many citizens to deal with every single one of their demands individually.
+Citizens automatically request the items they need to do their jobs. If another citizen can provide those items, the colony handles the exchange without any player involvement. The request system is built around two components: the [[Warehouse]], which stores the colony's resources, and Couriers, who wait there and deliver items when requests come in.
 
-Thankfully, there’s the Request System! Citizens will automatically ask for the items they need to perform their jobs, and if those items can be provided by your other citizens, they will do so! 
+When a worker needs something, they search their personal inventory, their hut block, and any storage rack in their building. If the item is not found, a request goes out automatically. If the item is in the [[Warehouse]], a Courier picks it up and delivers it. If it is not in the [[Warehouse]] but another worker knows how to make it, that worker requests the raw materials needed — and the chain continues until the item is produced or the colony runs out of workers who can fulfill the next step.
 
-## Getting Started
+If no worker can fulfill the request, the citizen waits and shows a red gear over their head. Talking to them reveals what they need. The player can then hand the item directly to the citizen or deposit it in the [[Warehouse]] for a Courier to deliver.
 
-The request system is based on two components: the [[Warehouse]], which stores all of your colony’s resources, and the Courier, who pick up and drop off items between buildings. The Couriers wait in the [[Warehouse]] until a request comes in.
+The Clipboard lets the player see all outstanding citizen requests without visiting each one — use it from anywhere within the colony. A filter hides constant standing requests, like a Smelter repeatedly asking for ore, so only the requests actually blocking work are visible.
 
-When a citizen realizes that they need an item, they’ll first look in their inventory, hut block, and Minecoloniesrack in their hut. If they cannot find the item in these locations, they’ll then make a request automatically. If this item is in the [[Warehouse]], a Courier will then take it from the [[Warehouse]] and deliver it to your citizen automatically.
+For players who want to retrieve items from the colony, the Postbox works in reverse — place a request there and a Courier will pull the item from the [[Warehouse]] and bring it. The Stash does the opposite: place items in the Stash and Couriers will collect them and return them to the [[Warehouse]].
 
-## Crafting Requests
-
-But what if you don’t have that item in your [[Warehouse]]? In that case, your citizens will check who is able to make that item and attempt to ask them to make it. For example, if your builder needs some oak stairs and there aren’t any in the [[Warehouse]], your Carpenter will check if they know how to make oak stairs. If they do, then they’ll request some oak planks to turn into stairs. If there aren’t any oak planks but the carpenter also knows how to make them from oak logs, then they’ll request oak logs to turn into oak planks to turn into oak stairs. Your citizens will keep making and trying to fulfill requests until they have the items they need or they cannot fulfill a request given their jobs and knowledge. As such, it’s convenient to get as many citizens working different jobs as you can to fulfill as many of their requests as they can automatically!
-
-## Manual Requests
-
-What if your builder asks for oak stairs but you don’t have a carpenter yet? In that case, the request can’t be filled automatically, and the citizen will wait for you, the mayor, to fulfill the request manually. These citizens will have a red gear over their head and, in talking to them, will tell you what they need. Once you have that item they need, you can give it to them directly or put it in the [[Warehouse]] for your Couriers to deliver.
-
-## Clipboard
-
-Of course, being the busy mayor you are, you’ll want to be able to see all of your citizens’ requests without running to each one. For this, there’s the Clipboard. Simply right-click the air with your clipboard and you can see all of your citizens’ requests, no matter where you are (as long as you're close to your colony)!
-
-Some of your citizens will always have constant requests (e.g., the Smelter requesting ores). Clicking the "Show Important Requests Only" hides these constant requests, so you can focus on the requests that bottleneck your citizens' work.
-
-## Stash/Postbox
-
-As your colony grows, so too will the number of items and blocks in your [[Warehouse]] and that your citizens can produce. Searching the [[Warehouse]] each time you want something can be tedious. Thankfully, your colony has a Postbox, from which you can make requests just like your citizens! Simply place it down somewhere you can easily access and, when you want to request an item from your colony but don’t want to hunt it down, make a request at the postbox. These can range from held items to placeable blocks to any items your workers can craft.
-
-For convenience, your colony also has a Stash. The stash behaves like a reverse postbox: Couriers will take any items you place in the stash and put them back in the [[Warehouse]].
-
-## Priority
-
-Finally, you can adjust the order in which Couriers pick up items from each building by changing that building's *priority*. Higher numbers mean higher priority, so buildings with a priority of 10/10 are visited before buildings with a priority of 1/10. This can help ensure the colonists doing urgent jobs are not delayed by those with less urgent jobs.
-
-Priority only affects pickup, though; deliveries *from* the [[Warehouse]] *to* other buildings or the postbox are always high priority.
+Delivery priority can be adjusted per building. Higher-priority buildings are visited first by Couriers picking up items. Deliveries out of the [[Warehouse]] are always treated as high priority regardless of the building's setting.

@@ -6,40 +6,10 @@ pipeline_stage: advisor-artifact
 version: latest
 ---
 
-MineColonies adds 5 magical scrolls:
+MineColonies adds five magical scrolls. Four are crafted by the Enchanter at the [[Enchanter's Tower]]; the fifth is found only in loot chests. To use a scroll, hold down right-click with it in hand. Scrolls have a small chance to fail, and whether they succeed or not, they are consumed on use.
 
-- Ultrasafe Colony Teleport Scroll
-- Ultrasafe Colony Group Teleport Scroll
-- Sacred Scroll of Regeneration
-- Spatial Guard Reinforcements Scroll
-- Worker-Where-Are-You Scroll
+The Ultrasafe Colony Teleport Scroll returns the player to their [[Town Hall]] when used. It must first be registered to the [[Town Hall]] by shift-clicking the hut block. The recipe is 3 paper, a compass, and a Scepter of Gold. The Ultrasafe Colony Group Teleport Scroll does the same but carries all nearby players along; the [[Enchanter's Tower]] must be at least level 2 to craft it, and it requires 3 Teleport Scrolls to make.
 
-To use a scroll, hold down right-click with the scroll in your main hand. Scrolls have a small chance to fail. Whether it fails or not, the scroll will disappear after using it.
+Once the Morescrolls research is completed at the [[University]], the Enchanter can craft two more. The Spatial Guard Reinforcements Scroll summons guards from a registered tower to the player's location for a limited time — similar to a Banner rally but limited to one tower and a fixed duration. It must be registered to both the [[Town Hall]] and a [[Guard Tower]] or [[Barracks Tower]], and is crafted from 1 Teleport Scroll, 5 lapis lazuli, 1 ender pearl, and 1 paper. The Worker-Where-Are-You Scroll highlights a specific worker and gives them a brief speed boost, making it easy to find a stuck or missing citizen; it is crafted from 3 Teleport Scrolls, 6 glowstone dust, and 2 paper.
 
-## Ultrasafe Colony Teleport Scroll
-
-This scroll will teleport you to your [[Town Hall]] when used. You must register it to your [[Town Hall]] first by shift + right-clicking on the [[Town Hall]] hut block.
-
-It is crafted by the Enchanter with 3 paper, 1 compass, and 1 Sceptergold.
-
-## Ultrasafe Colony Group Teleport Scroll
-
-This scroll will teleport you and any players near you to your [[Town Hall]] when used. You must register it to your [[Town Hall]] first by shift + right-clicking on the [[Town Hall]] hut block.
-
-It is crafted by the Enchanter with 3 Ultrasafe Colony Teleport Scrolls. For the Enchanter to unlock this recipe, their [[Enchanter's Tower]] must be at least level 2.
-
-## Spatial Guard Reinforcements Scroll
-
-Calls Guards to you for a limited time. Like the Banner Rally Guards, but can only summon one tower of Guards at a time and has a finite time period. Must be registered to your [[Town Hall]] and to a [[Guard Tower]]/[[Barracks Tower]]  (register it by shift + right-clicking on the hut block).
-
-This scroll is crafted by the Enchanter with 1 Ultrasafe Colony Teleport Scroll, 5 lapis lazuli, 1 ender pearl, and 1 paper. For the Enchanter to unlock this recipe, you must have the Morescrolls research completed.
-
-## Worker-Where-Are-You Scroll
-
-Highlights the worker of a specific building and gives them a slight speed boost. Shift + right-click on a hut block to use.
-
-Crafted by the Enchanter with 3 Ultrasafe Colony Teleport Scrolls, 6 glowstone dust, and 2 paper. For the Enchanter to unlock this recipe, you must have the Morescrolls research completed.
-
-## Sacred Scroll of Regeneration
-
-This scroll applies the regeneration effect to you and any citizens near you. It can be found in loot chests.
+The Sacred Scroll of Regeneration applies a regeneration effect to the player and nearby citizens when used. It cannot be crafted and must be found in loot chests.

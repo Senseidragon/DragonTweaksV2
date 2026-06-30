@@ -6,44 +6,12 @@ pipeline_stage: advisor-artifact
 version: latest
 ---
 
-Over time, citizens in your colony will come to you with quests. These can range from introductory quests that walk you through setting up your colony, to one-off side quests from individual citizens with their own stories.
+Citizens in your colony will occasionally come to you with quests. These range from introductory tutorials that walk you through building a colony to one-off personal stories from individual citizens. Any citizen may bring a quest; quests are not tied to a specific building.
 
-## Getting a Quest
+When you approach a citizen who has a quest waiting, they will bring it up before their usual detail page. You can accept it, decline it, or skip past it. After accepting, you fulfill the quest's objectives and return to that citizen to claim the reward, which takes the form of items.
 
-When you right-click a citizen who has a quest for you, they will bring it up before anything else. You can choose to accept it, decline it, or skip past it to their detail page. Once you accept a quest, you will need to fulfill its objectives before returning to that citizen to collect your reward.
+Quests can ask for many different things: having a conversation with a citizen, delivering a specific item, constructing or upgrading a building to a certain level, breaking or placing a set number of blocks, defeating a number of a specific mob type, or completing a particular research at the [[University]]. A single quest can chain several of these objectives together in sequence.
 
-Quests are offered by citizens themselves, not by any specific building. Any citizen may bring a quest to you depending on the circumstances.
+Some quests are part of chains — completing one unlocks the next. The introductory tutorial works this way, guiding new players through the early stages of colony-building step by step. These tutorials can be skipped entirely by players who already know what they are doing. Other quests are standalone and repeat after some time passes.
 
-## Quest Types
-
-Quests can ask you to do a variety of things:
-
-- **Dialogue.** Have a conversation with a citizen, sometimes with branching choices.
-- **Delivery.** Bring a specific item to a citizen.
-- **Build a building.** Construct or upgrade a colony building to a certain level.
-- **Break blocks.** Break a number of a specific block.
-- **Place blocks.** Place a number of a specific block.
-- **Kill entities.** Defeat a number of a specific mob type.
-- **Complete research.** Finish a specific research at the [[University]].
-
-A single quest can chain several of these objectives together in sequence.
-
-## Quest Chains and One-Off Quests
-
-Some quests are part of chains, where completing one unlocks the next. The introductory tutorial quests work this way, guiding you through the early stages of building a colony step by step. These tutorial quests are skippable if you already know what you are doing and do not want to go through them.
-
-Other quests are standalone and can be completed multiple times, with citizens repeating them after some time has passed.
-
-## Rewards
-
-Completing a quest rewards you with items. The specific items vary per quest.
-
-## The Quest Log
-
-The Quest Log is an item that lets you track all your quests in one place. Right-click a hut block to bind the Quest Log to that colony, then right-click in the air to open it. It shows three tabs:
-
-- **Available.** Quests you can currently pick up.
-- **In Progress.** Quests you have accepted but not yet completed.
-- **Finished.** Quests you have already turned in.
-
-Clicking on a quest in the log will highlight the citizen who gave it to you, making it easy to track them down in your colony.
+The Quest Log is an item that tracks all active quests in one place. Bind it to a colony by interacting with a hut block, then use it in the open air to see quests that are available, in progress, or completed. Selecting a quest in the log highlights the citizen who issued it, making them easy to find.

@@ -6,11 +6,6 @@ pipeline_stage: advisor-artifact
 version: latest
 ---
 
-The [[Bakery]] will craft bread dough, cookie dough, cake dough, and raw pumpkin pie, then bake these in a furnace to create bread, cookies, cakes, and pumpkin pies. They will only do this upon request, whether from the Cook, the Postbox, or as a minimum stock in the [[Warehouse]].
+The [[Bakery]] produces bread, cookies, cakes, and pumpkin pies for the colony. The Baker first crafts dough forms of each item, then bakes them in a furnace. These are produced on request only — from the Cook, from the Postbox, or as a minimum stock order placed through the [[Warehouse]].
 
-The Baker can also craft some non-vanilla breads:
-
-- Sweet bread, made from wheat and a honey bottle. Available at [[Bakery]] level 3. Has slightly higher saturation than normal bread, also gives you a speed boost and removes poison.
-- Milk-infused bread, made from wheat and a milk bucket. Available at [[Bakery]] level 4. Removes all potion effects (like milk buckets do).
-- Golden bread, made from wheat and a gold ingot. Available at [[Bakery]] level 5. Instantly heals 2 hearts.
-- Chorus bread, made from wheat and a chorus fruit. Available after completing the Know the End research in the [[University]]. Has higher saturation than normal bread and teleports you to the surface after eating it.
+Higher-level [[Bakery]] buildings unlock specialty breads unavailable elsewhere. At level 3, the Baker can make sweet bread from wheat and a honey bottle, which provides a slight speed boost and clears poison in addition to its food value. At level 4, milk-infused bread becomes available — wheat and a milk bucket — which clears all active potion effects when eaten, similar to drinking milk directly. At level 5, golden bread made from wheat and a gold ingot is unlocked, instantly restoring a measure of health. Completing the Know the End research at the [[University]] unlocks chorus bread, made from wheat and chorus fruit, which offers higher saturation than normal bread and teleports the eater to the surface.

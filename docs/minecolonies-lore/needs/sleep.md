@@ -6,30 +6,14 @@ pipeline_stage: advisor-artifact
 version: latest
 ---
 
-No matter how busy your thriving colony is, your colonists need to sleep. At the end of each day until sunrise the next day, they will go to their homes and sleep in their beds.
+Citizens need to rest. At the end of each day they return to their assigned beds and sleep until sunrise. A well-rested colony is a happier one — if a citizen cannot reach their bed for three nights running, they will start complaining about it. Citizens who have gone without a home for two weeks become noticeably unhappy and will make that known.
 
-## Happiness
+Homeless citizens gather at the [[Town Hall]] at night rather than sleeping, leaving them exposed during raids. Building enough housing to keep pace with the colony's population is one of the first priorities for any growing settlement.
 
-Letting your colonists sleep will make them happier. If they're unable to reach their beds for at least 3 days, they'll tell you they're unhappy. 
+Most colonists sleep in a [[House]] or [[Tavern]]. The [[Tavern]] provides exactly four beds regardless of building level — upgrading it raises skill caps and attracts visitors but does not add beds. A [[House]] provides one bed per building level, so a level-four [[House]] houses four colonists. The [[Town Hall]] GUI lets the player manually assign colonists to specific beds, or the colony will randomly fill available space. Colonists are reluctant to commute more than 100 blocks between their bed and their work hut; if the distance is too great, they will ask to be reassigned.
 
-## Assigning Beds
+Guards are housed differently. A [[Guard Tower]] provides one bed for a single Guard, while a [[Barracks]] with its [[Barracks Tower]] structures handles housing for many Guards at once.
 
-[[House]] and [[Tavern]] provide most of your colonists with bedspaces to sleep in. If set in the [[Town Hall]], you can manually assign colonists to beds in  or the [[Tavern]]. Else, they'll be randomly assigned to an open bed.
+Children can be born if at least one male and one female colonist live in the colony. A child takes up a bed in whatever building they are born into and inherits some skills from the adults living there, making well-skilled, happy adults a genuine advantage for the next generation.
 
-Each colony can have only one [[Tavern]] by default. The [[Tavern]] will provide 4 beds. Upgrading does not increase the number of beds; however, it does affect skill caps and number and quality of visitors.
-
-Each colony can have as many  as you'd like. Each [[House]] will provide one bed per level; i.e., a level 4 [[House]] will provide 4 beds, and a level 1 [[House]] will provide 1 bed. The [[House]] level also restricts colonist skill caps.
-
- provide 1 bed for a Guard, while a [[Barracks]] provides housing for many Guards. See those pages for more details.
-
-Colonists don't like to commute too far, whether by rail or by foot. If they're over 100 blocks from their work hut, they'll complain that they're living too far from work. If you see this, have them switch bed with someone else!
-
-If you have at least one female and one male colonist in your colony, then children can be born. Children also take up a bed space, but that bed space does not need to be with either of their birth parents. Instead, their parents will be the adults living in the building they're born into, which can be two colonists (of either gender), a single colonist, or none at all! Children will take some of their skills from their parents, though, so a child with highly skilled parents in a very happy colony will start with pretty good stats!
-
-## Homelessness
-
-Colonists that do not have a home will gather at the [[Town Hall]] at night. You should build them a home, so they have somewhere safe to be at night and during raids. Colonists become upset after two weeks of not having a home.
-
-## Ticking Events at Night
-
-Turning off the daylight cycle in-game can affect some events and internal updates unpredictably. Most notably, this includes raids and Farmer, but may include things like sicknesses or the growth of children. However, this is not publicly known.
+Turning off the day/night cycle affects colonists in unpredictable ways — raids, Farmer behavior, sickness, and child growth may not proceed normally without the natural day cycle running.

@@ -4,29 +4,31 @@ Lore documents live in `docs/minecolonies-lore/`. They are keyword-indexed by `L
 
 ## Current Coverage
 
-**One file exists:** `needs/food.md`
+65 files, all in plain prose with no section headers, no bullet lists, no XP references, and no game-mechanic framing.
 
-MineColonies is a large mod. Topics with no lore coverage yet include:
-- Worker buildings (Lumberjack, Miner, Builder, Blacksmith, Farmer, etc.)
-- Research trees and university progression
-- Citizen happiness and morale mechanics
-- Military (Guard Tower, Barracks, Knights, Rangers)
-- Supply mechanics (Warehouse, Courier, Postbox)
-- Colony founding and town hall progression
-- Raids and barbarian attacks
+| Category | Count | Obsidian Page |
+|----------|-------|---------------|
+| buildings | 51 | [[Lore-Buildings]] |
+| systems | 9 | [[Lore-Systems]] |
+| needs | 4 | [[Lore-Needs]] |
+| items | 1 | [[Lore-Items]] |
+
+`needs/food.md` is hand-crafted prose (not script-generated).
+`buildings/enchanter.md` and `needs/gear.md` were manually rewritten for prose quality.
+`buildings/barracks.md`, `buildings/farmer.md`, `buildings/townhall.md`, `items/scrolls.md`, `needs/sleep.md`, all systems files, `buildings/netherworker.md`, `buildings/graveyard.md`, `buildings/baker.md`, and `buildings/builder.md` were prose-ified in this pass.
 
 ## Format Conventions (minecolonies-lore only)
 
-These conventions apply to files in `docs/minecolonies-lore/` only — they do **not** apply to `docs/minecraft-lore/`, which uses the advisor-artifact schema with headers and bullets.
+These apply to files in `docs/minecolonies-lore/` only — they do **not** apply to `docs/minecraft-lore/`, which uses the advisor-artifact schema with headers and bullets.
 
 - Plain prose — no section headers, no bullet lists
-- No "tier" language, no "saturation bar", no "satisfaction penalty", no game-mechanic framing
+- No "tier" language, no "saturation bar", no game-mechanic framing
+- No XP or experience point references
 - Write as if describing the colony world from the inside, not as a game manual
+- `[[wikilinks]]` to related buildings and systems where relevant
 
-## Recent Changes
+## food.md Note
 
-`needs/food.md` — rewritten as flowing prose (session `advisor-persona-grounding`, 2026-06-30). Removed: tiered crop language, section headers, bullet lists. Retained: full production chain (Farmer → Cookery/Chef → Restaurant/Cook → Bakery/Baker), citizen hunger vs. player hunger, climate-based crops, colony-grown food superiority.
-
-**Status: not yet re-tested in-game after rewrite.**
+`needs/food.md` — hand-crafted prose, last edited 2026-06-30. The script-generated version from the mdoc was discarded. **Not yet re-tested in-game after rewrite.**
 
 ← [[MineColonies]]

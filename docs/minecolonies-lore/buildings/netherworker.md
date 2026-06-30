@@ -6,14 +6,6 @@ pipeline_stage: advisor-artifact
 version: latest
 ---
 
-The [[Nether Mine]] is where the Netherminer works. The Netherminer travels into The Nether and mines resources found there. The level of the hut determines what items Netherminer brings back.
+The [[Nether Mine]] is where the Netherminer works. Despite the name and the portal on site, the Netherminer does not actually travel into the Nether or break any blocks there — the portal can be used by players, but the worker operates purely through the building's mechanics. The level of the [[Nether Mine]] determines which resources the Netherminer is able to retrieve.
 
-- **Level 1:**  blaze rod, ender pearl, ghast tear, gold ingot, gold nugget, gravel, gunpowder, leather, magma cream, nether quartz ore, netherrack, porkchop, rotten flesh, soul sand, soul_soil.
-- **Level 2:**  All items from previous levels, plus brown mushroom, crimson fungus, crimson nylium, crimson stem, glowstone, nether wart, red mushroom.
-- **Level 3:**  All items from previous levels, plus basalt, warped fungus, warped nylium, warped_stem.
-- **Level 4:**  All items from previous levels, plus blackstone, nether gold ore.
-- **Level 5:**  All items from previous levels, plus ancient debris.
-
-The Netherminer can also craft Lava Bucket.
-
-> **Note:** The portal in the [[Nether Mine]] will transport players to the Nether. However, the Netherminer does not actually travel into the Nether, nor do they actually mine any blocks in the Nether.
+At level 1 the Netherminer brings back common nether materials: blaze rods, ender pearls, ghast tears, gold ingots and nuggets, gravel, gunpowder, leather, magma cream, nether quartz ore, netherrack, porkchops, rotten flesh, soul sand, and soul soil. Each successive level adds to this list — level 2 adds mushrooms, crimson and warped fungi, nylium, crimson and warped stems, glowstone, nether wart, and red mushrooms; level 3 adds basalt; level 4 adds blackstone and nether gold ore; level 5 adds ancient debris. The Netherminer can also craft lava buckets on request.

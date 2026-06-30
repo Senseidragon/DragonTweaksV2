@@ -22,7 +22,7 @@ Active deferred work as of branch `advisor-persona-grounding`.
 
 ## Infrastructure
 
-- **PreToolUse hook** — Bash path enforcement to close `.gradle` access gap (complements Read/Glob deny rules); Dragon's call on timing
+- **PreToolUse hook** — Bash path enforcement to close `.gradle` access gap; Dragon's call on timing
 - **prickle missing dependency** — Dragon's call
 
 ← [[Project-State]]

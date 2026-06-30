@@ -6,38 +6,14 @@ pipeline_stage: advisor-artifact
 version: latest
 ---
 
-**If a raid is currently in progress, your colonists will stop working and run home!**
+When a raid begins, all colonists stop working and return home immediately.
 
-## Before the Raid
-As your colony develops, you may get raided by hostile forces. These forces can spawn almost anywhere except near your buildings. Generally, this means they'll spawn outside of the colony, but if your buildings are spread out, they could spawn between them!
+As a colony grows, it will be attacked by hostile raiding forces at night. Raiders spawn at the start of a night and will appear outside the colony's boundaries, though a spread-out colony may find raiders appearing in the gaps between buildings. A message announces the general direction the raid came from, and a progress bar shows how many raiders remain. Larger, more developed colonies may face multiple simultaneous waves from different directions, sometimes of different raider types.
 
-Raids will only spawn at the start of a night. There will be a chat message giving a general direction of where the raid spawned and a bar at the top of your screen showing your progress in defeating the raiders. Raids spawn randomly, with a minimum number of nights between them and an average number of nights as set in the config file. Larger colonies may get multiple waves or groups of raiders from different directions, even of different types. Be careful!
+The type of raiders that appear depends on the biome where they spawn: Nordic raiders appear in taiga biomes, Mummies in deserts, Pirates near large bodies of water, Amazons in jungles, and Barbarians everywhere else. Pirates arrive on a ship with spawners that keep generating more pirates until the spawners are destroyed; the ship itself sails away after a few days and restores any terrain it displaced. Mummy raids may include Pharaohs, who occasionally drop a scepter-bow that Archers can use.
 
-If you have a [[Barracks]] at level 3 or higher, you can hire spies to make raiders glow. This can help you find that one pesky raider that got stuck or is hiding and finish the raid.
+Raiders are capable pathfinders. They break through doors, place ladders to climb obstacles, bridge gaps, and swim through lava and moving water without taking damage. Attacks that land too hard are reflected back at the attacker, and turrets from other mods are generally ineffective against them. If a [[Barracks]] is at level 3 or higher, spies can be hired to make raiders glow, helping locate any who get stuck or try to hide.
 
-## Types of Raids
-The type of raiders that can spawn are determined by the biome in which they spawn.
+Defeated raiders may drop their equipment or an Ancient Tome, which the [[Enchanter's Tower]] uses to produce enchanted books. Once the last raider and all spawners are cleared, colonists return to their jobs. If any colonists died, their families will grieve and not work the following day — Guards are the exception and are not mourned.
 
-| Biome               | Raider type |
-| ------------------- | ----------- |
-| Taiga               | Nordic      |
-| Desert              | Mummy       |
-| Large body of water | Pirate      |
-| Jungle              | Amazon      |
-| Other               | Barbarian   |
-
-Notably, Pirate raids can spawn on any large body of water, not just the ocean. They will spawn with a ship that has spawners that continuously spawn more pirates until you break the spawners. If any of the environment would be clipped by the pirate ship's spawning, the environment will be restored after the ship sails away (in 3 days, by default).
-
-Mummy raids may include Pharaohs, who may drop their scepter on defeat. These scepters are essentially bows, and as such can be used by your Archers.
-
-## During the Raid
-Raiders will run around the colony breaking down doors and trying to attack your Guards and colonists. Generally, raiders will path toward hut blocks in your colony, similar to what Guards do on patrol.
-
-Trying to "cheese" the raiders usually will not work. They are able to path fairly well, though if they are unable to find any path to their destination, they will break through any block, place ladders to climb up obstacles, or place blocks to bridge gaps to get to your colony. They can swim straight through moving water and lava, taking no damage from lava. Any attack that hits a raider *too* hard will be reflected back at the attacker. Similarly, turrets (from other mods) generally will not be effective on raiders.
-
-Raiders have a chance to drop their equipment when you or your Guards defeat them. They may also drop Ancient Tome, which are used in enchanting.
-
-## After the Raid
-After all of the raiders have been defeated and spawners broken, your colonists will go back to their jobs. If any of your colonists die, then their family will mourn their death and not work that day. However, Guards will not be mourned.
-
-As you defeat more raiders and develop your colony, the raids will increase in difficulty. How quickly they increase in difficulty or what affects their difficulty is not publicly known.
+Raids grow harder as the colony develops. The exact formula for difficulty scaling is not publicly documented.

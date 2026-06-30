@@ -3,7 +3,7 @@
 `LoreIndex` scans `docs/minecolonies-lore/` and `docs/minecraft-lore/` at startup and builds a keyword → document map. When a player message matches a keyword, the corresponding lore doc is injected into the round-1 prompt.
 
 - Matching is case-insensitive substring; typo-tolerant in practice (confirmed: "sht dues my colony need for food" matched `food`)
-- The entry count as of the last measured test session was 92, but this is a snapshot — it changes as files are added
+- Entry count is not tracked here — it changes as files are added and will drift if noted as a snapshot
 
 ## minecraft-lore coverage
 
@@ -25,6 +25,13 @@
 
 ## minecolonies-lore coverage
 
-Currently a single file: `docs/minecolonies-lore/needs/food.md`. The MineColonies mod has many more topics not yet covered (worker buildings, research trees, citizen happiness, military, supply mechanics). See [[Lore-Content]] for file conventions and known gaps.
+65 files in plain prose format. See [[Lore-Content]] for format conventions and file status.
+
+| Category | Count | Obsidian Page |
+|----------|-------|---------------|
+| buildings | 51 | [[Lore-Buildings]] |
+| systems | 9 | [[Lore-Systems]] |
+| needs | 4 | [[Lore-Needs]] |
+| items | 1 | [[Lore-Items]] |
 
 ← [[Advisor-System]]

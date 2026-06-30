@@ -6,34 +6,10 @@ pipeline_stage: advisor-artifact
 version: latest
 ---
 
-The [[Barracks]] is the ultimate protection for your colony. Each [[Barracks]] can hold multiple [[Barracks Tower]] within its structure. The [[Barracks Tower]] (unlike the normal [[Guard Tower]]) will employ *and* house one Guard for every level built, for a total of 5 Guards per [[Barracks Tower]]! Each new Guard will need a bed in a [[House]] in order to spawn. However, once they are hired at the [[Barracks Tower]], that becomes their new residence and the bed in the house will open up for another new citizen. Currently, all official-style [[Barracks]] contain 4 [[Barracks Tower]] for a total of 20 Guards per [[Barracks]] for your colony. However, custom styles can have more or fewer than 4 [[Barracks Tower]]. Colonists like feeling safe, so building [[Barracks]] close to colonists' work and homes can improve their happiness.
+The [[Barracks]] is the colony's most powerful defensive installation, capable of housing multiple [[Barracks Tower]] structures within its grounds. Unlike a standard [[Guard Tower]], each [[Barracks Tower]] employs and houses one Guard per level built, meaning a fully upgraded tower holds five Guards. Guards assigned to a tower treat it as their home, freeing up any bed they previously occupied in a regular [[House]]. Standard colony layouts support four [[Barracks Tower]], allowing up to twenty Guards per [[Barracks]] complex, though custom styles may include more or fewer.
 
-| Building Level | Max # of [[Barracks Tower]] | Max Level of [[Barracks Tower]] |
-| -------------- | --------------------------------------------- | ------------------------------------------------- |
-| 1              | 1                                             | 1                                                 |
-| 2              | 2                                             | 2                                                 |
-| 3              | 3                                             | 3                                                 |
-| 4              | 4                                             | 4                                                 |
-| 5              | 4                                             | 5                                                 |
+As the [[Barracks]] itself is upgraded, more towers become available and the towers themselves can be upgraded to higher levels. At level 1 a single tower of level 1 is supported; by level 5, all four towers can be built to level 5.
 
-> **Note:** The [[Barracks]] has slightly higher border expansion than other buildings. See the border system page for more information.
+The [[Barracks]] also expands the colony border more than most buildings, and colonists near it gain a happiness bonus from feeling safe.
 
-## Guard Types
-
-There are three types of guards that can be assigned to towers: Knights, Archers, and Druids.
-
-### Knight
-
-Knights are melee guards. They require a sword to fight and can optionally use a shield and armor.
-
-Before being hired as an actual guard, Knights can first be trained at the [[Combat Academy]] to level up their skills without risk of dying to mobs.
-
-### Archer
-
-Archers are ranged guards. They require a bow to fight and can optionally use arrows and armor.
-
-Before being hired as an actual guard, Archers can first be trained at the [[Archery]] to level up their skills without risk of dying to mobs.
-
-### Druid
-
-Druids are support guards. They throw potions at fellow guards to improve their combat effectiveness. There is no dedicated training building for Druids.
+Three types of Guards can be assigned to towers. Knights are melee fighters who wield a sword and can optionally carry a shield and armor; they can train at the [[Combat Academy]] before deployment to develop their skills without the risk of dying in the field. Archers are ranged fighters who use a bow and can optionally use arrows and armor; they can train at the [[Archery]] building in the same way. Druids are support Guards who throw potions at allied Guards to improve their combat effectiveness; there is no dedicated training building for Druids.
